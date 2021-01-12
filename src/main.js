@@ -2,18 +2,23 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
 import App from './App.vue'
 import VueRouter from 'vue-router'
+import VueLayers from 'vuelayers'
+import 'vuelayers/lib/style.css' // needs css-loader
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import DermatologistTable from "@/components/DermatologistTable";
 import Home from "@/components/Home";
+import OurTeam from "@/components/OurTeam/OurTeam";
+import Contact from "@/components/Contact/Contact"
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false
 Vue.use(VueRouter);
+Vue.use(VueLayers)
 
 const routes = [
-    {path: '/dermatologists', component: DermatologistTable},
+    {path: '/ourteam', component: OurTeam},
+    {path: '/contact', component: Contact},
     {path: '/', component: Home}
 ];
 
