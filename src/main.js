@@ -12,6 +12,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Home from "@/components/Home";
 import OurTeam from "@/components/OurTeam/OurTeam";
 import Contact from "@/components/Contact/Contact"
+import RegisterPatient from "@/components/SignedOutUser/RegisterPatient";
+import LogIn from "@/components/SignedOutUser/LogIn";
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false
@@ -22,7 +24,9 @@ Vue.use(PointGeom);
 const routes = [
     {path: '/ourteam', component: OurTeam},
     {path: '/contact', component: Contact},
-    {path: '/', component: Home}
+    {path: '/register', component: RegisterPatient},
+    {path: '/login', component: LogIn},
+    {path: '/', component: Home},
 ];
 
 const router = new VueRouter({
