@@ -14,12 +14,15 @@ import OurTeam from "@/components/OurTeam/OurTeam";
 import Contact from "@/components/Contact/Contact"
 import RegisterPatient from "@/components/SignedOutUser/RegisterPatient";
 import LogIn from "@/components/SignedOutUser/LogIn";
+import axios  from "axios";
+Vue.prototype.$http = axios;
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false
 Vue.use(VueRouter);
 Vue.use(VueLayers);
 Vue.use(PointGeom);
+Vue.use(axios);
 
 const routes = [
     {path: '/ourteam', component: OurTeam},

@@ -5,17 +5,17 @@
     </div>
     <div class="card-body bg-dark">
       <div class="form-outline mb-4">
-        <input type="email" id="form1Example1" class="form-control" placeholder="Enter your email address"/>
+        <input v-model="email" type="email" id="form1Example1" class="form-control" placeholder="Enter your email address"/>
         <label class="form-label" for="form1Example1">Email address</label>
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <input type="password" id="form1Example2" class="form-control" placeholder="Enter your password"/>
+        <input v-model="password" type="password" id="form1Example2" class="form-control" placeholder="Enter your password"/>
         <label class="form-label" for="form1Example2">Password</label>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      <button v-on:click="login" class="btn btn-primary btn-block">Log in</button>
     </div>
     <div class="card-footer bg-dark">
       <small>
@@ -29,8 +29,38 @@
 </template>
 
 <script>
+
+
+import axios from "axios";
+
 export default {
-  name: "LogIn"
+
+  data () {
+    return {
+      email : "",
+      password : "",
+      Token:null
+    }
+  },
+  name: "LogIn",
+  mounted () {
+
+  },
+  computed:{
+    JwtAuthenticationRequest(){
+      let account;
+      account = {'email':this.email, 'password':this.password}
+      return account
+    }
+  },
+  methods : {
+    login(){
+
+      axios
+          .post('http://localhost:8080/login/', this.JwtAuthenticationRequest)
+          .then(response => {this.Token = response.data; console.log(this.Token)});
+    }
+  }
 }
 </script>
 
