@@ -19,6 +19,7 @@ import ActivationMailSent from "@/components/SignedOutUser/ActivationMailSent";
 import ActivationSucceeded from "@/components/SignedOutUser/ActivationSucceeded";
 import ActivationFailed from "@/components/SignedOutUser/ActivationFailed";
 import Activation from "@/components/SignedOutUser/Activation";
+import Medicine from "@/components/Medicine/Medicine";
 Vue.prototype.$http = axios;
 
 Vue.use(BootstrapVue);
@@ -29,6 +30,7 @@ Vue.use(PointGeom);
 Vue.use(axios);
 
 const routes = [
+    {path: '/medicine', component: Medicine},
     {path: '/ourteam', component: OurTeam},
     {path: '/contact', component: Contact},
     {path: '/register', component: RegisterPatient},
