@@ -1,5 +1,5 @@
 <template>
-  <li style="float:right" class="dropdown nav-item ml-auto" >
+  <li style="float:right" class="dropdown nav-item ml-auto">
     <a href="javascript:void(0)" class="dropbtn">Profile</a>
     <div class="dropdown-content">
       <a class="drop-link" href="#">Edit profile</a>
@@ -30,14 +30,13 @@ li a:hover, .dropdown:hover .dropbtn {
 }
 
 
-
 .dropdown-content {
   right: 0;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -49,7 +48,9 @@ li a:hover, .dropdown:hover .dropbtn {
   text-align: left;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
