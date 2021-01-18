@@ -11,23 +11,21 @@ export default {
       navbarClass: 'navbar-nav',
     }
   },
-  props:['side'],
+  props: ['side'],
   name: "NavGroup",
-  computed:{
-    getSide(){
+  computed: {
+    getSide() {
       console.log(this.side)
-      if(this.side=='ml-auto' | this.side=='mr-auto' | this.side=='mx-auto'){
+      if (this.side === 'ml-auto' | this.side === 'mr-auto' | this.side === 'mx-auto') {
         return this.side
-      }
-      else {
-        return  'ml-auto'
+      } else {
+        return 'ml-auto'
       }
 
     }
   }
 }
-</script >
-
+</script>
 
 <style scoped>
 

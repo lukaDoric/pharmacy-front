@@ -20,6 +20,8 @@ import ActivationSucceeded from "@/components/SignedOutUser/ActivationSucceeded"
 import ActivationFailed from "@/components/SignedOutUser/ActivationFailed";
 import Activation from "@/components/SignedOutUser/Activation";
 import Medicine from "@/components/Medicine/Medicine";
+import Order from "@/components/Order/Order";
+
 Vue.prototype.$http = axios;
 
 Vue.use(BootstrapVue);
@@ -40,6 +42,7 @@ const routes = [
     {path: '/activation/failed', component: ActivationFailed},
     {path: '/activation', component: Activation},
     {path: '/', component: Home},
+    {path: '/order', component: Order}
 ];
 
 const router = new VueRouter({
