@@ -5,74 +5,38 @@
     <div class="container my-4">
       <hr>
       <div class="table-responsive">
+        <div class="d-flex bd-highlight mb-3">
+          <input type="text"
+                 placeholder="Search"
+                 v-model="filter">
+          <input type="text"
+                 placeholder="Filter by pharmacy"
+                 v-model="filterByPharmacyValue" @keyup.enter="filterByPharmacy">
+        </div>
         <table class="table">
           <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Heading</th>
-            <th scope="col">Heading</th>
-            <th scope="col">Heading</th>
+            <th scope="col">See pharamcy</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Rating</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody v-for="(dermatologist, index) in filteredDermatologists" :key="index">
           <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1"
               href="#collapseOne">
             <td class="expand-button"></td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-
+            <td>{{ dermatologist.name }}</td>
+            <td>{{ dermatologist.surname }}</td>
+            <td>{{ dermatologist.rating }}</td>
           </tr>
           <tr class="hide-table-padding">
             <td></td>
             <td colspan="3">
               <div id="collapseOne" class="collapse in p-3">
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 1</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 2</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 3</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 4</div>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr class="accordion-toggle collapsed" id="accordion2" data-toggle="collapse" data-parent="#accordion2"
-              href="#collapseTwo">
-            <td class="expand-button"></td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-
-          </tr>
-          <tr class="hide-table-padding">
-            <td></td>
-            <td colspan="4">
-              <div id="collapseTwo" class="collapse in p-3">
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value</div>
+                <div class="row" v-for="(pharmacy, index) in dermatologist.pharmacies" :key="index">
+                  <div class="col-3"><p style="color:forestgreen;">{{ pharmacy.pharmacyName }}</p></div>
+                  <div class="col-4"><p style="color:forestgreen;">{{ pharmacy.pharmacyAddress }}</p></div>
                 </div>
               </div>
             </td>
@@ -86,8 +50,48 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Dermatologists"
+  name: "Dermatologists",
+  data() {
+    return {
+      filter: '',
+      filterByPharmacyValue: '',
+      dermatologists: []
+    }
+  },
+
+  mounted() {
+    axios
+        .get('http://localhost:8080/user/getAllDermatologists')
+        .then(response => {
+          this.dermatologists = response.data;
+        })
+  },
+
+  methods: {
+
+    filterByPharmacy() {
+      axios
+          .get('http://localhost:8080/user/getDermatologistsByPharmacy')
+          .then(response => {
+            this.dermatologists = response.data;
+          })
+    }
+  },
+
+  computed: {
+    filteredDermatologists() {
+      return this.dermatologists.filter(dermatologist => {
+        const name = dermatologist.name.toString().toLowerCase();
+        const surname = dermatologist.surname.toLowerCase();
+        const rating = dermatologist.rating.toString();
+        const searchTerm = this.filter.toLowerCase();
+        return name.includes(searchTerm) || surname.includes(searchTerm) || rating.includes(searchTerm);
+      });
+    }
+  },
 }
 </script>
 
