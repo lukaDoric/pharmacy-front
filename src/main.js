@@ -34,8 +34,8 @@ const routes = [
     {path: '/register', component: RegisterPatient},
     {path: '/login', component: LogIn},
     {path: '/emailSent', component: ActivationMailSent},
-    {path: '/register/success', component: ActivationSucceeded},
-    {path: '/register/failed', component: ActivationFailed},
+    {path: '/activation/success', component: ActivationSucceeded},
+    {path: '/activation/failed', component: ActivationFailed},
     {path: '/activation', component: Activation},
     {path: '/', component: Home},
 ];

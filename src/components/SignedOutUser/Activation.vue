@@ -1,6 +1,6 @@
 <template>
-<div>
-</div>
+  <div>
+  </div>
 </template>
 
 <script>
@@ -9,7 +9,18 @@ import axios from "axios";
 export default {
   name: "Activation",
   mounted() {
-    axios.put('http://localhost:8080/activate/' + this.$route.query.code + '/' + this.$route.query.email)
+    let email = this.$route.query.email.replace(/ /g, "+");
+    let code = this.$route.query.code;
+    axios.post('http://localhost:8080/register/activate',
+        {
+          'code': code,
+          'email': email
+        })
+        .then(response => {
+          this.redirectURL = response.data;
+          window.location.href = this.redirectURL;
+        })
+        .catch(err => window.location.href = err.response.data);
   },
 }
 

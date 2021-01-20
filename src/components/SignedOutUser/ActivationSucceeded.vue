@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1 style="margin: auto">
+    <h1>
       Activation succseeded!
     </h1>
-    <p style="margin: auto">
-      Welcome to pharmacy manager!
+    <p>
+      Welcome to pharmacy manager! You are free to <a href="/login">login</a>!
     </p>
   </div>
 
