@@ -125,8 +125,8 @@ export default {
       if(this.ValidInformation){
         axios
             .post('http://localhost:8080/register/patient', this.User)
-            .then(response => {this.redirectURL = response.data; self.$router.push(this.redirectURL);})
-            .catch(err => console.log(err.response.data));
+            .then(response => {this.redirectURL = response.data; window.location.href = this.redirectURL;})
+            .catch(err => alert(err.response.data));
       }
       else {
         console.log("NEVALJAJU PODACI")

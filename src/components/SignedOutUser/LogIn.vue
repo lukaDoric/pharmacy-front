@@ -55,12 +55,11 @@ export default {
   },
   methods : {
     login(){
-
       axios
           .post('http://localhost:8080/login/', this.JwtAuthenticationRequest)
-          .then(response => {this.Token = response.data; console.log(this.Token)});
+          .then(response => {localStorage.setItem('jwt', response.data);});
     }
-  }
+  },
 }
 </script>
 
