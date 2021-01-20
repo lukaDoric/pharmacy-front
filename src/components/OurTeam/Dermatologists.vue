@@ -9,9 +9,12 @@
           <input type="text"
                  placeholder="Search"
                  v-model="filter">
-          <input type="text"
-                 placeholder="Filter by pharmacy"
-                 v-model="filterByPharmacyValue" @keyup.enter="filterByPharmacy">
+          <div>
+            <select v-on:select="filterByPharmacy" id="dropdown-1" text="Pharmacy" class="m-md-2" @change="filterByPharmacy($event)">
+              <option>All pharmacies</option>
+              <option v-for="(pharmacy, index) in pharmacies" :key="index">{{ pharmacy.pharmacyName }}</option>
+            </select>
+          </div>
         </div>
         <table class="table">
           <thead>
@@ -58,7 +61,9 @@ export default {
     return {
       filter: '',
       filterByPharmacyValue: '',
-      dermatologists: []
+      pharmacies: [],
+      dermatologists: [],
+      allDermatologists: []
     }
   },
 
@@ -67,17 +72,30 @@ export default {
         .get('http://localhost:8080/user/getAllDermatologists')
         .then(response => {
           this.dermatologists = response.data;
+          this.allDermatologists = response.data;
+        })
+
+    axios
+        .get('http://localhost:8080/pharmacy/')
+        .then(response => {
+          this.pharmacies = response.data;
         })
   },
 
   methods: {
 
-    filterByPharmacy() {
-      axios
-          .get('http://localhost:8080/user/getDermatologistsByPharmacy')
-          .then(response => {
-            this.dermatologists = response.data;
-          })
+    filterByPharmacy(event) {
+      console.log(event.target.value);
+
+      if(event.target.value === 'All pharmacies') {
+        this.dermatologists = this.allDermatologists;
+      } else {
+        axios
+            .get('http://localhost:8080/dermatologist/getDermatologistsByPharmacy/' + event.target.value)
+            .then(response => {
+              this.dermatologists = response.data;
+            })
+      }
     }
   },
 
