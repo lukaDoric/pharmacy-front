@@ -15,6 +15,10 @@ import Contact from "@/components/Contact/Contact"
 import RegisterPatient from "@/components/SignedOutUser/RegisterPatient";
 import LogIn from "@/components/SignedOutUser/LogIn";
 import axios  from "axios";
+import ActivationMailSent from "@/components/SignedOutUser/ActivationMailSent";
+import ActivationSucceeded from "@/components/SignedOutUser/ActivationSucceeded";
+import ActivationFailed from "@/components/SignedOutUser/ActivationFailed";
+import Activation from "@/components/SignedOutUser/Activation";
 Vue.prototype.$http = axios;
 
 Vue.use(BootstrapVue);
@@ -29,6 +33,10 @@ const routes = [
     {path: '/contact', component: Contact},
     {path: '/register', component: RegisterPatient},
     {path: '/login', component: LogIn},
+    {path: '/emailSent', component: ActivationMailSent},
+    {path: '/register/success', component: ActivationSucceeded},
+    {path: '/register/failed', component: ActivationFailed},
+    {path: '/activation', component: Activation},
     {path: '/', component: Home},
 ];
 
