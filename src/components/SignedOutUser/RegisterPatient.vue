@@ -3,9 +3,10 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header bg-dark"><h3 style="color: aliceblue">Register</h3></div>
-          <div class="card-body bg-dark">
 
+          <div class="card-header bg-dark"><h3 style="color: aliceblue">Register</h3></div>
+
+          <div class="card-body bg-dark">
             <div class="form-group">
               <label for="email" class="cols-sm-2 control-label">Your email</label>
               <div class="cols-sm-10">
@@ -15,6 +16,7 @@
                 </div>
               </div>
             </div>
+
             <div class="row">
               <div class="col-sm-6 form-group">
                 <label for="password" class="cols-sm-2 control-label">Password</label>
@@ -47,6 +49,7 @@
               </div>
             </div>
             <hr>
+
             <div class="form-group">
               <label for="country" class="cols-sm-2 control-label">Country</label>
               <div class="cols-sm-10">
@@ -87,7 +90,7 @@
           </div>
           <div class="card-footer login-register bg-dark">
             <small>
-              Already have account? <a href="#">Login</a>
+              Already have account? <a href="\login">Login</a>
             </small>
 
           </div>
@@ -95,16 +98,18 @@
         </div>
       </div>
     </div>
+    <div v-if="sendingMail" class="spinner"></div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+
 
 export default {
   name: "RegisterPatient",
   data: function () {
     return {
+      sendingMail:false,
       redirectURL:"",
       name:"",
       surname:"",
@@ -123,13 +128,15 @@ export default {
   methods: {
     submit(){
       if(this.ValidInformation){
-        axios
+        this.sendingMail = true;
+        this.$http
             .post('http://localhost:8080/register/patient', this.User)
             .then(response => {this.redirectURL = response.data; window.location.href = this.redirectURL;})
-            .catch(err => alert(err.response.data));
+            .catch(err => {alert(err.response.data);this.sendingMail=false});
       }
       else {
-        console.log("NEVALJAJU PODACI")
+        this.sendingMail = false;
+        alert("The given data was not valid!")
       }
     }
   },
@@ -158,6 +165,7 @@ export default {
 </script>
 
 <style scoped>
+@import '../css/Loader.css';
 .card {
   color: white;
   background-color: dimgray;

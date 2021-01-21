@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import VueLayers from 'vuelayers'
 import 'vuelayers/lib/style.css' // needs css-loader
 import {PointGeom} from 'vuelayers'
+import {store} from  './store/store'
 
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -24,12 +25,15 @@ import Order from "@/components/Order/Order";
 
 Vue.prototype.$http = axios;
 
+
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false
 Vue.use(VueRouter);
 Vue.use(VueLayers);
 Vue.use(PointGeom);
-Vue.use(axios);
+
+
+axios.defaults.headers.common['Authorization'] = store.getters.tokenString;
 
 const routes = [
     {path: '/medicine', component: Medicine},
@@ -50,7 +54,9 @@ const router = new VueRouter({
     mode: 'history'
 });
 
+
 new Vue({
+    store:store,
     el: '#app',
     router,
     render: h => h(App),
