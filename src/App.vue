@@ -8,10 +8,11 @@
       </NavGroup>
       <NavGroup side="ml-auto">
         <RegisterPatientLink/>
-        <LogIn/>
+        <LogIn v-if="isLogged"/>
         <ProfileDropMenu/>
       </NavGroup>
     </NavBar>
+    <h3>{{ user }}</h3>
     <hr>
     <router-view></router-view>
   </div>
@@ -27,6 +28,7 @@ import RegisterPatientLink from "@/components/NavBar/RegisterPatientLink";
 import OrderLink from "@/components/NavBar/OrderLink";
 import LogIn from "@/components/NavBar/LogInLink";
 
+
 export default {
   name: 'App',
   components: {
@@ -38,7 +40,21 @@ export default {
     NavGroup,
     RegisterPatientLink,
     OrderLink
+  },
+  mounted() {
+
+    this.$store.dispatch('startSession', null);
+
+  },
+  computed: {
+    isLogged() {
+      return this.$store.state.userType == null;
+    },
+    user() {
+      return this.$store.state.userType
+    },
   }
+
 }
 </script>
 

@@ -3,14 +3,19 @@
     <a href="javascript:void(0)" class="dropbtn">Profile</a>
     <div class="dropdown-content">
       <a class="drop-link" href="#">Edit profile</a>
-      <a class="drop-link" href="#">Log out</a>
+      <a class="drop-link" v-on:click="logOut">Log out</a>
     </div>
   </li>
 </template>
 
 <script>
 export default {
-  name: "ProfileDropMenu"
+  name: "ProfileDropMenu",
+  methods:{
+    logOut(){
+      this.$store.dispatch('logOut');
+    }
+  }
 }
 </script>
 

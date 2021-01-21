@@ -5,13 +5,15 @@
     </div>
     <div class="card-body bg-dark">
       <div class="form-outline mb-4">
-        <input v-model="email" type="email" id="form1Example1" class="form-control" placeholder="Enter your email address"/>
+        <input v-model="email" type="email" id="form1Example1" class="form-control"
+               placeholder="Enter your email address"/>
         <label class="form-label" for="form1Example1">Email address</label>
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <input v-model="password" type="password" id="form1Example2" class="form-control" placeholder="Enter your password"/>
+        <input v-model="password" type="password" id="form1Example2" class="form-control"
+               placeholder="Enter your password"/>
         <label class="form-label" for="form1Example2">Password</label>
       </div>
 
@@ -30,33 +32,35 @@
 
 <script>
 
-import axios from "axios";
 
 export default {
 
-  data () {
+  data() {
     return {
-      email : "",
-      password : "",
-      Token:null
+      email: "",
+      password: "",
+      Token: null
     }
   },
   name: "LogIn",
-  mounted () {
+  mounted() {
 
   },
-  computed:{
-    JwtAuthenticationRequest(){
+  computed: {
+    JwtAuthenticationRequest() {
       let account;
-      account = {'email':this.email, 'password':this.password}
+      account = {'email': this.email, 'password': this.password}
       return account
     }
   },
-  methods : {
-    login(){
-      axios
+  methods: {
+    login() {
+      var store = this.$store;
+      this.$http
           .post('http://localhost:8080/login/', this.JwtAuthenticationRequest)
-          .then(response => {localStorage.setItem('jwt', response.data);});
+          .then(response => {
+            store.dispatch('startSession', response.data); this.$router.push('/ourteam');
+          });
     }
   },
 }
@@ -73,7 +77,7 @@ export default {
   margin: 3%;
 }
 
-.card-footer{
+.card-footer {
   margin: 3%;
 }
 </style>

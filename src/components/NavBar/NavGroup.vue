@@ -15,7 +15,6 @@ export default {
   name: "NavGroup",
   computed: {
     getSide() {
-      console.log(this.side)
       if (this.side === 'ml-auto' | this.side === 'mr-auto' | this.side === 'mx-auto') {
         return this.side
       } else {
