@@ -85,8 +85,6 @@ export default {
   methods: {
 
     filterByPharmacy(event) {
-      console.log(event.target.value);
-
       if(event.target.value === 'All pharmacies') {
         this.dermatologists = this.allDermatologists;
       } else {
