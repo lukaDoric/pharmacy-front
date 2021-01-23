@@ -70,7 +70,7 @@ export default {
 
   mounted() {
     axios
-        .get('http://localhost:8080/user/getAllPharmacists')
+        .get('http://localhost:8080/pharmacist/getAllPharmacists')
         .then(response => {
           this.pharmacists = response.data;
           this.allPharmacists = response.data;
