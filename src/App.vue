@@ -5,6 +5,7 @@
         <OurTeamLink/>
         <ContactLink/>
         <OrderLink/>
+        <VacationRequests/>
       </NavGroup>
       <NavGroup side="ml-auto">
         <RegisterPatientLink/>
@@ -27,11 +28,13 @@ import NavGroup from "@/components/NavBar/NavGroup";
 import RegisterPatientLink from "@/components/NavBar/RegisterPatientLink";
 import OrderLink from "@/components/NavBar/OrderLink";
 import LogIn from "@/components/NavBar/LogInLink";
+import VacationRequests from "@/components/NavBar/VacationRequestsLink";
 
 
 export default {
   name: 'App',
   components: {
+    VacationRequests,
     LogIn,
     NavBar,
     ContactLink,

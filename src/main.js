@@ -22,6 +22,7 @@ import ActivationFailed from "@/components/SignedOutUser/ActivationFailed";
 import Activation from "@/components/SignedOutUser/Activation";
 import Medicine from "@/components/Medicine/Medicine";
 import Order from "@/components/Order/Order";
+import VacationRequests from "@/components/VacationRequest/VacationRequests";
 
 Vue.prototype.$http = axios;
 
@@ -46,7 +47,8 @@ const routes = [
     {path: '/activation/failed', component: ActivationFailed},
     {path: '/activation', component: Activation},
     {path: '/', component: Home},
-    {path: '/order', component: Order}
+    {path: '/order', component: Order},
+    {path: '/vacationRequests', component: VacationRequests}
 ];
 
 const router = new VueRouter({
