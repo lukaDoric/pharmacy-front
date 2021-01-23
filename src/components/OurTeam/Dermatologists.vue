@@ -69,7 +69,7 @@ export default {
 
   mounted() {
     axios
-        .get('http://localhost:8080/user/getAllDermatologists')
+        .get('http://localhost:8080/dermatologist/getAllDermatologists')
         .then(response => {
           this.dermatologists = response.data;
           this.allDermatologists = response.data;
