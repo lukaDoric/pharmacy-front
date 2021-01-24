@@ -32,9 +32,13 @@
               </b-button>
             </td>
           </tr>
-          <b-form-textarea v-model="pharmacistReason[index]" placeholder="Reason..."
-                           v-if="pharmacistApproved[index] === 'false'">
-          </b-form-textarea>
+          <tr>
+            <td colspan="4">
+              <b-form-textarea v-model="pharmacistReason[index]" placeholder="Reason..."
+                               v-if="pharmacistApproved[index] === 'false'">
+              </b-form-textarea>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -49,7 +53,7 @@
             <th scope="col">Name</th>
             <th scope="col">Surname</th>
             <th scope="col">Vacation Time</th>
-            <th scope="col">Accept/Decline</th>
+            <th scope="col">Accept/Reject</th>
           </tr>
           </thead>
           <tbody v-for="(vacation, index) in dermatologistVacations" :key="index">
@@ -58,17 +62,21 @@
             <td>{{ vacation.surname }}</td>
             <td>{{ vacation.vacationInterval }}</td>
             <td>
-              <form>
+              <form v-if="dermatologistVacations[index].status === 'Waiting for response'">
                 <input v-model="dermatologistApproved[index]" type="radio" name="status" value=true>
                 <label>Accept</label><br>
                 <input v-model="dermatologistApproved[index]" type="radio" name="status" value=false>
                 <label>Decline</label><br>
               </form>
-              <b-button class="btn-success" @click="sendVacationResponseDermatologist(index)">Send
+              <p v-if="dermatologistVacations[index].approved">APPROVED</p>
+              <p v-else-if="!dermatologistVacations[index].approved && dermatologistVacations[index].status === 'Responded'">
+                REJECTED</p>
+              <b-button v-if="dermatologistVacations[index].status === 'Waiting for response'" class="btn-success"
+                        @click="sendVacationResponseDermatologist(index)">Send
               </b-button>
             </td>
           </tr>
-          <b-form-textarea rowspan="4" v-model="dermatologistReason[index]" placeholder="Reason..."
+          <b-form-textarea v-model="dermatologistReason[index]" placeholder="Reason..."
                            v-if="dermatologistApproved[index] === 'false'">
           </b-form-textarea>
           </tbody>
@@ -100,9 +108,6 @@ export default {
         .get('http://localhost:8080/vacation/getAllPharmacistsVacation')
         .then(response => {
           this.pharmacistVacations = response.data;
-          this.pharmacistVacations.forEach(vacation => {
-            this.pharmacistVacationStatus.add(vacation.status)
-          });
         })
 
     axios
@@ -113,17 +118,26 @@ export default {
   },
 
   methods: {
-    // sendVacationResponseDermatologist(index) {
-    //   axios
-    //       .post('http://localhost:8080/vacation/sendVacationResponseDermatologist',
-    //           {id: this.pharmacistVacations[index].id,
-    //           name: this.pharmacistVacations[index].name,
-    //           surname: this.pharmacistVacations[index].surname,
-    //           vacationInterval: this.pharmacistVacations[index].vacationInterval,
-    //           role: this.pharmacistVacations[index].role,
-    //           isApproved: this.dermatologistApproved[index],
-    //           reason: this.dermatologistReason[index]})
-    // },
+    sendVacationResponseDermatologist(index) {
+
+      let approved = 'true';
+
+      if (this.dermatologistApproved[index] === 'false') {
+        approved = 'false';
+      }
+
+      axios
+          .post('http://localhost:8080/vacation/sendVacationResponseDermatologist/',
+              {
+                id: this.dermatologistVacations[index].id,
+                name: this.dermatologistVacations[index].name,
+                surname: this.dermatologistVacations[index].surname,
+                vacationInterval: this.dermatologistVacations[index].vacationInterval,
+                role: this.dermatologistVacations[index].role,
+                approved: approved,
+                reason: this.dermatologistReason[index]
+              });
+    },
 
     sendVacationResponsePharmacist(index) {
 
