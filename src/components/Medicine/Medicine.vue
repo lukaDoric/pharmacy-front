@@ -7,25 +7,24 @@
           <table class="table table-dark table-hover table-bordered">
             <thead>
             <tr>
-              <th scope="col"><button class="btn btn-info btn-sm" type="button">search</button></th>
+              <th scope="col"><button class="btn btn-info btn-sm" type="button" v-on:click="search">search</button></th>
               <th scope="col">Name
-                <input size="10" type="text">
+                <input size="10" type="text" v-model="searchName">
               </th>
               <th scope="col">Type
-                <select>
+                <select v-model="searchType">
                   <option>All</option>
                   <option v-for="key in enumTypeDict" v-bind:key="key" class="dropdown-item">{{ key }}</option>
                 </select>
               </th>
               <th scope="col">Form
-                <select>
+                <select v-model="searchForm">
                   <option>All</option>
                   <option v-for="key in enumFormDict" v-bind:key="key" class="dropdown-item">{{ key }}</option>
                 </select>
               </th>
               <th scope="col">Rating
-
-                <select>
+                <select v-model="searchRating">
                   <option>All</option>
                   <option v-for="index in 5" v-bind:key="index">{{ index }}</option>
                 </select>
@@ -34,7 +33,7 @@
               <th scope="col">Select</th>
             </tr>
             </thead>
-            <tbody v-for="(m, index) in medicine" v-bind:key="m.id">
+            <tbody v-for="(m, index) in medicineSearched" v-bind:key="m.id">
             <tr class="align-content-center accordion-toggle collapsed">
               <th scope="row">{{ index }}</th>
               <td class="align-baseline">{{ m.name }}</td>
@@ -138,6 +137,7 @@ export default {
       nameInput: "",
       medicine: [],
       pharmacies: [],
+      medicineSearched: [],
       selectedMedicine: null,
       selectedPharmacy: null,
       expirationDate: "",
@@ -159,14 +159,18 @@ export default {
         'DROPS': 'Drops',
         'GEL': 'Gel',
         'PASTE': 'Paste'
-      }
+      },
+      searchName:"",
+      searchType:"All",
+      searchForm:"All",
+      searchRating:"All"
     }
   },
   name: "Medicine",
   mounted() {
     axios
         .get("http://localhost:8080/medicine-reservation/medicine")
-        .then(response => (this.medicine = response.data))
+        .then(response => {this.medicine = response.data; this.medicineSearched = this.medicine})
   },
   methods: {
     selectMedicine(medicine) {
@@ -174,14 +178,10 @@ export default {
       this.selectedMedicine = medicine
       axios
           .get("http://localhost:8080/medicine-reservation/pharmacies/" + medicine.id.toString())
-          .then(response => (this.pharmacies = response.data))
+          .then(response => {this.pharmacies = response.data;})
     },
     downloadPdf(medicine){
       console.log(medicine);
-    },
-    onSelectionChanged(pharmacy) {
-      this.selectedPharmacy = pharmacy
-      this.dropdownText = pharmacy.name + ', ' + pharmacy.address
     },
     onSubmit() {
       console.log("confirmed: " + this.selectedMedicine.name + " " + this.expirationDate)
@@ -201,7 +201,21 @@ export default {
           })
     },
     search() {
-      this.$router.push('/medicineSearched/' + this.nameInput);
+      this.selectedMedicine = null;
+      this.selectedPharmacy = null;
+      this.medicineSearched = [];
+      this.medicine.forEach(med =>{
+          if(this.searchName=="" || med.name==this.searchName){
+            if(this.searchForm=="All" || this.searchForm==this.enumFormDict[med.form]){
+              if(this.searchType=="All" || this.searchType==this.enumTypeDict[med.type]){
+                if(this.searchRating=="All" || this.searchRating==med.ratings){
+                  this.medicineSearched.push(med);
+                }
+              }
+            }
+          }
+        }
+      )
     },
     formFilter: function (value) {
       return this.enumFormDict[value];
@@ -209,6 +223,7 @@ export default {
     typeFilter: function (value) {
       return this.enumTypeDict[value];
     },
+
   },
   computed:{
     loggedUser(){
