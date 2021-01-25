@@ -105,13 +105,13 @@ export default {
 
   mounted() {
     axios
-        .get('http://localhost:8080/vacation/getAllPharmacistsVacation')
+        .get('http://localhost:8080/vacation/pharmacistVacation')
         .then(response => {
           this.pharmacistVacations = response.data;
         })
 
     axios
-        .get('http://localhost:8080/vacation/getAllDermatologistsVacation')
+        .get('http://localhost:8080/vacation/dermatologistVacation')
         .then(response => {
           this.dermatologistVacations = response.data;
         })
@@ -127,7 +127,7 @@ export default {
       }
 
       axios
-          .post('http://localhost:8080/vacation/sendVacationResponseDermatologist/',
+          .post('http://localhost:8080/vacation/dermatologistVacation/',
               {
                 id: this.dermatologistVacations[index].id,
                 name: this.dermatologistVacations[index].name,
@@ -148,7 +148,7 @@ export default {
       }
 
       axios
-          .post('http://localhost:8080/vacation/sendVacationResponsePharmacist/',
+          .post('http://localhost:8080/vacation/pharmacistVacation/',
               {
                 id: this.pharmacistVacations[index].id,
                 name: this.pharmacistVacations[index].name,
