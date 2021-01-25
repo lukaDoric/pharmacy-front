@@ -13,8 +13,8 @@
         <ProfileDropMenu/>
       </NavGroup>
     </NavBar>
-    <h3>{{ user }}</h3>
     <hr>
+    <h3>{{user}}</h3>
     <router-view></router-view>
   </div>
 </template>
