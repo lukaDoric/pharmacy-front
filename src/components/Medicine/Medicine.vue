@@ -74,7 +74,7 @@
                   <tr>
                     <td>{{p.name}}</td>
                     <td>{{p.address}}</td>
-                    <td>dolary</td>
+                    <td>{{p.price}}</td>
                     <td v-if="loggedUser!=null"><button class="btn btn-info btn-sm" v-on:click="selectedPharmacy=p">select</button></td>
                   </tr>
                   </tbody>
@@ -189,7 +189,7 @@ export default {
       doc.setFontSize(14);
       doc.text(medicine.name, 10, 40);
       doc.setFontSize(9);
-      doc.text("Id: " + medicine.id, 10,50);
+      doc.text("Id: " + medicine.uuid, 10,50);
       doc.text("Form: " + this.enumFormDict[medicine.form], 10,60);
       doc.text("Type: " + this.enumTypeDict[medicine.type], 10,70);
       if(medicine.prescribed){
@@ -198,8 +198,12 @@ export default {
       else{
         doc.text("You can get this medicine without prescription!", 10,80);
       }
-      doc.text("Description: " + medicine.description, 10,90);
-
+      doc.text("Average rating: " + medicine.ratings, 10,90);
+      doc.text("Recommended daily dose: " + medicine.recommendedDose, 10,100);
+      doc.text("Manufacturer: " + medicine.manufacturer, 10,110);
+      doc.text("Composition: " + medicine.composition, 10,120);
+      doc.text("Some side effects may be: " + medicine.sideEffects, 10,130);
+      doc.text("Description: " + medicine.description, 10,140);
       doc.save(medicine.name + ".pdf");
     },
     onSubmit() {
