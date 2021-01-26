@@ -130,6 +130,7 @@
 <script>
 import axios from "axios";
 import 'bootstrap/dist/js/bootstrap.bundle';
+import { jsPDF } from "jspdf";
 
 export default {
   data() {
@@ -181,7 +182,25 @@ export default {
           .then(response => {this.pharmacies = response.data;})
     },
     downloadPdf(medicine){
-      console.log(medicine);
+      const doc = new jsPDF();
+      doc.setFontSize(20);
+      doc.text("®™PharmacyManager", 10, 30);
+      doc.line(0, 34, 200, 34);
+      doc.setFontSize(14);
+      doc.text(medicine.name, 10, 40);
+      doc.setFontSize(9);
+      doc.text("Id: " + medicine.id, 10,50);
+      doc.text("Form: " + this.enumFormDict[medicine.form], 10,60);
+      doc.text("Type: " + this.enumTypeDict[medicine.type], 10,70);
+      if(medicine.prescribed){
+        doc.text("This medicine has to be prescribed!", 10,80);
+      }
+      else{
+        doc.text("You can get this medicine without prescription!", 10,80);
+      }
+      doc.text("Description: " + medicine.description, 10,90);
+
+      doc.save(medicine.name + ".pdf");
     },
     onSubmit() {
       console.log("confirmed: " + this.selectedMedicine.name + " " + this.expirationDate)
