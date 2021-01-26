@@ -19,7 +19,7 @@ export const store = new Vuex.Store({
             if (store.state.accessToken == null) {
                 return '';
             } else if ('accessToken' in state.accessToken) {
-                return "Bearer " + state.accessToken.accessToken;
+                return "Bearer " + state.accessToken;
             } else {
                 return '';
             }

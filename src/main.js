@@ -23,6 +23,7 @@ import Activation from "@/components/SignedOutUser/Activation";
 import Medicine from "@/components/Medicine/Medicine";
 import Order from "@/components/Order/Order";
 import VacationRequests from "@/components/VacationRequest/VacationRequests";
+import PriceList from "@/components/PriceList/PriceList";
 
 Vue.prototype.$http = axios;
 
@@ -48,7 +49,8 @@ const routes = [
     {path: '/activation', component: Activation},
     {path: '/', component: Home},
     {path: '/order', component: Order},
-    {path: '/vacationRequests', component: VacationRequests}
+    {path: '/vacationRequests', component: VacationRequests},
+    {path: '/priceList', component: PriceList}
 ];
 
 const router = new VueRouter({
