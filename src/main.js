@@ -35,7 +35,6 @@ Vue.use(VueLayers);
 Vue.use(PointGeom);
 
 
-axios.defaults.headers.common['Authorization'] = store.getters.tokenString;
 
 const routes = [
     {path: '/medicine', component: Medicine},

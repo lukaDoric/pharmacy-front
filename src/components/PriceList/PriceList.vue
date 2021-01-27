@@ -70,14 +70,8 @@ export default {
 
   mounted() {
 
-    let config = {
-      headers: {
-        Authorization: "Bearer " + this.$store.state.accessToken,
-      }
-    }
-
     this.$http
-        .get('http://localhost:8080/priceList/', config)
+        .get('http://localhost:8080/priceList/')
         .then(response => {
           this.priceListItems = response.data;
 
@@ -91,19 +85,13 @@ export default {
 
     sendPrice() {
 
-      let config = {
-        headers: {
-          Authorization: "Bearer " + this.$store.state.accessToken,
-        }
-      }
-
       this.$http.post('http://localhost:8080/priceList/',
           {
             'medicineId': this.id,
             'price': this.price,
             'from': this.from,
             'to': this.to
-          }, config)
+          })
     },
 
     test(event) {
