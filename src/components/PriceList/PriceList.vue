@@ -53,9 +53,7 @@
     </div>
   </div>
 </template>
-
 <script>
-import axios from "axios";
 
 export default {
   name: "PriceListItems",
@@ -78,7 +76,7 @@ export default {
       }
     }
 
-    axios
+    this.$http
         .get('http://localhost:8080/priceList/', config)
         .then(response => {
           this.priceListItems = response.data;
@@ -99,7 +97,7 @@ export default {
         }
       }
 
-      axios.post('http://localhost:8080/priceList/',
+      this.$http.post('http://localhost:8080/priceList/',
           {
             'medicineId': this.id,
             'price': this.price,
