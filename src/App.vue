@@ -7,6 +7,7 @@
         <OrderLink/>
         <VacationRequests/>
         <PriceListLink/>
+        <PromotionLink/>
       </NavGroup>
       <NavGroup side="ml-auto">
         <RegisterPatientLink/>
@@ -15,7 +16,7 @@
       </NavGroup>
     </NavBar>
     <hr>
-    <h3>{{user}}</h3>
+    <h3>{{ user }}</h3>
     <router-view></router-view>
   </div>
 </template>
@@ -31,7 +32,7 @@ import OrderLink from "@/components/NavBar/OrderLink";
 import LogIn from "@/components/NavBar/LogInLink";
 import VacationRequests from "@/components/NavBar/VacationRequestsLink";
 import PriceListLink from "@/components/NavBar/PriceListLink";
-
+import PromotionLink from "@/components/NavBar/PromotionLink";
 
 export default {
   name: 'App',
@@ -45,16 +46,15 @@ export default {
     ProfileDropMenu,
     NavGroup,
     RegisterPatientLink,
-    OrderLink
+    OrderLink,
+    PromotionLink
   },
   created() {
-
     this.$store.dispatch('startSession', null);
     this.$http.defaults.headers.common['Authorization'] = this.$store.getters.tokenString;
-
   },
-  watch:{
-    $route (){
+  watch: {
+    $route() {
       this.$http.defaults.headers.common['Authorization'] = this.$store.getters.tokenString;
     }
   }
