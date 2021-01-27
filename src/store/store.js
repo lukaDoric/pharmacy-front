@@ -18,10 +18,8 @@ export const store = new Vuex.Store({
         tokenString: state => {
             if (store.state.accessToken == null) {
                 return '';
-            } else if ('accessToken' in state.accessToken) {
-                return "Bearer " + state.accessToken;
             } else {
-                return '';
+                return "Bearer " + state.accessToken;
             }
         },
 

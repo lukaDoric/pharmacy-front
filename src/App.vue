@@ -32,6 +32,7 @@ import LogIn from "@/components/NavBar/LogInLink";
 import VacationRequests from "@/components/NavBar/VacationRequestsLink";
 import PriceListLink from "@/components/NavBar/PriceListLink";
 
+
 export default {
   name: 'App',
   components: {
@@ -46,11 +47,18 @@ export default {
     RegisterPatientLink,
     OrderLink
   },
-  mounted() {
+  created() {
 
     this.$store.dispatch('startSession', null);
+    this.$http.defaults.headers.common['Authorization'] = this.$store.getters.tokenString;
 
   },
+  watch:{
+    $route (){
+      this.$http.defaults.headers.common['Authorization'] = this.$store.getters.tokenString;
+    }
+  }
+  ,
   computed: {
     isLogged() {
       return this.$store.state.userType == null;
