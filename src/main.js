@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 import VueLayers from 'vuelayers'
 import 'vuelayers/lib/style.css' // needs css-loader
 import {PointGeom} from 'vuelayers'
-import {store} from  './store/store'
+import {store} from './store/store'
 
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -15,7 +15,7 @@ import OurTeam from "@/components/OurTeam/OurTeam";
 import Contact from "@/components/Contact/Contact"
 import RegisterPatient from "@/components/SignedOutUser/RegisterPatient";
 import LogIn from "@/components/SignedOutUser/LogIn";
-import axios  from "axios";
+import axios from "axios";
 import ActivationMailSent from "@/components/SignedOutUser/ActivationMailSent";
 import ActivationSucceeded from "@/components/SignedOutUser/ActivationSucceeded";
 import ActivationFailed from "@/components/SignedOutUser/ActivationFailed";
@@ -24,17 +24,14 @@ import Medicine from "@/components/Medicine/Medicine";
 import Order from "@/components/Order/Order";
 import VacationRequests from "@/components/VacationRequest/VacationRequests";
 import PriceList from "@/components/PriceList/PriceList";
+import Promotion from "@/components/Promotion/Promotion";
 
 Vue.prototype.$http = axios;
-
-
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false
 Vue.use(VueRouter);
 Vue.use(VueLayers);
 Vue.use(PointGeom);
-
-
 
 const routes = [
     {path: '/medicine', component: Medicine},
@@ -49,7 +46,8 @@ const routes = [
     {path: '/', component: Home},
     {path: '/order', component: Order},
     {path: '/vacationRequests', component: VacationRequests},
-    {path: '/priceList', component: PriceList}
+    {path: '/priceList', component: PriceList},
+    {path: '/promotion', component: Promotion}
 ];
 
 const router = new VueRouter({
@@ -57,9 +55,8 @@ const router = new VueRouter({
     mode: 'history'
 });
 
-
 new Vue({
-    store:store,
+    store: store,
     el: '#app',
     router,
     render: h => h(App),
