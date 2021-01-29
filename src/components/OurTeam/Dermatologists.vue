@@ -10,7 +10,8 @@
                  placeholder="Search"
                  v-model="filter">
           <div>
-            <select v-on:select="filterByPharmacy" id="dropdown-1" text="Pharmacy" class="m-md-2" @change="filterByPharmacy($event)">
+            <select v-on:select="filterByPharmacy" id="dropdown-1" text="Pharmacy" class="m-md-2"
+                    @change="filterByPharmacy($event)">
               <option>All pharmacies</option>
               <option v-for="(pharmacy, index) in pharmacies" :key="index">{{ pharmacy.pharmacyName }}</option>
             </select>
@@ -32,6 +33,11 @@
             <td>{{ dermatologist.name }}</td>
             <td>{{ dermatologist.surname }}</td>
             <td>{{ dermatologist.rating }}</td>
+            <td>
+              <button :value="dermatologist.id" @click="checkDetails($event)" type="button" class="btn btn-success">
+                Check details
+              </button>
+            </td>
           </tr>
           <tr class="hide-table-padding">
             <td></td>
@@ -40,6 +46,26 @@
                 <div class="row" v-for="(pharmacy, index) in dermatologist.pharmacies" :key="index">
                   <div class="col-3"><p style="color:forestgreen;">{{ pharmacy.pharmacyName }}</p></div>
                   <div class="col-4"><p style="color:forestgreen;">{{ pharmacy.pharmacyAddress }}</p></div>
+                </div>
+                <div>
+                  <div class="col-sm-10">
+                    <div class="d-flex flex-row">
+                      <input type="text" readonly class="form-control-plaintext" value="MONDAY">
+                      <input type="text" readonly class="form-control-plaintext" value="MON">
+                    </div>
+                    <div class="d-flex flex-row">
+                      <input type="text" readonly class="form-control-plaintext" value="TUESDAY">
+                    </div>
+                    <div class="d-flex flex-row">
+                      <input type="text" readonly class="form-control-plaintext" value="WEDNESDAY">
+                    </div>
+                    <div class="d-flex flex-row">
+                      <input type="text" readonly class="form-control-plaintext" value="THURSDAY">
+                    </div>
+                    <div class="d-flex flex-row">
+                      <input type="text" readonly class="form-control-plaintext" value="FRIDAY">
+                    </div>
+                  </div>
                 </div>
               </div>
             </td>
@@ -80,12 +106,14 @@ export default {
         .then(response => {
           this.pharmacies = response.data;
         })
+
+  //  this.$http.get('http://localhost:8080/dermatologist/shiftIntervals')
   },
 
   methods: {
 
     filterByPharmacy(event) {
-      if(event.target.value === 'All pharmacies') {
+      if (event.target.value === 'All pharmacies') {
         this.dermatologists = this.allDermatologists;
       } else {
         axios
@@ -94,6 +122,10 @@ export default {
               this.dermatologists = response.data;
             })
       }
+    },
+
+    checkDetails(event) {
+      this.$router.push("/dermatologistDetails/" + event.target.value);
     }
   },
 
