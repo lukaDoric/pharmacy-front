@@ -1,0 +1,110 @@
+<template>
+  <div>
+    <b-jumbotron>
+      <h2>Dermatologist details</h2>
+      <form>
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="name"
+                   :value="shiftIntervals.dermatologist.name">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="surname" class="col-sm-2 col-form-label">Surname</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="surname"
+                   :value="shiftIntervals.dermatologist.surname">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="email"
+                   :value="shiftIntervals.dermatologist.email">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Exam duration:</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="email"
+                   :value="shiftIntervals.durationInMinutes + 'min'">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Price per exam:</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="email" :value="shiftIntervals.price + '$'">
+          </div>
+        </div>
+        <h2>Schedule</h2>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Monday</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="monday"
+                   :value="shiftIntervals.hourIntervals[0]">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Tuesday</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="tuesday"
+                   :value="shiftIntervals.hourIntervals[1]">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Wednesday</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="wednesday"
+                   :value="shiftIntervals.hourIntervals[2]">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Thursday</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="thursday"
+                   :value="shiftIntervals.hourIntervals[3]">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Friday</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="firday"
+                   :value="shiftIntervals.hourIntervals[4]">
+          </div>
+        </div>
+      </form>
+    </b-jumbotron>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "DermatologistDetails",
+
+  watch: {
+    '$route'(to) {
+      this.dermatologistId = to.params.id;
+    }
+  },
+
+  data() {
+    return {
+      dermatologistId: '',
+      shiftIntervals: {dermatologist: ''}
+    }
+  },
+
+  mounted() {
+    this.dermatologistId = this.$route.params.id;
+    this.$http.get('http://localhost:8080/dermatologist/shiftIntervals/' + this.dermatologistId)
+        .then(response => {
+          this.shiftIntervals = response.data;
+        })
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
