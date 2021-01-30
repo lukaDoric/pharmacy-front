@@ -74,6 +74,16 @@
           </div>
         </div>
       </form>
+      <div>
+        <h3>Create new appointment</h3>
+        <div id="appointment" class="d-flex justify-content-center">
+          <input v-model="startDate" type="date"/>
+          <input v-model="startTime" type="time"/>
+          <input v-model="durationTime" type="number" placeholder="Duration..."/>
+          <input v-model="price" type="number" placeholder="Price in dollars..."/>
+          <button type="button" class="btn btn-success" @click="createExam">Create new appointment</button>
+        </div>
+      </div>
     </b-jumbotron>
   </div>
 </template>
@@ -91,7 +101,11 @@ export default {
   data() {
     return {
       dermatologistId: '',
-      shiftIntervals: {dermatologist: ''}
+      shiftIntervals: {dermatologist: '', hourIntervals: []},
+      startDate: '',
+      startTime: '',
+      durationTime: '',
+      price: ''
     }
   },
 
@@ -101,10 +115,24 @@ export default {
         .then(response => {
           this.shiftIntervals = response.data;
         })
+  },
+
+  methods: {
+    createExam() {
+      let startDate = new Date(this.startDate + 'T' + this.startTime)
+      this.$http.post('http://localhost:8080/exam/', {
+        dermatologistId: this.dermatologistId,
+        examStart: startDate,
+        duration: this.durationTime,
+        price: this.price
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
-
+#appointment {
+  margin-top: 5%;
+}
 </style>
