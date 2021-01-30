@@ -11,9 +11,9 @@
         </thead>
         <tbody>
         <tr v-for="p in pharmacies" v-bind:key="p.id">
-          <td>{{p.name}}</td>
-          <td>{{p.address}}</td>
-          <td>{{p.about}}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.address }}</td>
+          <td>{{ p.about }}</td>
         </tr>
         </tbody>
       </table>
@@ -68,10 +68,13 @@ export default {
         'about': this.about
       }
       this.$http.post('http://localhost:8080/pharmacy/register', pharmacy)
-          .then(response => {alert(response.data);this.getAllPharmacies()})
+          .then(response => {
+            alert(response.data);
+            this.getAllPharmacies()
+          })
           .catch(err => alert(err.response.data));
     },
-    getAllPharmacies(){
+    getAllPharmacies() {
       this.$http.get('http://localhost:8080/pharmacy/getAll').then(response => {
         this.pharmacies = response.data
       });

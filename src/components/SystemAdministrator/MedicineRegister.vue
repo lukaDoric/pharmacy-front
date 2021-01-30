@@ -84,7 +84,7 @@
           </div>
           <hr style="background-color: white">
           <div class="form-outline mb-4">
-            <label for="customRange1" class="form-label"><h4>Points: {{points}}</h4></label><br>
+            <label for="customRange1" class="form-label"><h4>Points: {{ points }}</h4></label><br>
             <input v-model="points" type="range" min="0" max="5" class="form-range slider" id="customRange1">
           </div>
           <button class="btn btn-primary btn-block" @click="registerMedicine">Submit</button>
@@ -102,7 +102,7 @@ export default {
       medicines: null,
       name: "",
       uuid: "",
-      points:0,
+      points: 0,
       alternatives: "None",
       type: "Human medicament",
       enumTypeDict: {
@@ -125,9 +125,9 @@ export default {
   },
   methods: {
     registerMedicine() {
-      if(this.uuid=="" || this.name==""){
+      if (this.uuid == "" || this.name == "") {
         alert("Id and name must be filled.")
-        return ;
+        return;
       }
       const reverseMapping = o => Object.keys(o).reduce((r, k) =>
           Object.assign(r, {[o[k]]: (r[o[k]] || []).concat(k)}), {})
@@ -141,7 +141,7 @@ export default {
         'recommendedDose': this.recommendedDose,
         'description': this.description,
         'prescribed': this.prescribed,
-        'points':this.points
+        'points': this.points
       }
       if (this.alternatives !== "None") {
         medicine['alternatives'] = this.alternatives;
@@ -187,7 +187,7 @@ export default {
   padding: 0 1%;
 }
 
-.slider{
+.slider {
   width: 90%;
 }
 
