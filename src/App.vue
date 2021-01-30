@@ -8,6 +8,7 @@
         <VacationRequests/>
         <PriceListLink/>
         <PromotionLink/>
+        <MedicineReservationLink v-if="user == 'Patient'"/>
       </NavGroup>
       <NavGroup side="ml-auto">
         <RegisterPatientLink/>
@@ -33,10 +34,12 @@ import LogIn from "@/components/NavBar/LogInLink";
 import VacationRequests from "@/components/NavBar/VacationRequestsLink";
 import PriceListLink from "@/components/NavBar/PriceListLink";
 import PromotionLink from "@/components/NavBar/PromotionLink";
+import MedicineReservationLink from "@/components/NavBar/MedicineReservationLink";
 
 export default {
   name: 'App',
   components: {
+    MedicineReservationLink,
     PriceListLink,
     VacationRequests,
     LogIn,

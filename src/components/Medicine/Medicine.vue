@@ -141,6 +141,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import {jsPDF} from "jspdf";
 
 export default {
+  name: "Medicine",
   data() {
     return {
       nameInput: "",
@@ -175,7 +176,6 @@ export default {
       searchRating: "All"
     }
   },
-  name: "Medicine",
   mounted() {
     axios
         .get("http://localhost:8080/medicine-reservation/medicine")
