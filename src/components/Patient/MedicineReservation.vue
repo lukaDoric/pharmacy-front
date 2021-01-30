@@ -15,7 +15,7 @@
                 <p>By: {{r.deadline}}</p>
               </div>
               <div class="col-sm">
-                <button class="btn btn-danger">Cancel reservation</button>
+                <button class="btn btn-danger" v-if="r.cancellable">Cancel reservation</button>
               </div>
             </div>
           </div>
