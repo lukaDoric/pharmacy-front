@@ -1,21 +1,27 @@
 <template>
   <div>
-    <b-jumbotron class="jumbotron">
+    <b-jumbotron class="jumbotron bg-dark text-light">
       <h1 class="display-4">Medicine reservations</h1>
-      <ul class="list-group" v-for="r in reservations" v-bind:key="r.reservationId">
-        <li class="list-group-item">
+      <p>All medicine reservations can be cancelled 24 hours before expiring.</p>
+      <p class="text-warning"> Warning: Medicine that is not cancelled nor purchased at the selected pharmacy by the
+        time
+        reservation is expired may result in penalty points for the user.</p>
+      <ul class="list-group text-dark" v-for="r in reservations" v-bind:key="r.reservationId">
+        <li class="list-group-item bg-light">
           <div class="container">
             <div class="row align-items-center">
               <div class="col-sm">
-                <p>Medicine: {{r.medicineName}}</p>
-                <p>Form: {{r.medicineForm}}</p>
+                <p>Medicine: {{ r.medicineName }}</p>
+                <p>Form: {{ r.medicineForm }}</p>
               </div>
               <div class="col-sm-8">
-                <p>You can purchase this medicine at: {{r.pharmacyName}}, {{r.pharmacyAddress}}</p>
-                <p>By: {{r.deadline}}</p>
+                <p>You can purchase this medicine at: {{ r.pharmacyName }}, {{ r.pharmacyAddress }}</p>
+                <p>By: {{ r.deadline }}</p>
               </div>
               <div class="col-sm">
-                <button class="btn btn-danger" v-if="r.cancellable">Cancel reservation</button>
+                <button class="btn btn-danger" v-if="r.cancellable" v-on:click="onCancel(r.reservationId)">Cancel
+                  reservation
+                </button>
               </div>
             </div>
           </div>
@@ -43,7 +49,13 @@ export default {
         })
   },
   methods: {
-
+    onCancel(reservationId) {
+      console.log(reservationId)
+      axios
+          .delete("http://localhost:8080/medicine-reservation/cancel/" + reservationId)
+          .then(window.location.reload())
+          .catch(reason => (alert(reason.message)))
+    }
   }
 }
 </script>
