@@ -22,7 +22,7 @@
     <div class="card-footer bg-dark">
       <small>
         Don't have account?
-        <router-link to="/register"><a class="nav-link" href="#">Register<span class="sr-only">(current)</span></a>
+        <router-link to="/register/patient"><a class="nav-link" href="#">Register<span class="sr-only">(current)</span></a>
         </router-link>
       </small>
     </div>
@@ -59,7 +59,7 @@ export default {
       this.$http
           .post('http://localhost:8080/login/', this.JwtAuthenticationRequest)
           .then(response => {
-            store.dispatch('startSession', response.data); this.$router.push('/ourteam');
+            store.dispatch('startSession', response.data); this.$router.push('/home');
           });
     }
   },
