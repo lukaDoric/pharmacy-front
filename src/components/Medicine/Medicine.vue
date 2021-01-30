@@ -219,7 +219,6 @@ export default {
       doc.save(medicine.name + ".pdf");
     },
     onSubmit() {
-      console.log("confirmed: " + this.selectedMedicine.name + " " + this.expirationDate)
       axios
           .post("http://localhost:8080/medicine-reservation/", {
             medicineId: this.selectedMedicine.id,
