@@ -27,7 +27,6 @@
       Zoom: {{ zoom }}<br>
       Center: {{ center }}<br>
       Rotation: {{ rotation }}<br>
-      My geolocation: {{ geolocPosition }}
     </div>
   </div>
 </template>

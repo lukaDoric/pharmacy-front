@@ -106,8 +106,6 @@ export default {
         .then(response => {
           this.pharmacies = response.data;
         })
-
-  //  this.$http.get('http://localhost:8080/dermatologist/shiftIntervals')
   },
 
   methods: {

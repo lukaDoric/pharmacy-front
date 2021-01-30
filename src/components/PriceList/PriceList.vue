@@ -43,7 +43,7 @@
           </thead>
           <tbody v-for="(priceListItem, index) in  priceListItems" :key="index">
           <tr>
-            <td>{{ priceListItem.medicine.name }}</td>
+            <td>{{ priceListItem.medicineInfo.name }}</td>
             <td>{{ priceListItem.currentPrice + '$' }}</td>
             <td>{{ priceListItem.startDate + '//' + priceListItem.endDate }}</td>
           </tr>
@@ -76,7 +76,7 @@ export default {
           this.priceListItems = response.data;
 
           this.priceListItems.forEach(priceListItem => {
-            this.medicines.push(priceListItem.medicine)
+            this.medicines.push(priceListItem.medicineInfo)
           })
         })
   },
