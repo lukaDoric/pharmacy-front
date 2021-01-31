@@ -30,6 +30,7 @@ import AddPharmacy from "@/components/SystemAdministrator/AddPharmacy";
 import MedicineRegister from "@/components/SystemAdministrator/MedicineRegister";
 import DermatologistDetails from "@/components/OurTeam/DermatologistDetails";
 import MedicineReservation from "@/components/Patient/MedicineReservation";
+import PharmacyProfile from "@/components/PharmacyProfile/PharmacyProfile";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -58,6 +59,7 @@ const routes = [
     {path: '/priceList', component: PriceList},
     {path: '/promotion', component: Promotion},
     {path: '/dermatologistDetails/:id', component: DermatologistDetails},
+    {path: '/pharmacyProfile', component: PharmacyProfile},
     {path: '/medicineReservation', component: MedicineReservation}
 ];
 
