@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   name: "MedicineReservation",
@@ -42,7 +41,7 @@ export default {
     }
   },
   mounted() {
-    axios
+    this.$http
         .get("http://localhost:8080/medicine-reservation/")
         .then(response => {
           this.reservations = response.data;
@@ -51,7 +50,7 @@ export default {
   methods: {
     onCancel(reservationId) {
       console.log(reservationId)
-      axios
+      this.$http
           .delete("http://localhost:8080/medicine-reservation/cancel/" + reservationId)
           .then(window.location.reload())
           .catch(reason => (alert(reason.message)))
