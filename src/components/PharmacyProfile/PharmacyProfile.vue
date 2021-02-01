@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1>Pharmacy name</h1>
+      <h1>{{ pharmacy.name }}</h1>
     </div>
 
     <vl-map :load-tiles-while-animating="true" :load-tiles-while-interacting="true"
@@ -18,7 +18,7 @@
         </template>
       </vl-geoloc>
       <vl-feature>
-        <vl-geom-point :coordinates="[19.801726, 45.255790]"></vl-geom-point>
+        <vl-geom-point :coordinates="[location[1], location[0]]"></vl-geom-point>
       </vl-feature>
       <vl-layer-tile id="osm">
         <vl-source-osm></vl-source-osm>
@@ -27,121 +27,117 @@
 
     <div>
       <b-jumbotron>
-        <p id="address" align="left">Address: Bulevar Slobodana Jovanovica 35</p>
-        <p id="rating" align="left">Rating: 4.35 / 5</p>
+        <p id="address" align="left">Address: {{ pharmacy.address.street }}, {{ pharmacy.address.city }},
+          {{ pharmacy.address.country }}</p>
+        <p id="rating" align="left">Rating: {{ pharmacy.rating }} \ 5</p>
+        <p id="about" align="left">About: {{ pharmacy.about }}</p>
       </b-jumbotron>
     </div>
 
-    <div>
-      <h1>Dermatologists</h1>
-    </div>
-    <div class="container my-4">
-      <hr>
-      <div class="table-responsive">
-        <div class="d-flex bd-highlight mb-3">
-          <input type="text"
-                 placeholder="Search"
-                 v-model="filter">
-        </div>
-        <table class="table">
-          <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Rating</th>
-          </tr>
-          </thead>
-          <tbody v-for="(dermatologist, index) in filteredDermatologists" :key="index">
-          <tr>
-            <td class="expand-button"></td>
-            <td>{{ dermatologist.name }}</td>
-            <td>{{ dermatologist.surname }}</td>
-            <td>{{ dermatologist.rating }}</td>
-            <td>
-              <button :value="dermatologist.id" @click="checkDetails($event)" type="button" class="btn btn-success">
-                Check details
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+    <b-jumbotron>
+      <div>
+        <h1 id="dermatologists">Dermatologists</h1>
       </div>
-    </div>
-
-    <div>
-      <h1>Pharmacists</h1>
-    </div>
-
-    <div class="container my-4">
-      <hr>
-      <div class="table-responsive">
-        <div class="d-flex bd-highlight mb-3">
-          <input type="text"
-                 placeholder="Search"
-                 v-model="filter">
+      <div class="container my-4">
+        <hr>
+        <div class="table-responsive">
+          <div class="d-flex bd-highlight mb-3">
+            <input type="text"
+                   placeholder="Search"
+                   v-model="filterDermatologist">
+          </div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody v-for="(dermatologist, index) in filteredDermatologists" :key="index">
+            <tr>
+              <td>{{ dermatologist.name }}</td>
+              <td>{{ dermatologist.surname }}</td>
+              <td>{{ dermatologist.rating }}</td>
+              <td>
+                <button type="button" class="btn btn-success">Check details</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="table">
-          <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Rating</th>
-          </tr>
-          </thead>
-          <tbody v-for="(dermatologist, index) in filteredDermatologists" :key="index">
-          <tr>
-            <td class="expand-button"></td>
-            <td>{{ dermatologist.name }}</td>
-            <td>{{ dermatologist.surname }}</td>
-            <td>{{ dermatologist.rating }}</td>
-            <td>
-              <button :value="dermatologist.id" @click="checkDetails($event)" type="button" class="btn btn-success">
-                Check details
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
+    </b-jumbotron>
 
-    <div>
-      <h1>Medicine</h1>
-    </div>
-
-    <div class="container my-4">
-      <hr>
-      <div class="table-responsive">
-        <div class="d-flex bd-highlight mb-3">
-          <input type="text"
-                 placeholder="Search"
-                 v-model="filter">
+    <b-jumbotron>
+      <div>
+        <h1 id="pharmacists">Pharmacists</h1>
+      </div>
+      <div class="container my-4">
+        <hr>
+        <div class="table-responsive">
+          <div class="d-flex bd-highlight mb-3">
+            <input type="text"
+                   placeholder="Search"
+                   v-model="filterPharmacist">
+          </div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody v-for="(pharmacist, index) in filteredPharmacists" :key="index">
+            <tr>
+              <td>{{ pharmacist.name }}</td>
+              <td>{{ pharmacist.surname }}</td>
+              <td>{{ pharmacist.rating }}</td>
+              <td>
+                <button type="button" class="btn btn-success">Check details</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="table">
-          <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Form</th>
-            <th scope="col">Rating</th>
-          </tr>
-          </thead>
-          <tbody v-for="(dermatologist, index) in filteredDermatologists" :key="index">
-          <tr>
-            <td class="expand-button"></td>
-            <td>{{ dermatologist.name }}</td>
-            <td>{{ dermatologist.surname }}</td>
-            <td>{{ dermatologist.rating }}</td>
-            <td>
-              <button :value="dermatologist.id" @click="checkDetails($event)" type="button" class="btn btn-success">
-                Check details
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
+    </b-jumbotron>
 
+    <b-jumbotron>
+      <div>
+        <h1 id="medicine">Medicine</h1>
+      </div>
+      <div class="container my-4">
+        <hr>
+        <div class="table-responsive">
+          <div class="d-flex bd-highlight mb-3">
+            <input type="text"
+                   placeholder="Search"
+                   v-model="filterMedicine">
+          </div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Form</th>
+              <th scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody v-for="(medicine, index) in filteredMedicines" :key="index">
+            <tr>
+              <td>{{ medicine.name }}</td>
+              <td>{{ medicine.form }}</td>
+              <td>{{ medicine.rating }}</td>
+              <td>
+                <button type="button" class="btn btn-success">Order now</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </b-jumbotron>
   </div>
 </template>
 
@@ -152,10 +148,70 @@ export default {
   data() {
     return {
       zoom: 18,
-      center: [19.801726, 45.255790],
+      center: ['', ''],
+      location: ['', ''],
       rotation: 0,
-      address: '',
+      pharmacy: {about: '', address: '', id: '', name: '', rating: ''},
+      dermatologists: [],
+      pharmacists: [],
+      filterPharmacist: '',
+      filterDermatologist: '',
+      filterMedicine: '',
+      medicines: ''
+    }
+  },
 
+  mounted() {
+
+    this.$http
+        .get('http://localhost:8080/pharmacy/getPharmacyById/' + 4)
+        .then(response => {
+          this.pharmacy = response.data.pharmacy;
+          this.dermatologists = response.data.dermatologists;
+          this.pharmacists = response.data.pharmacists;
+          this.medicines = response.data.medicines;
+          this.location[0] = response.data.pharmacy.address.longitude;
+          this.location[1] = response.data.pharmacy.address.latitude;
+          this.center[1] = response.data.pharmacy.address.longitude;
+          this.center[0] = response.data.pharmacy.address.latitude;
+        })
+  },
+
+  methods: {
+    onMarkObject(event) {
+      console.log(event.mapBrowserEvent.coordinate)
+    }
+  },
+
+  computed: {
+    filteredDermatologists() {
+      return this.dermatologists.filter(dermatologist => {
+        const name = dermatologist.name.toString().toLowerCase();
+        const surname = dermatologist.surname.toLowerCase();
+        const rating = dermatologist.rating.toString();
+        const searchTerm = this.filterDermatologist.toLowerCase();
+        return name.includes(searchTerm) || surname.includes(searchTerm) || rating.includes(searchTerm);
+      });
+    },
+
+    filteredPharmacists() {
+      return this.pharmacists.filter(pharmacist => {
+        const name = pharmacist.name.toString().toLowerCase();
+        const surname = pharmacist.surname.toLowerCase();
+        const rating = pharmacist.rating.toString();
+        const searchTerm = this.filterPharmacist.toLowerCase();
+        return name.includes(searchTerm) || surname.includes(searchTerm) || rating.includes(searchTerm);
+      });
+    },
+
+    filteredMedicines() {
+      return this.medicines.filter(medicine => {
+        const name = medicine.name.toString().toLowerCase();
+        const form = medicine.form.toLowerCase();
+        const rating = medicine.rating.toString();
+        const searchTerm = this.filterMedicine.toLowerCase();
+        return name.includes(searchTerm) || form.includes(searchTerm) || rating.includes(searchTerm);
+      });
     }
   },
 }
@@ -168,5 +224,21 @@ export default {
 
 #rating {
   font-size: large;
+}
+
+#about {
+  font-size: large;
+}
+
+#dermatologists {
+  margin-top: 5%;
+}
+
+#pharmacists {
+  margin-top: 5%;
+}
+
+#medicine {
+  margin-top: 5%;
 }
 </style>

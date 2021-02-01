@@ -3,7 +3,7 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import VueLayers from 'vuelayers'
-import 'vuelayers/lib/style.css' // needs css-loader
+import 'vuelayers/lib/style.css'
 import {PointGeom} from 'vuelayers'
 import {store} from './store/store'
 
