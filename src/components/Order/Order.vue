@@ -6,7 +6,8 @@
         <div class="ml-auto p-2 bd-highlight">
           <button name="addOrder" type="button" class="btn btn-success mt-3 mr-2" v-on:click="createOrder">Create order
           </button>
-          <button name="addOrder" type="button" class="btn btn-secondary mt-3 mr-2" v-on:click="addOrderItem">Add medicine
+          <button name="addOrder" type="button" class="btn btn-secondary mt-3 mr-2" v-on:click="addOrderItem">Add
+            medicine
           </button>
           <button name="addOrder" type="button" class="btn btn-danger mt-3" v-on:click="removeOrderItem">Remove medicine
           </button>
@@ -14,12 +15,13 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <b-form-input v-model="deadline" id="dateInput4" placeholder="Deadline" type="date"></b-form-input>
+          <b-form-input v-model="deadline" id="dateInput4" placeholder="Deadline" type="date"
+                        :min="today"></b-form-input>
         </div>
       </div>
       <div v-for="(item, index) in items" v-bind:key="index">
-        <OrderItem :medicine="item.medicineName" @medicineNameChanged="item.medicineName = $event"
-                   :amount="item.amount" @amountChanged="item.amount = $event"></OrderItem>
+        <OrderItem :medicine="item.medicineId" @medicineIdChanged="item.medicineId = $event"
+                   :amount="item.amount" @amountChanged="item.amount = $event" :medicines="medicines"></OrderItem>
       </div>
     </b-jumbotron>
     <b-jumbotron class="jumbotron">
@@ -57,20 +59,27 @@ export default {
   components: {OrderItem},
   data() {
     return {
-      items: [{medicineName: '', amount: 0}],
+      items: [{medicineId: '', amount: 0}],
       deadline: null,
       medicineName: '',
       amount: 0,
       medicineAmount: null,
-      recentOrders: []
+      recentOrders: [],
+      medicines: [],
+      today: new Date().toISOString().split('T')[0]
     }
   },
 
   mounted() {
     axios
-        .get('http://localhost:8080/order/')
+        .get('http://localhost:8080/order/getOrdersByPharmacy')
         .then(response => {
           this.recentOrders = response.data;
+        })
+
+    this.$http.get('http://localhost:8080/medicine/get/all')
+        .then(response => {
+          this.medicines = response.data;
         })
   },
 
@@ -78,8 +87,17 @@ export default {
     createOrder() {
       this.medicineAmount = {}
 
+      if (this.deadline === null) {
+        alert("Please fill all fields or remove ones you don't use!")
+      }
+
       for (let i = 0; i < this.items.length; i++) {
-        this.medicineAmount[this.items[i].medicineName] = this.items[i].amount
+        this.medicineAmount[this.items[i].medicineId] = this.items[i].amount
+        if ((this.medicineAmount[this.items[i].medicineId]) === '' || (this.medicineAmount[this.items[i].medicineId]) === 0
+            || (this.items[i].medicineId === "")) {
+          alert("Please fill all fields or remove ones you don't use!")
+          return;
+        }
       }
 
       axios

@@ -18,7 +18,7 @@
           <b-form-input v-model="to" type="date"></b-form-input>
         </div>
         <div>
-          <select id="dropdown-1" text="Medicine" class="m-md-2" @change="test($event)">
+          <select id="dropdown-1" text="Medicine" class="m-md-2" @change="onMedicineSelect($event)">
             <option>Choose medicine</option>
             <option :value="medicine.id" v-for="(medicine, index) in medicines" :key="index">
               {{ medicine.name + ' - ' + medicine.form }}
@@ -82,7 +82,6 @@ export default {
   },
 
   methods: {
-
     sendPrice() {
 
       this.$http.post('http://localhost:8080/priceList/',
@@ -94,7 +93,7 @@ export default {
           })
     },
 
-    test(event) {
+    onMedicineSelect(event) {
       this.id = event.target.value;
     }
   }
