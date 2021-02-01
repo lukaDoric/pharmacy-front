@@ -178,7 +178,7 @@ export default {
   },
   mounted() {
     axios
-        .get("http://localhost:8080/medicine-reservation/medicine")
+        .get("http://localhost:8080/medicine/get/all")
         .then(response => {
           this.medicine = response.data;
           this.medicineSearched = this.medicine

@@ -2,7 +2,25 @@
   <div>
     <b-jumbotron class="jumbotron bg-dark text-light">
       <h1 class="display-4">Schedule an appointment with a dermatologist</h1>
-      <p>All scheduled appointments can be cancelled 24 hours before start time.</p>
+      <div class="row">
+        <div class="col-sm-10">
+          <p>All scheduled appointments can be cancelled 24 hours before start time.</p>
+        </div>
+        <div class="col-sm">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sort by
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#" v-on:click="onSort(0)">Price (lowest first)</a>
+              <a class="dropdown-item" href="#" v-on:click="onSort(1)">Price (highest first)</a>
+              <a class="dropdown-item" href="#" v-on:click="onSort(2)">Rating (lowest first)</a>
+              <a class="dropdown-item" href="#" v-on:click="onSort(3)">Rating (highest first)</a>
+            </div>
+          </div>
+        </div>
+      </div>
       <table class="table table-dark table-hover table-bordered">
         <thead>
         <tr>
@@ -20,11 +38,11 @@
           <td>{{ e.date | dateFormat() }}</td>
           <td>{{ e.start }}</td>
           <td>{{ e.end }}</td>
-          <td>20</td>
+          <td>{{ e.price }}</td>
           <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
           <td>{{ e.dermatologistRating }}</td>
           <td>
-            <button class="btn btn-success">Schedule</button>
+            <button class="btn btn-success" v-on:click="onSchedule(e.examId)">Schedule</button>
           </td>
         </tr>
         </tbody>
@@ -50,7 +68,41 @@ export default {
           this.exams = response.data;
         })
   },
-  methods: {},
+  methods: {
+    onSchedule(examId) {
+      const config = {headers: {'Content-Type': 'application/json'}};
+      this.$http
+          .put("http://localhost:8080/patient-exam/", examId, config)
+          .then(response => {
+            response.data
+            alert("Exam is scheduled successfully!")
+            window.location.reload()
+          })
+          .catch(reason => alert(reason.message))
+    },
+    onSort(sort) {
+      let param = ''
+      switch (sort) {
+        case 0:
+          param = 'PRICE_ASC';
+          break;
+        case 1:
+          param = 'PRICE_DESC';
+          break;
+        case 2:
+          param = 'RATING_ASC';
+          break;
+        case 3:
+          param = 'RATING_DESC';
+          break;
+      }
+      this.$http
+          .get("http://localhost:8080/patient-exam/4/" + param)
+          .then(response => {
+            this.exams = response.data;
+          })
+    }
+  },
   filters: {
     dateFormat: function (value) {
       let parsed = moment(value);
