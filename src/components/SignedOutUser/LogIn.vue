@@ -35,6 +35,7 @@
 
 export default {
 
+
   data() {
     return {
       email: "",
@@ -55,12 +56,26 @@ export default {
   },
   methods: {
     login() {
-      var store = this.$store;
+      let store = this.$store;
       this.$http
           .post('http://localhost:8080/login/', this.JwtAuthenticationRequest)
           .then(response => {
-            store.dispatch('startSession', response.data); this.$router.push('/home');
-          });
+            store.dispatch('startSession', response.data);
+            this.dispatch(response.data.userType);
+          }).catch(err => this.handleErr(err.response.data.message));
+    },
+    handleErr(msg) {
+      if (msg === 'User is disabled') {
+        this.$router.push({name: 'ChangePassword', params: {oldPassword: this.password, email: this.email}})
+      } else {
+        alert(msg);
+      }
+    },
+    dispatch(type) {
+      let router = this.$router;
+      if (type != null) {
+        router.push("/home");
+      }
     }
   },
 }
