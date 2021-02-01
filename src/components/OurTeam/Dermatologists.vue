@@ -47,26 +47,6 @@
                   <div class="col-3"><p style="color:forestgreen;">{{ pharmacy.pharmacyName }}</p></div>
                   <div class="col-4"><p style="color:forestgreen;">{{ pharmacy.pharmacyAddress }}</p></div>
                 </div>
-                <div>
-                  <div class="col-sm-10">
-                    <div class="d-flex flex-row">
-                      <input type="text" readonly class="form-control-plaintext" value="MONDAY">
-                      <input type="text" readonly class="form-control-plaintext" value="MON">
-                    </div>
-                    <div class="d-flex flex-row">
-                      <input type="text" readonly class="form-control-plaintext" value="TUESDAY">
-                    </div>
-                    <div class="d-flex flex-row">
-                      <input type="text" readonly class="form-control-plaintext" value="WEDNESDAY">
-                    </div>
-                    <div class="d-flex flex-row">
-                      <input type="text" readonly class="form-control-plaintext" value="THURSDAY">
-                    </div>
-                    <div class="d-flex flex-row">
-                      <input type="text" readonly class="form-control-plaintext" value="FRIDAY">
-                    </div>
-                  </div>
-                </div>
               </div>
             </td>
           </tr>
