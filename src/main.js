@@ -36,6 +36,7 @@ import Offers from "@/components/Supplier/Offers";
 import OffersUpdate from "@/components/Supplier/OffersUpdate";
 import AvailableDermatologistExams from "@/components/Patient/AvailableDermatologistExams";
 import ScheduledDermatologistExams from "@/components/Patient/ScheduledDermatologistExams";
+import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -71,7 +72,8 @@ const routes = [
     {path: '/medicineReservation', component: MedicineReservation},
     {path: '/medicineReservation', component: MedicineReservation},
     {path: '/scheduling', component: AvailableDermatologistExams},
-    {path: '/scheduledDermatologistExams', component: ScheduledDermatologistExams}
+    {path: '/scheduledDermatologistExams', component: ScheduledDermatologistExams},
+    {path: '/schedulePharmacistExam', component: SchedulePharmacistExam}
 ];
 
 const router = new VueRouter({
