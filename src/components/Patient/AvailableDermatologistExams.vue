@@ -38,7 +38,7 @@
           <td>{{ e.date | dateFormat() }}</td>
           <td>{{ e.start }}</td>
           <td>{{ e.end }}</td>
-          <td>{{ e.price }}</td>
+          <td>{{ e.price | toMoney() }}</td>
           <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
           <td>{{ e.dermatologistRating }}</td>
           <td>
@@ -108,8 +108,8 @@ export default {
       let parsed = moment(value);
       return parsed.format('DD.MM.YYYY');
     },
-    twoDecimals: function (value) {
-      return (Math.round(value * 100) / 100).toFixed(2);
+    toMoney: function (value) {
+      return (Math.round(value * 100) / 100).toFixed(2) + '$';
     }
   }
 }
