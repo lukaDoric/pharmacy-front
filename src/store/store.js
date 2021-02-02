@@ -8,9 +8,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         accessToken: null,
-        refreshToken: null,
-        accessTokenExpiresIn: null,
-        refreshTokenExpiresIn: null,
+        expiresIn: null,
         userType: null,
         canChange: true
     },
@@ -38,27 +36,23 @@ export const store = new Vuex.Store({
             console.log("Loging out.")
             state.userType = null;
             state.accessToken = null;
-            state.accessTokenExpiresIn = null;
-            state.refreshToken = null;
-            state.refreshTokenExpiresIn = null;
+            state.expiresIn = null;
             state.canChange = true;
         },
 
 
-
     },
     actions: {
-        pushDataFromSession: ({commit,state}) => {
+        pushDataFromSession: ({commit, state}) => {
             commit('setData', {state});
         },
         setData: (context, tokenData) => {
             assignData(context.state, tokenData);
         },
         startSession: (context, tokenData) => {
-            if(tokenData==null){
+            if (tokenData == null) {
                 tokenData = loadFromSessionStorage();
-            }
-            else {
+            } else {
                 saveToSessionStorage(tokenData);
             }
             if (!isTokenDataValid(tokenData)) {
@@ -66,37 +60,30 @@ export const store = new Vuex.Store({
                 return;
             }
             try {
-                assignData(context.state,tokenData);
-                let d1 = new Date();
-                let startTime = d1.getTime();
+                assignData(context.state, tokenData);
                 setTimeout(function () {
                     if (context.state.userType != null &&
                         context.state.accessToken != null &&
-                        Number.isInteger(context.state.accessTokenExpiresIn) &&
-                        context.state.refreshToken != null &&
-                        Number.isInteger(context.state.refreshTokenExpiresIn)) {
+                        Number.isInteger(context.state.expiresIn)) {
                         context.state.canChange = false;
-                        let d2 = new Date();
-                        if (context.state.refreshTokenExpiresIn > context.state.accessTokenExpiresIn &&
-                            d2.getTime() - startTime < context.state.refreshTokenExpiresIn) {
-                            axios.post('http://localhost:8080/user/refresh ', {},
-                                {
-                                    headers: {
-                                        Authorization: 'Bearer ' + context.state.refreshToken
-                                    }
-                                }).then(
-                                response => {
-                                    context.state.canChange = true;
-                                    console.log("Session is refreshed.")
-                                    context.dispatch('startSession', response.data).then();
+                        axios.post('http://localhost:8080/user/refresh ', {},
+                            {
+                                headers: {
+                                    Authorization: 'Bearer ' + context.state.accessToken
                                 }
-                            ).catch(err => {
-                                console.log(err);
-                                context.commit('logOut');
-                            });
-                        }
+                            }).then(
+                            response => {
+                                context.state.canChange = true;
+                                console.log("Session is refreshed.")
+                                context.dispatch('startSession', response.data).then();
+                            }
+                        ).catch(err => {
+                            console.log(err);
+                            console.log("Erorcina axios");
+                            context.commit('logOut');
+                        });
                     }
-                }, context.state.accessTokenExpiresIn)
+                }, context.state.expiresIn / 2)
             } catch (err) {
                 console.log("Error in session validation!");
                 context.commit('logOut');
@@ -109,21 +96,17 @@ export const store = new Vuex.Store({
     }
 })
 
-function  assignData(state, tokenData){
+function assignData(state, tokenData) {
     state.userType = tokenData.userType;
     state.accessToken = tokenData.accessToken;
-    state.accessTokenExpiresIn = parseInt(tokenData.accessTokenExpiresIn, 10);
-    state.refreshToken = tokenData.refreshToken;
-    state.refreshTokenExpiresIn = parseInt(tokenData.refreshTokenExpiresIn, 10);
+    state.expiresIn = parseInt(tokenData.expiresIn, 10);
 }
 
 function loadFromSessionStorage() {
     let tokenData = {};
     tokenData.userType = sessionStorage.getItem('userType');
     tokenData.accessToken = sessionStorage.getItem('accessToken');
-    tokenData.accessTokenExpiresIn = parseInt(sessionStorage.getItem('accessTokenExpiresIn'));
-    tokenData.refreshToken = sessionStorage.getItem('refreshToken');
-    tokenData.refreshTokenExpiresIn = parseInt(sessionStorage.getItem('refreshTokenExpiresIn'));
+    tokenData.expiresIn = parseInt(sessionStorage.getItem('expiresIn'));
     return tokenData;
 }
 
@@ -132,21 +115,13 @@ function isTokenDataValid(tokenData) {
         return false;
     } else if (!('userType' in tokenData &&
         'accessToken' in tokenData &&
-        'accessTokenExpiresIn' in tokenData &&
-        'refreshToken' in tokenData &&
-        'refreshTokenExpiresIn' in tokenData)) {
+        'expiresIn' in tokenData)) {
         return false;
-    } else return !(tokenData.accessToken == null ||
-        tokenData.refreshToken == null ||
-        tokenData.accessTokenExpiresIn == null ||
-        tokenData.refreshTokenExpiresIn == null ||
-        tokenData.userType == null);
+    } else return !(tokenData.accessToken == null || tokenData.userType == null);
 }
 
-function saveToSessionStorage(tokenData){
+function saveToSessionStorage(tokenData) {
     sessionStorage.setItem('userType', tokenData.userType);
     sessionStorage.setItem('accessToken', tokenData.accessToken);
-    sessionStorage.setItem('accessTokenExpiresIn', tokenData.accessTokenExpiresIn);
-    sessionStorage.setItem('refreshToken', tokenData.refreshToken);
-    sessionStorage.setItem('refreshTokenExpiresIn', tokenData.refreshTokenExpiresIn);
+    sessionStorage.setItem('expiresIn', tokenData.expiresIn);
 }
