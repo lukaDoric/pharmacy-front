@@ -140,13 +140,18 @@
         </div>
       </div>
     </b-jumbotron>
+
+    <b-jumbotron>
+      <AvailableDermatologistExams :pharmacy-id="pharmacyId"></AvailableDermatologistExams>
+    </b-jumbotron>
   </div>
 </template>
 
 <script>
+import AvailableDermatologistExams from "@/components/Patient/AvailableDermatologistExams";
 export default {
   name: "PharmacyProfile",
-
+  components: {AvailableDermatologistExams},
   data() {
     return {
       zoom: 18,
@@ -159,7 +164,8 @@ export default {
       filterPharmacist: '',
       filterDermatologist: '',
       filterMedicine: '',
-      medicines: '',
+      medicines: [],
+      pharmacyId: 4,
       subscribed: false
     }
   },
@@ -167,7 +173,7 @@ export default {
   mounted() {
 
     this.$http
-        .get('http://localhost:8080/pharmacy/getPharmacyById/' + 4)
+        .get('http://localhost:8080/pharmacy/getPharmacyById/' + this.pharmacyId)
         .then(response => {
           this.pharmacy = response.data.pharmacy;
           this.dermatologists = response.data.dermatologists;
@@ -185,6 +191,7 @@ export default {
     onMarkObject(event) {
       console.log(event.mapBrowserEvent.coordinate)
     },
+
     checkIfSubscribed() {
       if (this.userType === "Patient") {
         this.$http
@@ -238,6 +245,7 @@ export default {
         return name.includes(searchTerm) || surname.includes(searchTerm) || rating.includes(searchTerm);
       });
     },
+
     filteredMedicines() {
       return this.medicines.filter(medicine => {
         const name = medicine.name.toString().toLowerCase();
@@ -247,6 +255,7 @@ export default {
         return name.includes(searchTerm) || form.includes(searchTerm) || rating.includes(searchTerm);
       });
     },
+
     userType() {
       return this.$store.state.userType;
     },

@@ -42,7 +42,8 @@
           <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
           <td>{{ e.dermatologistRating }}</td>
           <td>
-            <button class="btn btn-success" v-on:click="onSchedule(e.examId)">Schedule</button>
+            <button v-if="userType==='Patient'" class="btn btn-success" v-on:click="onSchedule(e.examId)">Schedule</button>
+            <button v-if="userType==='PharmacyAdmin'" class="btn btn-danger" v-on:click="onDelete(e.examId)">Delete</button>
           </td>
         </tr>
         </tbody>
@@ -56,14 +57,18 @@ import moment from "moment";
 
 export default {
   name: "AvailableDermatologistExams",
+
+  props: ['pharmacyId'],
+
   data() {
     return {
-      exams: []
+      exams: [],
+      userType: this.$store.state.userType
     }
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/patient-exam/4")
+        .get("http://localhost:8080/patient-exam/" + this.pharmacyId)
         .then(response => {
           this.exams = response.data;
         })
@@ -76,6 +81,16 @@ export default {
           .then(response => {
             response.data
             alert("Exam is scheduled successfully!")
+            window.location.reload()
+          })
+          .catch(reason => alert(reason.message))
+    },
+    onDelete(examId) {
+      this.$http
+          .delete("http://localhost:8080/exam/delete/" + examId)
+          .then(response => {
+            response.data
+            alert("Exam is deleted successfully!")
             window.location.reload()
           })
           .catch(reason => alert(reason.message))
