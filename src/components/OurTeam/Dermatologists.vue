@@ -9,7 +9,7 @@
           <input type="text"
                  placeholder="Search"
                  v-model="filter">
-          <div>
+          <div v-if="userType !== 'PharmacyAdmin'">
             <select v-on:select="filterByPharmacy" id="dropdown-1" text="Pharmacy" class="m-md-2"
                     @change="filterByPharmacy($event)">
               <option>All pharmacies</option>
@@ -20,7 +20,7 @@
         <table class="table">
           <thead>
           <tr>
-            <th scope="col">See pharamcy</th>
+            <th v-if="userType !== 'PharmacyAdmin'" scope="col">See pharamcy</th>
             <th scope="col">Name</th>
             <th scope="col">Surname</th>
             <th scope="col">Rating</th>
@@ -29,17 +29,17 @@
           <tbody v-for="(dermatologist, index) in filteredDermatologists" :key="index">
           <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1"
               href="#collapseOne">
-            <td class="expand-button"></td>
+            <td v-if="userType !== 'PharmacyAdmin'" class="expand-button"></td>
             <td>{{ dermatologist.name }}</td>
             <td>{{ dermatologist.surname }}</td>
             <td>{{ dermatologist.rating }}</td>
             <td>
-              <button :value="dermatologist.id" @click="checkDetails($event)" type="button" class="btn btn-success">
+              <button v-if="userType === 'PharmacyAdmin'" :value="dermatologist.id" @click="checkDetails($event)" type="button" class="btn btn-success">
                 Check details
               </button>
             </td>
           </tr>
-          <tr class="hide-table-padding">
+          <tr class="hide-table-padding" v-if="userType !== 'PharmacyAdmin'">
             <td></td>
             <td colspan="3">
               <div id="collapseOne" class="collapse in p-3">
@@ -69,7 +69,8 @@ export default {
       filterByPharmacyValue: '',
       pharmacies: [],
       dermatologists: [],
-      allDermatologists: []
+      allDermatologists: [],
+      userType: this.$store.state.userType
     }
   },
 

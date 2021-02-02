@@ -44,8 +44,9 @@
           <tbody v-for="(priceListItem, index) in  priceListItems" :key="index">
           <tr>
             <td>{{ priceListItem.medicineInfo.name }}</td>
-            <td>{{ priceListItem.currentPrice + '$' }}</td>
-            <td>{{ priceListItem.startDate + '//' + priceListItem.endDate }}</td>
+            <td v-if="priceListItem.currentPrice !== 0">{{ priceListItem.currentPrice + '$' }}</td>
+            <td v-else>Price is not currently defined!</td>
+            <td v-if="priceListItem.currentPrice !== 0">{{ priceListItem.startDate + '//' + priceListItem.endDate }}</td>
           </tr>
           </tbody>
         </table>
