@@ -18,16 +18,16 @@
             <td>{{ vacation.surname }}</td>
             <td>{{ vacation.vacationInterval }}</td>
             <td>
-              <form v-if="pharmacistVacations[index].status === 'Waiting for response'">
+              <form v-if="pharmacistVacations[index].status === 'Waiting'">
                 <input v-model="pharmacistApproved[index]" type="radio" name="status" value=true>
                 <label>Accept</label><br>
                 <input v-model="pharmacistApproved[index]" type="radio" name="status" value=false>
                 <label>Decline</label><br>
               </form>
-              <p v-if="pharmacistVacations[index].approved">APPROVED</p>
-              <p v-else-if="!pharmacistVacations[index].approved && pharmacistVacations[index].status === 'Responded'">
+              <p v-if="pharmacistVacations[index].status === 'Approved'">APPROVED</p>
+              <p v-else-if="pharmacistVacations[index].status === 'Rejected'">
                 REJECTED</p>
-              <b-button v-if="pharmacistVacations[index].status === 'Waiting for response'" class="btn-success"
+              <b-button v-if="pharmacistVacations[index].status === 'Waiting'" class="btn-success"
                         @click="sendVacationResponsePharmacist(index)">Send
               </b-button>
             </td>
@@ -62,23 +62,27 @@
             <td>{{ vacation.surname }}</td>
             <td>{{ vacation.vacationInterval }}</td>
             <td>
-              <form v-if="dermatologistVacations[index].status === 'Waiting for response'">
-                <input v-model="dermatologistApproved[index]" type="radio" name="status" value=true>
+              <form v-if="dermatologistVacations[index].status === 'Waiting'">
+                <input v-model="dermatologistApproved[index]" checked type="radio" name="status" value=true>
                 <label>Accept</label><br>
                 <input v-model="dermatologistApproved[index]" type="radio" name="status" value=false>
                 <label>Decline</label><br>
               </form>
-              <p v-if="dermatologistVacations[index].approved">APPROVED</p>
-              <p v-else-if="!dermatologistVacations[index].approved && dermatologistVacations[index].status === 'Responded'">
+              <p v-if="dermatologistVacations[index].status === 'Approved'">APPROVED</p>
+              <p v-else-if="dermatologistVacations[index].status === 'Rejected'">
                 REJECTED</p>
-              <b-button v-if="dermatologistVacations[index].status === 'Waiting for response'" class="btn-success"
+              <b-button v-if="dermatologistVacations[index].status === 'Waiting'" class="btn-success"
                         @click="sendVacationResponseDermatologist(index)">Send
               </b-button>
             </td>
           </tr>
-          <b-form-textarea v-model="dermatologistReason[index]" placeholder="Reason..."
-                           v-if="dermatologistApproved[index] === 'false'">
-          </b-form-textarea>
+          <tr>
+            <td colspan="4">
+              <b-form-textarea v-model="dermatologistReason[index]" placeholder="Reason..."
+                               v-if="dermatologistApproved[index] === 'false'">
+              </b-form-textarea>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -120,10 +124,24 @@ export default {
   methods: {
     sendVacationResponseDermatologist(index) {
 
-      let approved = 'true';
+      let approved = '';
 
       if (this.dermatologistApproved[index] === 'false') {
-        approved = 'false';
+        approved = 'REJECTED';
+      }
+
+      if (this.dermatologistApproved[index] === 'true') {
+        approved = 'APPROVED';
+      }
+
+      if (approved === '') {
+        alert("Please choose one of two options!")
+        return;
+      }
+
+      if (approved === 'REJECTED' && (this.dermatologistReason[index] === undefined || this.dermatologistReason[index] === '')) {
+        alert("Reason for rejection is required!")
+        return;
       }
 
       axios
@@ -134,18 +152,36 @@ export default {
                 surname: this.dermatologistVacations[index].surname,
                 vacationInterval: this.dermatologistVacations[index].vacationInterval,
                 role: this.dermatologistVacations[index].role,
-                approved: approved,
+                status: approved,
                 reason: this.dermatologistReason[index]
-              });
+              }).then(window.location.reload());
     },
 
     sendVacationResponsePharmacist(index) {
 
-      let approved = 'true';
+      let approved = '';
 
       if (this.pharmacistApproved[index] === 'false') {
-        approved = 'false';
+        approved = 'REJECTED';
       }
+
+      if (this.pharmacistApproved[index] === 'true') {
+        approved = 'APPROVED';
+      }
+
+      if (approved === '') {
+        alert("Please choose one of two options!")
+        return;
+      }
+
+      if (approved === 'REJECTED' && (this.pharmacistReason[index] === undefined || this.pharmacistReason[index] === '')) {
+        alert("Reason for rejection is required!")
+        return;
+      }
+
+      console.log("123")
+      console.log(approved)
+      console.log(this.pharmacistReason[index])
 
       axios
           .post('http://localhost:8080/vacation/pharmacistVacation/',
@@ -155,7 +191,7 @@ export default {
                 surname: this.pharmacistVacations[index].surname,
                 vacationInterval: this.pharmacistVacations[index].vacationInterval,
                 role: this.pharmacistVacations[index].role,
-                approved: approved,
+                status: approved,
                 reason: this.pharmacistReason[index]
               }).then(window.location.reload());
     }
