@@ -24,7 +24,9 @@
         <vl-source-osm></vl-source-osm>
       </vl-layer-tile>
     </vl-map>
-
+    <button v-on:click="subscription" v-if="userType==='Patient'" class="btn btn-info" style="margin: 1%;width: 30%">
+      {{ subscribeText }}
+    </button>
     <div>
       <b-jumbotron>
         <p id="address" align="left">Address: {{ pharmacy.address.street }}, {{ pharmacy.address.city }},
@@ -157,7 +159,8 @@ export default {
       filterPharmacist: '',
       filterDermatologist: '',
       filterMedicine: '',
-      medicines: ''
+      medicines: '',
+      subscribed: false
     }
   },
 
@@ -175,11 +178,43 @@ export default {
           this.center[1] = response.data.pharmacy.address.longitude;
           this.center[0] = response.data.pharmacy.address.latitude;
         })
+    this.checkIfSubscribed();
   },
 
   methods: {
     onMarkObject(event) {
       console.log(event.mapBrowserEvent.coordinate)
+    },
+    checkIfSubscribed() {
+      if (this.userType === "Patient") {
+        this.$http
+            .get('http://localhost:8080/promotion/subscribe/' + 4)
+            .then(response => {
+              this.subscribed = response.data
+            })
+            .catch(err => {
+              {
+                this.subscribed = err.response.data;
+                console.log("Backend error")
+              }
+            });
+      }
+    },
+
+    subscription() {
+      if (this.userType === "Patient") {
+        this.$http
+            .put('http://localhost:8080/promotion/subscribe/' + 4)
+            .then(response => {
+              this.subscribed = response.data
+            })
+            .catch(err => {
+              {
+                this.subscribed = err.response.data;
+                console.log("Backend error")
+              }
+            });
+      }
     }
   },
 
@@ -203,7 +238,6 @@ export default {
         return name.includes(searchTerm) || surname.includes(searchTerm) || rating.includes(searchTerm);
       });
     },
-
     filteredMedicines() {
       return this.medicines.filter(medicine => {
         const name = medicine.name.toString().toLowerCase();
@@ -212,6 +246,17 @@ export default {
         const searchTerm = this.filterMedicine.toLowerCase();
         return name.includes(searchTerm) || form.includes(searchTerm) || rating.includes(searchTerm);
       });
+    },
+    userType() {
+      return this.$store.state.userType;
+    },
+
+    subscribeText() {
+      if (this.subscribed) {
+        return "Unsubscribe"
+      } else {
+        return "Subscribe"
+      }
     }
   },
 }
