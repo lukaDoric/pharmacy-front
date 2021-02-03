@@ -2,10 +2,10 @@
   <div>
     <div class="row">
       <table style="margin: 0 5% " class="table table-dark table-hover">
-        <thead >
-          <th>Name</th>
-          <th style="width: 33.3333%">Uuid</th>
-          <th style="width: 33.3333%">Amount</th>
+        <thead>
+        <th>Name</th>
+        <th style="width: 33.3333%">Uuid</th>
+        <th style="width: 33.3333%">Amount</th>
         </thead>
         <tbody>
         <tr v-for="m in supplierMedicines" v-bind:key="m.uuid">
@@ -26,7 +26,7 @@
                 <div class="card-header">
                   <h3>ORDER ID: {{ order.id }}</h3>
                   <h3>ORDER DEADLINE: {{ formatDate(order.deadline) }}</h3>
-                  <button class="btn btn-success" v-on:click="selectedOrder=order">See orders medicines</button>
+                  <button class="btn btn-success" v-on:click="selectedOrder=order">Select</button>
                 </div>
                 <div class="card-body">
                   <table class="table table-dark table-hover">
@@ -97,7 +97,7 @@ export default {
       selectedOrder: null,
       shippingDays: 1,
       price: 1,
-      supplierMedicines:[]
+      supplierMedicines: []
     }
   },
   mounted() {
@@ -112,9 +112,9 @@ export default {
             this.orders = response.data;
           })
       this.$http.get("http://localhost:8080/offer/medicine")
-      .then(response => {
-        this.supplierMedicines = response.data
-      })
+          .then(response => {
+            this.supplierMedicines = response.data
+          })
     },
     onSubmit() {
       console.log(this.selectedOrder.id);
@@ -131,9 +131,7 @@ export default {
     },
     convertToMap(map) {
       let mp = new Map();
-
       Object.keys(map).forEach((k) => mp.set(k, map[k]));
-
       return mp
     },
     convertToMap1(map) {
@@ -142,7 +140,6 @@ export default {
     getKeys(map) {
       return this.convertToMap(map).keys();
     }
-
   }
 }
 </script>

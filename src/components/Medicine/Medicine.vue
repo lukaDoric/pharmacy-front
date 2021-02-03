@@ -43,7 +43,7 @@
               <td class="align-baseline">{{ formFilter(m.form) }}</td>
               <td class="align-baseline">{{ m.ratings }}</td>
               <td>
-                <button type="button" class="btn btn-info btn-sm" v-on:click="downloadPdf(m)">Download</button>
+                <button type="button" class="btn btn-success btn-sm" v-on:click="downloadPdf(m)">Download</button>
               </td>
               <td class="align-baseline">
                 <button type="button" class="btn btn-info btn-sm" v-on:click="selectMedicine(m)">+</button>
