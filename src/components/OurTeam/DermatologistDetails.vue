@@ -27,14 +27,15 @@
         <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">Exam duration:</label>
           <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="email"
+            <input type="text" readonly class="form-control-plaintext"
                    :value="'~' + shiftIntervals.durationInMinutes + 'min'">
           </div>
         </div>
         <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">Price per exam:</label>
           <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="email" :value="'~' + shiftIntervals.price + '$'">
+            <input type="text" readonly class="form-control-plaintext"
+                   :value="'~' + shiftIntervals.price + '$'">
           </div>
         </div>
         <h2>Schedule</h2>
@@ -69,8 +70,22 @@
         <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">Friday</label>
           <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="firday"
+            <input type="text" readonly class="form-control-plaintext" id="friday"
                    :value="shiftIntervals.hourIntervals[4]">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Saturday</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="saturday"
+                   :value="shiftIntervals.hourIntervals[5]">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Sunday</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="sunday"
+                   :value="shiftIntervals.hourIntervals[6]">
           </div>
         </div>
       </form>
@@ -119,12 +134,35 @@ export default {
 
   methods: {
     createExam() {
+
+      if (this.startDate === '') {
+        alert("Please input all fields!")
+        return;
+      }
+
+      if (this.startTime === '') {
+        alert("Please input all fields!")
+        return;
+      }
+
+      if (this.durationTime === '') {
+        alert("Please input all fields!")
+        return;
+      }
+
+      if (this.price === '') {
+        alert("Please input all fields!")
+        return;
+      }
+
       let startDate = new Date(this.startDate + 'T' + this.startTime)
       this.$http.post('http://localhost:8080/exam/', {
         dermatologistId: this.dermatologistId,
         examStart: startDate,
         duration: this.durationTime,
         price: this.price
+      }).catch(reason => {
+        alert(reason.message)
       })
     }
   }
