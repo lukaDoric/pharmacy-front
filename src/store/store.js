@@ -33,7 +33,7 @@ export const store = new Vuex.Store({
 
         logOut: state => {
             sessionStorage.clear();
-            console.log("Loging out.")
+            console.log("Logging out.")
             state.userType = null;
             state.accessToken = null;
             state.expiresIn = null;
@@ -79,7 +79,6 @@ export const store = new Vuex.Store({
                             }
                         ).catch(err => {
                             console.log(err);
-                            console.log("Erorcina axios");
                             context.commit('logOut');
                         });
                     }
