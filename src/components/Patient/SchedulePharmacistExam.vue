@@ -18,7 +18,20 @@
             <th>Address</th>
             <th>Rating</th>
             <th>Price</th>
-            <th></th>
+            <th>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sort by
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#" v-on:click="onSort(0)">Price (lowest first)</a>
+                  <a class="dropdown-item" href="#" v-on:click="onSort(1)">Price (highest first)</a>
+                  <a class="dropdown-item" href="#" v-on:click="onSort(2)">Rating (lowest first)</a>
+                  <a class="dropdown-item" href="#" v-on:click="onSort(3)">Rating (highest first)</a>
+                </div>
+              </div>
+            </th>
           </tr>
           </thead>
           <tbody v-for="p in pharmacies" v-bind:key="p.id">
@@ -55,28 +68,47 @@ export default {
   },
   methods: {
     onSearchPharmacies() {
-      console.log("Date: " + this.date + ", time: " + this.time)
-      let dateTime = this.getDateFromInputs();
-      this.$http
-          .get("http://localhost:8080/pharmacistExam/pharmacies/" + dateTime)
-          .then(response => {
-            this.pharmacies = response.data;
-            this.noResults = this.pharmacies.length === 0
-            console.log(this.noResults)
-          })
+      this.getPharmacies()
     },
     onSelect(id) {
       console.log(id)
     },
+    onSort(option) {
+      console.log(option)
+      let param = ''
+      switch (option) {
+        case 0:
+          param = 'PRICE_ASC';
+          break;
+        case 1:
+          param = 'PRICE_DESC';
+          break;
+        case 2:
+          param = 'RATING_ASC';
+          break;
+        case 3:
+          param = 'RATING_DESC';
+          break;
+      }
+      this.getPharmacies(param)
+    },
+    getPharmacies(sort = '') {
+      let dateTime = this.getDateFromInputs();
+      this.$http
+          .get("http://localhost:8080/pharmacistExam/pharmacies/" + dateTime + "/" + sort)
+          .then(response => {
+            this.pharmacies = response.data;
+            this.noResults = this.pharmacies.length === 0
+          })
+    },
     getDateFromInputs() {
       let dateParts = this.date.split('-');
       let year = parseInt(dateParts[0]);
-      let month = parseInt(dateParts[1]);
+      let month = parseInt(dateParts[1]) - 1;
       let day = parseInt(dateParts[2]);
       let timeParts = this.time.split(':')
       let hour = parseInt(timeParts[0]);
       let minute = parseInt(timeParts[1]);
-      console.log(year + " " + month + " " + day + " " + hour + +" " + minute)
       return new Date(year, month, day, hour, minute);
     }
   }
