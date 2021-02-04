@@ -53,7 +53,7 @@
                   </tr>
                   </tbody>
                 </table>
-                <p v-if="noResults" class="text-warning">
+                <p v-if="pharmacyNoResults" class="text-warning">
                   Looks like there aren't any pharmacies with available pharmacist appointments.
                   Try searching for an other date or time
                 </p>
@@ -65,7 +65,24 @@
               <h4 class="text-dark">Step 2: Pick a pharmacist to schedule an appointment</h4>
               <br>
               <div class="form-group text-dark">
-                <p>This is step 2</p>
+                <div class="px-5">
+                  <table class="table table-dark table-hover table-bordered">
+                    <thead>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Rating</th>
+                    <th></th>
+                    </thead>
+                    <tbody v-for="p in pharmacists" v-bind:key="p.id">
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.surname }}</td>
+                    <td>{{ p.rating }}</td>
+                    <td>
+                      <button class="btn btn-success" v-on:click="onSelectPharmacist(p.id)">Select pharmacist</button>
+                    </td>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <button @click.prevent="prev()" class="btn btn-info">Previous</button>
               <button @click.prevent="next()" class="btn btn-primary">Next</button>
@@ -96,8 +113,10 @@ export default {
       date: '',
       time: '',
       pharmacies: [],
-      noResults: false,
-      step: 1
+      pharmacyNoResults: false,
+      step: 1,
+      pharmacists: [],
+      pharmacistNoResults: false
     }
   },
   methods: {
@@ -106,7 +125,13 @@ export default {
     },
     onSelect(id) {
       console.log(id)
-      // TODO: axios request that gets available pharmacists for selected pharmacy and appointment
+      let dateTime = this.getDateFromInputs();
+      this.$http
+          .get("http://localhost:8080/pharmacistExam/pharmacists/" + id + "/" + dateTime)
+          .then(response => {
+            this.pharmacists = response.data;
+            this.pharmacistNoResults = this.pharmacies.length === 0
+          })
       this.next()
     },
     onSort(option) {
@@ -137,8 +162,11 @@ export default {
           .get("http://localhost:8080/pharmacistExam/pharmacies/" + dateTime + "/" + sort)
           .then(response => {
             this.pharmacies = response.data;
-            this.noResults = this.pharmacies.length === 0
+            this.pharmacyNoResults = this.pharmacies.length === 0
           })
+    },
+    onSelectPharmacist(id) {
+      console.log(id)
     },
     getDateFromInputs() {
       let dateParts = this.date.split('-');
