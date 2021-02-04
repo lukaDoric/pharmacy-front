@@ -32,10 +32,10 @@
                           Sort by
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#" v-on:click="onSort(0)">Price (lowest first)</a>
-                          <a class="dropdown-item" href="#" v-on:click="onSort(1)">Price (highest first)</a>
-                          <a class="dropdown-item" href="#" v-on:click="onSort(2)">Rating (lowest first)</a>
-                          <a class="dropdown-item" href="#" v-on:click="onSort(3)">Rating (highest first)</a>
+                          <a class="dropdown-item" href="#" v-on:click="onSortPharmacies(0)">Price (lowest first)</a>
+                          <a class="dropdown-item" href="#" v-on:click="onSortPharmacies(1)">Price (highest first)</a>
+                          <a class="dropdown-item" href="#" v-on:click="onSortPharmacies(2)">Rating (lowest first)</a>
+                          <a class="dropdown-item" href="#" v-on:click="onSortPharmacies(3)">Rating (highest first)</a>
                         </div>
                       </div>
                     </th>
@@ -48,7 +48,7 @@
                     <td>{{ p.rating }}</td>
                     <td>{{ p.price }}</td>
                     <td>
-                      <button class="btn btn-success" v-on:click="onSelect(p.id)">Select pharmacy</button>
+                      <button class="btn btn-success" v-on:click="onSelectPharmacy(p.id)">Select pharmacy</button>
                     </td>
                   </tr>
                   </tbody>
@@ -71,7 +71,18 @@
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Rating</th>
-                    <th></th>
+                    <th>
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="pharmacistsSort"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Sort by
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#" v-on:click="onSortPharmacists(0)">Rating (lowest first)</a>
+                          <a class="dropdown-item" href="#" v-on:click="onSortPharmacists(1)">Rating (highest first)</a>
+                        </div>
+                      </div>
+                    </th>
                     </thead>
                     <tbody v-for="p in pharmacists" v-bind:key="p.id">
                     <td>{{ p.name }}</td>
@@ -116,26 +127,20 @@ export default {
       pharmacyNoResults: false,
       step: 1,
       pharmacists: [],
-      pharmacistNoResults: false
+      pharmacistNoResults: false,
+      selectedPharmacyId: 0
     }
   },
   methods: {
     onSearchPharmacies() {
       this.getPharmacies()
     },
-    onSelect(id) {
-      console.log(id)
-      let dateTime = this.getDateFromInputs();
-      this.$http
-          .get("http://localhost:8080/pharmacistExam/pharmacists/" + id + "/" + dateTime)
-          .then(response => {
-            this.pharmacists = response.data;
-            this.pharmacistNoResults = this.pharmacies.length === 0
-          })
+    onSelectPharmacy(id) {
+      this.selectedPharmacyId = id
+      this.getPharmacists()
       this.next()
     },
-    onSort(option) {
-      console.log(option)
+    onSortPharmacies(option) {
       let param = ''
       switch (option) {
         case 0:
@@ -153,6 +158,18 @@ export default {
       }
       this.getPharmacies(param)
     },
+    onSortPharmacists(option) {
+      let param = ''
+      switch (option) {
+        case 0:
+          param = 'RATING_ASC';
+          break;
+        case 1:
+          param = 'RATING_DESC';
+          break;
+      }
+      this.getPharmacists(param)
+    },
     onSubmit() {
       console.log("Submitting...")
     },
@@ -163,6 +180,15 @@ export default {
           .then(response => {
             this.pharmacies = response.data;
             this.pharmacyNoResults = this.pharmacies.length === 0
+          })
+    },
+    getPharmacists(sort = '') {
+      let dateTime = this.getDateFromInputs();
+      this.$http
+          .get("http://localhost:8080/pharmacistExam/pharmacists/" + this.selectedPharmacyId + "/" + dateTime + "/" + sort)
+          .then(response => {
+            this.pharmacists = response.data;
+            this.pharmacistNoResults = this.pharmacies.length === 0
           })
     },
     onSelectPharmacist(id) {
