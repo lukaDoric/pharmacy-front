@@ -48,7 +48,7 @@
                     <td>{{ p.rating }}</td>
                     <td>{{ p.price }}</td>
                     <td>
-                      <button class="btn btn-success" v-on:click="onSelectPharmacy(p.id)">Select pharmacy</button>
+                      <button class="btn btn-success" v-on:click="onSelectPharmacy(p)">Select pharmacy</button>
                     </td>
                   </tr>
                   </tbody>
@@ -89,25 +89,43 @@
                     <td>{{ p.surname }}</td>
                     <td>{{ p.rating }}</td>
                     <td>
-                      <button class="btn btn-success" v-on:click="onSelectPharmacist(p.id)">Select pharmacist</button>
+                      <button class="btn btn-success" v-on:click="onSelectPharmacist(p)">Select pharmacist</button>
                     </td>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <button @click.prevent="prev()" class="btn btn-info">Previous</button>
-              <button @click.prevent="next()" class="btn btn-primary">Next</button>
+              <div class="px-5">
+                <button @click.prevent="prev()" class="btn btn-info btn-block">Go back to pharmacies</button>
+              </div>
             </div>
           </fieldset>
           <fieldset v-if="step === 3">
             <div class="panel-body">
               <h4 class="text-dark">Step 3: Confirm an appointment</h4>
               <br>
-              <div class="form-group">
-                <p>This is step 3</p>
+              <div class="card bg-dark text-light mx-auto" style="width: 50rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Appointment information:</h5>
+                  <p class="card-text">
+                    Start time: {{ this.date }} {{ this.time }}
+                  </p>
+                  <p class="card-text">
+                    Pharmacist: {{ this.selectedPharmacist.name }} {{ this.selectedPharmacist.surname }}
+                  </p>
+                  <p>
+                    Location: {{ this.selectedPharmacy.name }}, {{ this.selectedPharmacy.address }}
+                  </p>
+                  <div class="row">
+                    <div class="col">
+                      <button @click.prevent="prev()" class="btn btn-info btn-block">Back to pharmacists</button>
+                    </div>
+                    <div class="col">
+                      <button @click.prevent="onSubmit()" class="btn btn-success btn-block">Confirm</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <button @click.prevent="prev()" class="btn btn-info">Previous</button>
-              <button @click.prevent="onSubmit()" class="btn btn-success">Save</button>
             </div>
           </fieldset>
         </div>
@@ -128,16 +146,25 @@ export default {
       step: 1,
       pharmacists: [],
       pharmacistNoResults: false,
-      selectedPharmacyId: 0
+      selectedPharmacyId: 0,
+      selectedPharmacy: null,
+      selectedPharmacistId: 0,
+      selectedPharmacist: null
     }
   },
   methods: {
     onSearchPharmacies() {
       this.getPharmacies()
     },
-    onSelectPharmacy(id) {
-      this.selectedPharmacyId = id
+    onSelectPharmacy(pharmacy) {
+      this.selectedPharmacy = pharmacy
+      this.selectedPharmacyId = pharmacy.id
       this.getPharmacists()
+      this.next()
+    },
+    onSelectPharmacist(pharmacist) {
+      this.selectedPharmacist = pharmacist
+      this.selectedPharmacistId = pharmacist.id
       this.next()
     },
     onSortPharmacies(option) {
@@ -171,7 +198,15 @@ export default {
       this.getPharmacists(param)
     },
     onSubmit() {
-      console.log("Submitting...")
+      let dateTime = this.getDateFromInputs();
+      let data = {"dateTime": dateTime, "pharmacistId": this.selectedPharmacistId}
+      this.$http
+          .post("http://localhost:8080/pharmacistExam/", data)
+          .then(response => {
+            response.data
+            alert("Appointment successfully scheduled!")
+          })
+          .catch(err => alert(err.response.data))
     },
     getPharmacies(sort = '') {
       let dateTime = this.getDateFromInputs();
@@ -181,7 +216,8 @@ export default {
             this.pharmacies = response.data;
             this.pharmacyNoResults = this.pharmacies.length === 0
           })
-    },
+    }
+    ,
     getPharmacists(sort = '') {
       let dateTime = this.getDateFromInputs();
       this.$http
@@ -190,10 +226,8 @@ export default {
             this.pharmacists = response.data;
             this.pharmacistNoResults = this.pharmacies.length === 0
           })
-    },
-    onSelectPharmacist(id) {
-      console.log(id)
-    },
+    }
+    ,
     getDateFromInputs() {
       let dateParts = this.date.split('-');
       let year = parseInt(dateParts[0]);
@@ -203,10 +237,12 @@ export default {
       let hour = parseInt(timeParts[0]);
       let minute = parseInt(timeParts[1]);
       return new Date(year, month, day, hour, minute);
-    },
+    }
+    ,
     prev() {
       this.step--;
-    },
+    }
+    ,
     next() {
       this.step++;
     }
