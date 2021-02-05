@@ -44,7 +44,7 @@
                   <tbody v-for="p in pharmacies" v-bind:key="p.id">
                   <tr>
                     <td>{{ p.name }}</td>
-                    <td>{{ p.address }}</td>
+                    <td>{{ p.address.city }}, {{ p.address.street }}</td>
                     <td>{{ p.rating }}</td>
                     <td>{{ p.price }}</td>
                     <td>
