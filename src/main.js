@@ -40,6 +40,9 @@ import LoyaltyProgram from "@/components/SystemAdministrator/LoyaltyProgram";
 import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
 import ScheduledPharmacistExams from "@/components/Patient/ScheduledPharmacistExams";
 import QR from "@/components/Patient/QR";
+import ManagePharmacyAdminProfileAndPharmacy
+    from "@/components/PharmacyAdminManage/ManagePharmacyAdminProfileAndPharmacy";
+import Chart from "@/components/Statistics/Chart";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -75,7 +78,10 @@ const routes = [
     {path: '/loyaltyProgram', component: LoyaltyProgram},
     {path: '/medicineReservation', component: MedicineReservation},
     {path: '/scheduling', component: AvailableDermatologistExams},
+    {path: '/schedulePharmacistExam', component: SchedulePharmacistExam},
     {path: '/scheduledDermatologistExams', component: ScheduledDermatologistExams},
+    {path: '/managePharmacy', component: ManagePharmacyAdminProfileAndPharmacy},
+    {path: '/chart', component: Chart},
     {path: '/schedulePharmacistExam', component: SchedulePharmacistExam},
     {path: '/scheduledPharmacistExams', component: ScheduledPharmacistExams},
     {path: '/qr', component: QR}

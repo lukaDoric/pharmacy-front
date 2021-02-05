@@ -132,7 +132,12 @@
               <td>{{ medicine.form }}</td>
               <td>{{ medicine.rating }}</td>
               <td>
-                <button type="button" class="btn btn-success">Order now</button>
+                <button type="button" class="btn btn-success">Remove medicine</button>
+              </td>
+              <td>
+                <button v-if="userType === 'PharmacyAdmin'" :value="medicine.id" type="button" class="btn btn-danger">
+                  Remove pharmacist
+                </button>
               </td>
             </tr>
             </tbody>
