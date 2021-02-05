@@ -2,34 +2,34 @@
   <div>
     <b-jumbotron>
       <h1>Manage pharmacy info</h1>
-      <b-label id="pharmacyNameLabel" for="pharmacyName">Pharmacy name</b-label>
-      <b-input id="pharmacyName" type="text" placeholder="Pharmacy name..."></b-input>
+      <b-label id="pharmacyNameLabel" for="pharmacyName">Name</b-label>
+      <b-input id="pharmacyName" type="text" placeholder="Pharmacy name..." v-model="pharmacy.name"></b-input>
 
-      <b-label id="countryLabelPharmacy" for="country">Country</b-label>
-      <b-input id="countryPharmacy" type="text" placeholder="Country..."></b-input>
+      <b-label id="countryLabelPharmacy" for="country">Address</b-label>
+      <b-input id="countryPharmacy" type="text" placeholder="Country..." v-model="pharmacy.address.country"></b-input>
 
       <b-label id="cityLabelPharmacy" for="city">City</b-label>
-      <b-input id="cityPharmacy" type="text" placeholder="City..."></b-input>
+      <b-input id="cityPharmacy" type="text" placeholder="City..." v-model="pharmacy.address.city"></b-input>
 
       <b-label id="streetLabelPharmacy" for="street">Street</b-label>
-      <b-input id="streetPharmacy" type="text" placeholder="Street..."></b-input>
+      <b-input id="streetPharmacy" type="text" placeholder="Street..." v-model="pharmacy.address.street"></b-input>
 
       <b-label id="aboutLabel" for="about">About</b-label>
-      <b-textarea id="about" type="text" placeholder="About..."></b-textarea>
+      <b-textarea id="about" type="text" placeholder="About..." v-model="pharmacy.about"></b-textarea>
 
       <div class="d-flex flex-row">
         <div>
           <b-label id="lonLabel" for="lon">Longitude</b-label>
-          <b-input id="lon" type="number"></b-input>
+          <b-input id="lon" v-model="pharmacy.address.longitude" type="number"></b-input>
         </div>
 
         <div>
           <b-label id="latLabel" for="lat">Latitude</b-label>
-          <b-input id="lat" type="number"></b-input>
+          <b-input id="lat" v-model="pharmacy.address.latitude" type="number"></b-input>
         </div>
 
         <div class="ml-auto p-2">
-          <button name="updatePharmacyInfo" type="button" class="btn btn-success mt-3 mr-2">Update Pharmacy Info
+          <button name="updatePharmacyInfo" type="button" @click="updatePharmacy" class="btn btn-success mt-3 mr-2">Update Pharmacy Info
           </button>
         </div>
       </div>
@@ -247,7 +247,8 @@ export default {
     return {
       pharmacyAdmin: null,
       newPassword: '',
-      oldPassword: ''
+      oldPassword: '',
+      pharmacy: null
     }
   },
 
@@ -258,6 +259,13 @@ export default {
         .then(response => {
           this.pharmacyAdmin = response.data
         });
+
+    this.$http
+        .get('http://localhost:8080/pharmacy/getPharmacyByAdmin')
+        .then(response => {
+          this.pharmacy = response.data
+        });
+
   },
 
   methods: {
@@ -281,6 +289,14 @@ export default {
       this.$http.post('http://localhost:8080/user/changePassword', {
         oldPassword: this.oldPassword,
         newPassword: this.newPassword
+      })
+    },
+
+    updatePharmacy() {
+      this.$http.post('http://localhost:8080/pharmacy/updatePharmacy', {
+        name: this.pharmacy.name,
+        about: this.pharmacy.about,
+        address: this.pharmacy.address
       })
     }
 
