@@ -33,6 +33,11 @@
             <td>{{ pharmacist.name }}</td>
             <td>{{ pharmacist.surname }}</td>
             <td>{{ pharmacist.rating }}</td>
+            <td>
+              <button v-if="userType === 'PharmacyAdmin'" :value="pharmacist.id" type="button" class="btn btn-danger">
+                Remove pharmacist
+              </button>
+            </td>
           </tr>
           <tr class="hide-table-padding" v-if="userType !== 'PharmacyAdmin'">
             <td></td>

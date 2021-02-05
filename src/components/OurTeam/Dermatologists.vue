@@ -38,6 +38,11 @@
                 Check details
               </button>
             </td>
+            <td>
+              <button v-if="userType === 'PharmacyAdmin'" :value="dermatologist.id" type="button" class="btn btn-danger">
+                Remove dermatologist
+              </button>
+            </td>
           </tr>
           <tr class="hide-table-padding" v-if="userType !== 'PharmacyAdmin'">
             <td></td>

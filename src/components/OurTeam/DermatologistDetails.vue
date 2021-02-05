@@ -161,8 +161,8 @@ export default {
         examStart: startDate,
         duration: this.durationTime,
         price: this.price
-      }).catch(reason => {
-        alert(reason.message)
+      }).catch(err => {
+        alert(err.response.data)
       })
     }
   }
