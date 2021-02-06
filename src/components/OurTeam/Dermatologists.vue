@@ -13,7 +13,7 @@
             <select v-on:select="filterByPharmacy" id="dropdown-1" text="Pharmacy" class="m-md-2"
                     @change="filterByPharmacy($event)">
               <option>All pharmacies</option>
-              <option v-for="(pharmacy, index) in pharmacies" :key="index">{{ pharmacy.pharmacyName }}</option>
+              <option v-for="(pharmacy, index) in pharmacies" :value="pharmacy.id" :key="index">{{ pharmacy.pharmacyName }}</option>
             </select>
           </div>
         </div>
@@ -34,12 +34,14 @@
             <td>{{ dermatologist.surname }}</td>
             <td>{{ dermatologist.rating }}</td>
             <td>
-              <button v-if="userType === 'PharmacyAdmin'" :value="dermatologist.id" @click="checkDetails($event)" type="button" class="btn btn-success">
+              <button v-if="userType === 'PharmacyAdmin'" :value="dermatologist.id" @click="checkDetails($event)"
+                      type="button" class="btn btn-success">
                 Check details
               </button>
             </td>
             <td>
-              <button v-if="userType === 'PharmacyAdmin'" :value="dermatologist.id" type="button" class="btn btn-danger">
+              <button v-if="userType === 'PharmacyAdmin'" @click="removeDermatologist(dermatologist)" :value="dermatologist.id" type="button"
+                      class="btn btn-danger">
                 Remove dermatologist
               </button>
             </td>
@@ -95,7 +97,6 @@ export default {
   },
 
   methods: {
-
     filterByPharmacy(event) {
       if (event.target.value === 'All pharmacies') {
         this.dermatologists = this.allDermatologists;
@@ -110,6 +111,12 @@ export default {
 
     checkDetails(event) {
       this.$router.push("/dermatologistDetails/" + event.target.value);
+    },
+
+    removeDermatologist(dermatologist) {
+      this.$http.delete('http://localhost:8080/pharmacy/deleteDermatologist/' + dermatologist.id).catch(err => {
+        alert(err.response.data)
+      })
     }
   },
 
