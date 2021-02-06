@@ -2,34 +2,35 @@
   <div>
     <b-jumbotron>
       <h1>Manage pharmacy info</h1>
-      <b-label id="pharmacyNameLabel" for="pharmacyName">Name</b-label>
+      <label id="pharmacyNameLabel">Name</label>
       <b-input id="pharmacyName" type="text" placeholder="Pharmacy name..." v-model="pharmacy.name"></b-input>
 
-      <b-label id="countryLabelPharmacy" for="country">Address</b-label>
+      <label id="countryLabelPharmacy">Address</label>
       <b-input id="countryPharmacy" type="text" placeholder="Country..." v-model="pharmacy.address.country"></b-input>
 
-      <b-label id="cityLabelPharmacy" for="city">City</b-label>
+      <label id="cityLabelPharmacy">City</label>
       <b-input id="cityPharmacy" type="text" placeholder="City..." v-model="pharmacy.address.city"></b-input>
 
-      <b-label id="streetLabelPharmacy" for="street">Street</b-label>
+      <label id="streetLabelPharmacy">Street</label>
       <b-input id="streetPharmacy" type="text" placeholder="Street..." v-model="pharmacy.address.street"></b-input>
 
-      <b-label id="aboutLabel" for="about">About</b-label>
+      <label id="aboutLabel">About</label>
       <b-textarea id="about" type="text" placeholder="About..." v-model="pharmacy.about"></b-textarea>
 
       <div class="d-flex flex-row">
         <div>
-          <b-label id="lonLabel" for="lon">Longitude</b-label>
+          <label id="lonLabel">Longitude</label>
           <b-input id="lon" v-model="pharmacy.address.longitude" type="number"></b-input>
         </div>
 
         <div>
-          <b-label id="latLabel" for="lat">Latitude</b-label>
+          <label id="latLabel">Latitude</label>
           <b-input id="lat" v-model="pharmacy.address.latitude" type="number"></b-input>
         </div>
 
         <div class="ml-auto p-2">
-          <button name="updatePharmacyInfo" type="button" @click="updatePharmacy" class="btn btn-success mt-3 mr-2">Update Pharmacy Info
+          <button type="button" @click="updatePharmacy" class="btn btn-success mt-3 mr-2">
+            Update Pharmacy Info
           </button>
         </div>
       </div>
@@ -39,40 +40,42 @@
 
     <b-jumbotron>
       <h1>Manage your info</h1>
-      <b-label id="nameLabel" for="pharmacyName">Name</b-label>
+      <label id="nameLabel">Name</label>
       <b-input id="Name" type="text" placeholder="Name..." v-model="pharmacyAdmin.name"></b-input>
 
-      <b-label id="surnameLabel" for="about">Surname</b-label>
+      <label id="surnameLabel">Surname</label>
       <b-input id="surname" type="text" placeholder="Surname..." v-model="pharmacyAdmin.surname"></b-input>
 
-      <b-label id="countryLabel" for="country">Country</b-label>
+      <label id="countryLabel">Country</label>
       <b-input id="country" type="text" placeholder="Country..." v-model="pharmacyAdmin.address.country"></b-input>
 
-      <b-label id="cityLabel" for="city">City</b-label>
+      <label id="cityLabel">City</label>
       <b-input id="city" type="text" placeholder="City..." v-model="pharmacyAdmin.address.city"></b-input>
 
-      <b-label id="streetLabel" for="street">Street</b-label>
+      <label id="streetLabel">Street</label>
       <b-input id="Street" type="text" placeholder="Street..." v-model="pharmacyAdmin.address.street"></b-input>
 
       <div id="password">
         <div class="d-flex flex-row">
           <div>
-            <b-label id="oldPasswordLabel" for="lon">Enter Old Password</b-label>
+            <label id="oldPasswordLabel">Enter Old Password</label>
             <b-input id="old" v-model="oldPassword" type="password"></b-input>
           </div>
 
           <div>
-            <b-label id="newPasswordLabel" for="lat">Enter New Password</b-label>
+            <label id="newPasswordLabel">Enter New Password</label>
             <b-input id="new" v-model="newPassword" type="password"></b-input>
           </div>
 
           <div>
-            <button id="updatePassButton" @click="changePassword" name="updatePharmacyAdminInfo" type="button" class="btn btn-danger mt-3 mr-2">
+            <button id="updatePassButton" @click="changePassword" name="updatePharmacyAdminInfo" type="button"
+                    class="btn btn-danger mt-3 mr-2">
               Update Your Password
             </button>
           </div>
           <div class="ml-auto p-2">
-            <button name="updatePharmacyAdminInfo" type="button" @click="updatePharmacyAdminInfo" class="btn btn-success mt-3 mr-2">Update Your Info
+            <button name="updatePharmacyAdminInfo" type="button" @click="updatePharmacyAdminInfo"
+                    class="btn btn-success mt-3 mr-2">Update Your Info
             </button>
           </div>
         </div>
@@ -84,14 +87,16 @@
       <div class="d-flex flex-row">
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                  aria-haspopup="true" aria-expanded="false">{{ medicineName }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" v-for="(medicine, index) in medicines"
+               :key="index" v-on:click.prevent="onMedicineSelected(medicine)">{{ medicine.name + '--' + medicine.form }}</a>
           </div>
         </div>
       </div>
       <div id="newMedicine">
-        <button name="updatePharmacyAdminInfo" type="button" class="btn btn-success mt-3 mr-2">Add new medicine
+        <button name="addMedicine" @click="addMedicine" type="button" class="btn btn-success mt-3 mr-2">Add new medicine
         </button>
       </div>
       <p id="note">*NOTE: Here you can only add medicine that does not exist in pharmacy. In Price List you can add
@@ -165,31 +170,23 @@
       <div>
         <div class="form-outline mb-4">
           <label class="form-label" for="emailInput">Email address</label>
-          <input v-model="email" type="email" id="emailInput" class="form-control"
+          <input type="email" id="emailInput" class="form-control"
                  placeholder="Enter user email address"/>
         </div>
         <div class="form-outline mb-4">
           <label class="form-label" for="passwordInput">Password</label>
-          <input v-model="password" type="password" id="passwordInput" class="form-control"
+          <input type="password" id="passwordInput" class="form-control"
                  placeholder="Enter user password"/>
         </div>
         <div class="form-outline mb-4">
           <label class="form-label" for="nameInput">Name</label>
-          <input v-model="name" type="text" id="nameInput" class="form-control"
+          <input type="text" id="nameInput" class="form-control"
                  placeholder="Enter user name"/>
         </div>
         <div class="form-outline mb-4">
           <label class="form-label" for="surnameInput">Surname</label>
-          <input v-model="surname" type="text" id="surnameInput" class="form-control"
+          <input type="text" id="surnameInput" class="form-control"
                  placeholder="Enter user surname"/>
-        </div>
-        <div class="form-outline mb-4" v-if="type=='PHARMACY_ADMIN'">
-          <select v-model="pharmacyId" id="pharmacySelect">
-            <option v-for="p  in pharmacies" v-bind:key="p.id" selected class="dropdown-item" v-bind:value="p.id">
-              {{ p.name }}, {{ p.address }}
-            </option>
-          </select>
-          <label class="form-label" for="pharmacySelect">Surname</label>
         </div>
 
         <hr>
@@ -232,7 +229,7 @@
           </div>
         </div>
 
-        <button class="btn btn-success btn-block" id="registerPharmacist" @click="registerPharmacist">Create
+        <button class="btn btn-success btn-block" id="registerPharmacist">Create
           pharmacist
         </button>
       </div>
@@ -248,7 +245,10 @@ export default {
       pharmacyAdmin: null,
       newPassword: '',
       oldPassword: '',
-      pharmacy: null
+      pharmacy: null,
+      medicineName: 'Select medicine',
+      medicines: [],
+      selectedMedicine: 0
     }
   },
 
@@ -265,6 +265,11 @@ export default {
         .then(response => {
           this.pharmacy = response.data
         });
+
+    this.$http.get('http://localhost:8080/medicine/getIfDoesntExist')
+        .then(response => {
+          this.medicines = response.data;
+        })
 
   },
 
@@ -298,6 +303,20 @@ export default {
         about: this.pharmacy.about,
         address: this.pharmacy.address
       })
+    },
+
+    onMedicineSelected(medicine) {
+      console.log(medicine.id);
+      this.medicineName = medicine.name + '--' + medicine.form;
+      this.selectedMedicine = medicine.id;
+    },
+
+    addMedicine() {
+      if (this.selectedMedicine === '') {
+        alert("Please select medicine");
+      }
+
+      this.$http.put('http://localhost:8080/pharmacy/addMedicine/' + this.selectedMedicine);
     }
 
   }

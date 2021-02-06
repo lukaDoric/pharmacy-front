@@ -13,7 +13,7 @@
             <select v-on:select="filterByPharmacy" id="dropdown-1" text="Pharmacy" class="m-md-2"
                     @change="filterByPharmacy($event)">
               <option>All pharmacies</option>
-              <option v-for="(pharmacy, index) in pharmacies" :key="index">{{ pharmacy.pharmacyName }}</option>
+              <option v-for="(pharmacy, index) in pharmacies" :value="pharmacy.id" :key="index">{{ pharmacy.pharmacyName }}</option>
             </select>
           </div>
         </div>
@@ -34,7 +34,7 @@
             <td>{{ pharmacist.surname }}</td>
             <td>{{ pharmacist.rating }}</td>
             <td>
-              <button v-if="userType === 'PharmacyAdmin'" :value="pharmacist.id" type="button" class="btn btn-danger">
+              <button v-if="userType === 'PharmacyAdmin'" @click="removePharmacist(pharmacist)" type="button" class="btn btn-danger">
                 Remove pharmacist
               </button>
             </td>
@@ -92,8 +92,6 @@ export default {
   methods: {
 
     filterByPharmacy(event) {
-      console.log(event.target.value);
-
       if (event.target.value === 'All pharmacies') {
         this.pharmacists = this.allPharmacists;
       } else {
@@ -103,6 +101,12 @@ export default {
               this.pharmacists = response.data;
             })
       }
+    },
+
+    removePharmacist(pharmacist) {
+      this.$http.delete('http://localhost:8080/pharmacy/deletePharmacist/' + pharmacist.id).catch(err => {
+        alert(err.response.data)
+      })
     }
   },
 

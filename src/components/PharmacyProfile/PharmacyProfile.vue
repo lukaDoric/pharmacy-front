@@ -132,12 +132,7 @@
               <td>{{ medicine.form }}</td>
               <td>{{ medicine.rating }}</td>
               <td>
-                <button type="button" class="btn btn-success">Remove medicine</button>
-              </td>
-              <td>
-                <button v-if="userType === 'PharmacyAdmin'" :value="medicine.id" type="button" class="btn btn-danger">
-                  Remove pharmacist
-                </button>
+                <button type="button" class="btn btn-success" @click="removeMedicine(medicine)">Remove medicine</button>
               </td>
             </tr>
             </tbody>
@@ -154,6 +149,7 @@
 
 <script>
 import AvailableDermatologistExams from "@/components/Patient/AvailableDermatologistExams";
+
 export default {
   name: "PharmacyProfile",
   components: {AvailableDermatologistExams},
@@ -227,6 +223,12 @@ export default {
               }
             });
       }
+    },
+
+    removeMedicine(medicine) {
+      this.$http.delete('http://localhost:8080/pharmacy/deleteMedicine/' + medicine.id).catch(err => {
+        alert(err.response.data)
+      })
     }
   },
 
