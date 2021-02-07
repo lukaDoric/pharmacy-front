@@ -1,20 +1,18 @@
 <template>
   <div>
     <b-jumbotron class="jumbotron bg-dark text-light">
-      <h1 class="display-4">Upcoming appointments with dermatologists</h1>
+      <h1 class="display-4">Upcoming appointments with pharmacists</h1>
       <div class="">
         <p>All scheduled appointments can be cancelled 24 hours before start time.</p>
       </div>
       <table class="table table-dark table-hover table-bordered">
         <thead>
-        <tr>
-          <th>Start</th>
-          <th>End</th>
-          <th>Price</th>
-          <th>Dermatologist</th>
-          <th>Pharmacy</th>
-          <th></th>
-        </tr>
+        <th>Start</th>
+        <th>End</th>
+        <th>Price</th>
+        <th>Pharmacist</th>
+        <th>Pharmacy</th>
+        <th></th>
         </thead>
         <tbody v-for="e in exams" v-bind:key="e.id">
         <tr>
@@ -37,7 +35,7 @@
 import moment from "moment";
 
 export default {
-  name: "ScheduledDermatologistExams",
+  name: "ScheduledPharmacistExams",
   data() {
     return {
       exams: []
@@ -45,22 +43,22 @@ export default {
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/patient-exam/")
+        .get("http://localhost:8080/pharmacistExam/")
         .then(response => {
-          this.exams = response.data;
+          this.exams = response.data
         })
+        .catch(err => alert(err.response.data))
   },
   methods: {
     onCancel(id) {
-      const config = {headers: {'Content-Type': 'application/json'}};
       this.$http
-          .put("http://localhost:8080/patient-exam/cancel/", id, config)
+          .delete("http://localhost:8080/pharmacistExam/cancel/" + id)
           .then(response => {
             response.data
-            alert("Exam is cancelled successfully!")
+            alert("Appointment successfully cancelled!")
             window.location.reload()
           })
-          .catch(reason => alert(reason.message))
+          .catch(err => alert(err.response.data))
     }
   },
   filters: {
