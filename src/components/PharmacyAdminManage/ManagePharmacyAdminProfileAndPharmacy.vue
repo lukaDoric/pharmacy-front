@@ -109,14 +109,15 @@
       <h1>Add Dermatologist</h1>
 
       <div class="d-flex flex-row">
-        <div>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            </div>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">{{ dermatologistName }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" v-for="(dermatologist, index) in otherDermatologists"
+               :key="index" v-on:click.prevent="onDermatologistSelected(dermatologist)">{{
+                dermatologist.name + '--' + dermatologist.surname
+              }}</a>
           </div>
         </div>
       </div>
@@ -126,43 +127,44 @@
       <div class="d-flex flex-column">
         <div class="d-flex flex-row">
           <p class="col-1">MON</p>
-          <b-input class="col-3" id="monTime" type="time"></b-input>
-          <b-input class="col-3" type="time"></b-input>
+          <b-input class="col-3" v-model="monTimeStartDermatologist" id="monTime" type="time"></b-input>
+          <b-input class="col-3" v-model="monTimeEndDetmatologist" type="time"></b-input>
         </div>
         <div class="d-flex flex-row">
           <p class="col-1">TUE</p>
-          <b-input class="col-3" id="tueTime" type="time"></b-input>
-          <b-input class="col-3" type="time"></b-input>
+          <b-input class="col-3" v-model="tueTimeStartDermatologist" id="tueTime" type="time"></b-input>
+          <b-input class="col-3" v-model="tueTimeEndDermatologist" type="time"></b-input>
         </div>
         <div class="d-flex flex-row">
           <p class="col-1">WED</p>
-          <b-input class="col-3" id="wedTime" type="time"></b-input>
-          <b-input class="col-3" type="time"></b-input>
+          <b-input class="col-3" v-model="wedTimeStartDermatologist" id="wedTime" type="time"></b-input>
+          <b-input class="col-3" v-model="wedTimeEndDermatologist" type="time"></b-input>
         </div>
         <div class="d-flex flex-row">
           <p class="col-1">THUR</p>
-          <b-input class="col-3" id="thuTime" type="time"></b-input>
-          <b-input class="col-3" type="time"></b-input>
+          <b-input class="col-3" v-model="thuTimeStartDermatologist" id="thuTime" type="time"></b-input>
+          <b-input class="col-3" v-model="thuTimeEndDermatologist" type="time"></b-input>
         </div>
         <div class="d-flex flex-row">
           <p class="col-1">FRI</p>
-          <b-input class="col-3" id="friTime" type="time"></b-input>
-          <b-input class="col-3" type="time"></b-input>
+          <b-input class="col-3" v-model="friTimeStartDermatologist" id="friTime" type="time"></b-input>
+          <b-input class="col-3" v-model="friTimeEndDermatologist" type="time"></b-input>
         </div>
         <div class="d-flex flex-row">
           <p class="col-1">SAT</p>
-          <b-input class="col-3" id="satTime" type="time"></b-input>
-          <b-input class="col-3" type="time"></b-input>
+          <b-input class="col-3" v-model="satTimeStartDermatologist" id="satTime" type="time"></b-input>
+          <b-input class="col-3" v-model="satTimeEndDermatologist" type="time"></b-input>
         </div>
         <div class="d-flex flex-row">
           <p class="col-1">SUN</p>
-          <b-input class="col-3" id="sunTime" type="time"></b-input>
-          <b-input class="col-3" type="time"></b-input>
+          <b-input class="col-3" v-model="sunTimeStartDermatologist" id="sunTime" type="time"></b-input>
+          <b-input class="col-3" v-model="sunTimeEndDermatologist" type="time"></b-input>
         </div>
       </div>
 
       <div id="newDermatologist">
-        <button name="addDermatologist" type="button" class="btn btn-success mt-3 mr-2">Add dermatologist
+        <button name="addDermatologist" @click="addDermatologist" type="button" class="btn btn-success mt-3 mr-2">Add
+          dermatologist
         </button>
       </div>
     </b-jumbotron>
@@ -259,14 +261,17 @@ export default {
   name: "ManagePharmacyAdminProfileAndPharmacy",
   data() {
     return {
-      pharmacyAdmin: null,
+      pharmacyAdmin: {address: ''},
       newPassword: '',
       oldPassword: '',
-      pharmacy: null,
+      pharmacy: {address: ''},
       medicineName: 'Select medicine',
       medicines: [],
       selectedMedicine: 0,
       pharmacistShifts: [],
+      otherDermatologists: [],
+      dermatologistName: 'Select dermatologist',
+      selectedDermatologist: 0,
 
       monTimeStartPharmacist: '',
       monTimeEndPharmacist: '',
@@ -282,6 +287,21 @@ export default {
       satTimeEndPharmacist: '',
       sunTimeStartPharmacist: '',
       sunTimeEndPharmacist: '',
+
+      monTimeStartDermatologist: '',
+      monTimeEndDermatologist: '',
+      tueTimeStartDermatologist: '',
+      tueTimeEndDermatologist: '',
+      wedTimeStartDermatologist: '',
+      wedTimeEndDermatologist: '',
+      thuTimeStartDermatologist: '',
+      thuTimeEndDermatologist: '',
+      friTimeStartDermatologist: '',
+      friTimeEndDermatologist: '',
+      satTimeStartDermatologist: '',
+      satTimeEndDermatologist: '',
+      sunTimeStartDermatologist: '',
+      sunTimeEndDermatologist: '',
 
       pharmacistEmail: '',
       pharmacistPassword: '',
@@ -312,6 +332,11 @@ export default {
           this.medicines = response.data;
         })
 
+    this.$http.get('http://localhost:8080/dermatologist/getOtherDermatologists')
+        .then(response => {
+          this.otherDermatologists = response.data;
+        })
+
   },
 
   methods: {
@@ -328,14 +353,14 @@ export default {
         name: this.pharmacyAdmin.name,
         surname: this.pharmacyAdmin.surname,
         address: this.pharmacyAdmin.address
-      })
+      }).then(response => alert(response.data)).catch(err => alert(err.response.data));
     },
 
     changePassword() {
       this.$http.post('http://localhost:8080/user/changePassword', {
         oldPassword: this.oldPassword,
         newPassword: this.newPassword
-      })
+      }).then(response => alert(response.data)).catch(err => alert(err.response.data));
     },
 
     updatePharmacy() {
@@ -343,7 +368,7 @@ export default {
         name: this.pharmacy.name,
         about: this.pharmacy.about,
         address: this.pharmacy.address
-      })
+      }).then(response => alert(response.data)).catch(err => alert(err.response.data));
     },
 
     onMedicineSelected(medicine) {
@@ -352,12 +377,18 @@ export default {
       this.selectedMedicine = medicine.id;
     },
 
+    onDermatologistSelected(dermatologist) {
+      this.dermatologistName = dermatologist.name + '--' + dermatologist.surname;
+      this.selectedDermatologist = dermatologist.id;
+    },
+
     addMedicine() {
       if (this.selectedMedicine === '') {
         alert("Please select medicine");
       }
 
-      this.$http.put('http://localhost:8080/pharmacy/addMedicine/' + this.selectedMedicine);
+      this.$http.put('http://localhost:8080/pharmacy/addMedicine/' + this.selectedMedicine)
+          .then(response => alert(response.data)).catch(err => alert(err.response.data));
     },
 
     registerPharmacist() {
@@ -372,23 +403,23 @@ export default {
         },
         {
           'start': new Date('1970-01-01 ' + this.wedTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.wedTimeEndPharmacist)
         },
         {
           'start': new Date('1970-01-01 ' + this.thuTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.thuTimeEndPharmacist)
         },
         {
           'start': new Date('1970-01-01 ' + this.friTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.friTimeEndPharmacist)
         },
         {
           'start': new Date('1970-01-01 ' + this.satTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.satTimeEndPharmacist)
         },
         {
           'start': new Date('1970-01-01 ' + this.sunTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.sunTimeEndPharmacist)
         }];
 
       this.$http.post('http://localhost:8080/register/pharmacist', {
@@ -399,6 +430,45 @@ export default {
         country: this.pharmacistCountry,
         street: this.pharmacistStreet,
         city: this.pharmacistCity,
+        shifts: shift
+      })
+          .then(response => alert(response.data))
+          .catch(err => alert(err.response.data));
+    },
+
+    addDermatologist() {
+
+      let shift = [{
+        'start': new Date('1970-01-01 ' + this.monTimeStartDermatologist),
+        'end': new Date('1970-01-01 ' + this.monTimeEndDermatologist)
+      }
+        , {
+          'start': new Date('1970-01-01 ' + this.tueTimeStartDermatologist),
+          'end': new Date('1970-01-01 ' + this.tueTimeEndDermatologist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.wedTimeStartDermatologist),
+          'end': new Date('1970-01-01 ' + this.wedTimeEndDermatologist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.thuTimeStartDermatologist),
+          'end': new Date('1970-01-01 ' + this.thuTimeEndDermatologist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.friTimeStartDermatologist),
+          'end': new Date('1970-01-01 ' + this.friTimeEndDermatologist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.satTimeStartDermatologist),
+          'end': new Date('1970-01-01 ' + this.satTimeEndDermatologist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.sunTimeStartDermatologist),
+          'end': new Date('1970-01-01 ' + this.sunTimeEndDermatologist)
+        }];
+
+      this.$http.post('http://localhost:8080/pharmacy/addDermatologist/', {
+        dermatologistId: this.selectedDermatologist,
         shifts: shift
       })
           .then(response => alert(response.data))
