@@ -45,6 +45,7 @@ import ResolveAComplaint from "@/components/SystemAdministrator/ResolveAComplain
 import ManagePharmacyAdminProfileAndPharmacy
     from "@/components/PharmacyAdminManage/ManagePharmacyAdminProfileAndPharmacy";
 import Chart from "@/components/Statistics/Chart";
+import PharmacySearch from "@/components/Pharmacy/PharmacySearch";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -80,15 +81,16 @@ const routes = [
     {path: '/loyaltyProgram', component: LoyaltyProgram},
     {path: '/medicineReservation', component: MedicineReservation},
     {path: '/scheduling', component: AvailableDermatologistExams},
-    {path: '/schedulePharmacistExam', component: SchedulePharmacistExam},
     {path: '/scheduledDermatologistExams', component: ScheduledDermatologistExams},
+    {path: '/schedulePharmacistExam', component: SchedulePharmacistExam},
+    {path: '/scheduledPharmacistExams', component: ScheduledPharmacistExams},
     {path: '/qr', component: QR},
     {path: '/complaint/new', component: MakeAComplaint},
     {path: '/complaint/resolve', component: ResolveAComplaint},
     {path: '/managePharmacy', component: ManagePharmacyAdminProfileAndPharmacy},
     {path: '/chart', component: Chart},
-    {path: '/scheduledPharmacistExams', component: ScheduledPharmacistExams},
-    {path: '/qr', component: QR}
+    {path: '/qr', component: QR},
+    {path: '/pharmacies', component: PharmacySearch}
 ];
 
 const router = new VueRouter({
