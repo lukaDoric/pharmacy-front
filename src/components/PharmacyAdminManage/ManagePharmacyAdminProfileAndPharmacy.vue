@@ -91,7 +91,9 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" v-for="(medicine, index) in medicines"
-               :key="index" v-on:click.prevent="onMedicineSelected(medicine)">{{ medicine.name + '--' + medicine.form }}</a>
+               :key="index" v-on:click.prevent="onMedicineSelected(medicine)">{{
+                medicine.name + '--' + medicine.form
+              }}</a>
           </div>
         </div>
       </div>
@@ -166,27 +168,42 @@
     </b-jumbotron>
 
     <b-jumbotron>
-      <h1>Register user</h1>
+      <h1>Register pharmacist</h1>
       <div>
         <div class="form-outline mb-4">
           <label class="form-label" for="emailInput">Email address</label>
-          <input type="email" id="emailInput" class="form-control"
+          <input type="email" v-model="pharmacistEmail" id="emailInput" class="form-control"
                  placeholder="Enter user email address"/>
         </div>
         <div class="form-outline mb-4">
           <label class="form-label" for="passwordInput">Password</label>
-          <input type="password" id="passwordInput" class="form-control"
+          <input type="password" v-model="pharmacistPassword" id="passwordInput" class="form-control"
                  placeholder="Enter user password"/>
         </div>
         <div class="form-outline mb-4">
           <label class="form-label" for="nameInput">Name</label>
-          <input type="text" id="nameInput" class="form-control"
+          <input type="text" v-model="pharmacistName" id="nameInput" class="form-control"
                  placeholder="Enter user name"/>
         </div>
         <div class="form-outline mb-4">
           <label class="form-label" for="surnameInput">Surname</label>
-          <input type="text" id="surnameInput" class="form-control"
+          <input type="text" v-model="pharmacistSurname" id="surnameInput" class="form-control"
                  placeholder="Enter user surname"/>
+        </div>
+        <div class="form-outline mb-4">
+          <label class="form-label" for="cityInput">City</label>
+          <input type="text" v-model="pharmacistCity" id="cityInput" class="form-control"
+                 placeholder="Enter user city"/>
+        </div>
+        <div class="form-outline mb-4">
+          <label class="form-label" for="countryInput">Country</label>
+          <input type="text" v-model="pharmacistCountry" id="countryInput" class="form-control"
+                 placeholder="Enter user country"/>
+        </div>
+        <div class="form-outline mb-4">
+          <label class="form-label" for="streetInput">Street</label>
+          <input type="text" v-model="pharmacistStreet" id="streetInput" class="form-control"
+                 placeholder="Enter user street"/>
         </div>
 
         <hr>
@@ -194,42 +211,42 @@
         <div id="schedule" class="d-flex flex-column">
           <div class="d-flex flex-row">
             <p class="col-1">MON</p>
-            <b-input class="col-3" id="monTime" type="time"></b-input>
-            <b-input class="col-3" type="time"></b-input>
+            <b-input class="col-3" v-model="monTimeStartPharmacist" id="monTime" type="time"></b-input>
+            <b-input class="col-3" v-model="monTimeEndPharmacist" type="time"></b-input>
           </div>
           <div class="d-flex flex-row">
             <p class="col-1">TUE</p>
-            <b-input class="col-3" id="tueTime" type="time"></b-input>
-            <b-input class="col-3" type="time"></b-input>
+            <b-input class="col-3" v-model="tueTimeStartPharmacist" id="tueTime" type="time"></b-input>
+            <b-input class="col-3" v-model="tueTimeEndPharmacist" type="time"></b-input>
           </div>
           <div class="d-flex flex-row">
             <p class="col-1">WED</p>
-            <b-input class="col-3" id="wedTime" type="time"></b-input>
-            <b-input class="col-3" type="time"></b-input>
+            <b-input class="col-3" v-model="wedTimeStartPharmacist" id="wedTime" type="time"></b-input>
+            <b-input class="col-3" v-model="wedTimeEndPharmacist" type="time"></b-input>
           </div>
           <div class="d-flex flex-row">
             <p class="col-1">THUR</p>
-            <b-input class="col-3" id="thuTime" type="time"></b-input>
-            <b-input class="col-3" type="time"></b-input>
+            <b-input class="col-3" v-model="thuTimeStartPharmacist" id="thuTime" type="time"></b-input>
+            <b-input class="col-3" v-model="thuTimeEndPharmacist" type="time"></b-input>
           </div>
           <div class="d-flex flex-row">
             <p class="col-1">FRI</p>
-            <b-input class="col-3" id="friTime" type="time"></b-input>
-            <b-input class="col-3" type="time"></b-input>
+            <b-input class="col-3" v-model="friTimeStartPharmacist" id="friTime" type="time"></b-input>
+            <b-input class="col-3" v-model="friTimeEndPharmacist" type="time"></b-input>
           </div>
           <div class="d-flex flex-row">
             <p class="col-1">SAT</p>
-            <b-input class="col-3" id="satTime" type="time"></b-input>
-            <b-input class="col-3" type="time"></b-input>
+            <b-input class="col-3" v-model="satTimeStartPharmacist" id="satTime" type="time"></b-input>
+            <b-input class="col-3" v-model="satTimeEndPharmacist" type="time"></b-input>
           </div>
           <div class="d-flex flex-row">
             <p class="col-1">SUN</p>
-            <b-input class="col-3" id="sunTime" type="time"></b-input>
-            <b-input class="col-3" type="time"></b-input>
+            <b-input class="col-3" v-model="sunTimeStartPharmacist" id="sunTime" type="time"></b-input>
+            <b-input class="col-3" v-model="sunTimeEndPharmacist" type="time"></b-input>
           </div>
         </div>
 
-        <button class="btn btn-success btn-block" id="registerPharmacist">Create
+        <button class="btn btn-success btn-block" @click="registerPharmacist" id="registerPharmacist">Create
           pharmacist
         </button>
       </div>
@@ -248,7 +265,31 @@ export default {
       pharmacy: null,
       medicineName: 'Select medicine',
       medicines: [],
-      selectedMedicine: 0
+      selectedMedicine: 0,
+      pharmacistShifts: [],
+
+      monTimeStartPharmacist: '',
+      monTimeEndPharmacist: '',
+      tueTimeStartPharmacist: '',
+      tueTimeEndPharmacist: '',
+      wedTimeStartPharmacist: '',
+      wedTimeEndPharmacist: '',
+      thuTimeStartPharmacist: '',
+      thuTimeEndPharmacist: '',
+      friTimeStartPharmacist: '',
+      friTimeEndPharmacist: '',
+      satTimeStartPharmacist: '',
+      satTimeEndPharmacist: '',
+      sunTimeStartPharmacist: '',
+      sunTimeEndPharmacist: '',
+
+      pharmacistEmail: '',
+      pharmacistPassword: '',
+      pharmacistName: '',
+      pharmacistSurname: '',
+      pharmacistCity: '',
+      pharmacistCountry: '',
+      pharmacistStreet: ''
     }
   },
 
@@ -317,9 +358,54 @@ export default {
       }
 
       this.$http.put('http://localhost:8080/pharmacy/addMedicine/' + this.selectedMedicine);
-    }
+    },
 
+    registerPharmacist() {
+
+      let shift = [{
+        'start': new Date('1970-01-01 ' + this.monTimeStartPharmacist),
+        'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+      }
+        , {
+          'start': new Date('1970-01-01 ' + this.tueTimeStartPharmacist),
+          'end': new Date('1970-01-01 ' + this.tueTimeEndPharmacist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.wedTimeStartPharmacist),
+          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.thuTimeStartPharmacist),
+          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.friTimeStartPharmacist),
+          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.satTimeStartPharmacist),
+          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+        },
+        {
+          'start': new Date('1970-01-01 ' + this.sunTimeStartPharmacist),
+          'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+        }];
+
+      this.$http.post('http://localhost:8080/register/pharmacist', {
+        email: this.pharmacistEmail,
+        password: this.pharmacistPassword,
+        name: this.pharmacistName,
+        surname: this.pharmacistSurname,
+        country: this.pharmacistCountry,
+        street: this.pharmacistStreet,
+        city: this.pharmacistCity,
+        shifts: shift
+      })
+          .then(response => alert(response.data))
+          .catch(err => alert(err.response.data));
+    }
   }
+
 }
 </script>
 
