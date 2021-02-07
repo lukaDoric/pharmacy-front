@@ -205,6 +205,7 @@ export default {
           .then(response => {
             response.data
             alert("Appointment successfully scheduled!")
+            this.$router.push("/scheduledPharmacistExams");
           })
           .catch(err => alert(err.response.data))
     },
