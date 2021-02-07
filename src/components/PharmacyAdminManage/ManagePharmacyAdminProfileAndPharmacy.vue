@@ -128,7 +128,7 @@
         <div class="d-flex flex-row">
           <p class="col-1">MON</p>
           <b-input class="col-3" v-model="monTimeStartDermatologist" id="monTime" type="time"></b-input>
-          <b-input class="col-3" v-model="monTimeEndDetmatologist" type="time"></b-input>
+          <b-input class="col-3" v-model="monTimeEndDermatologist" type="time"></b-input>
         </div>
         <div class="d-flex flex-row">
           <p class="col-1">TUE</p>
@@ -357,6 +357,12 @@ export default {
     },
 
     changePassword() {
+
+      if (this.oldPassword === '' || this.newPassword === '') {
+        alert("Please input all fields!")
+        return;
+      }
+
       this.$http.post('http://localhost:8080/user/changePassword', {
         oldPassword: this.oldPassword,
         newPassword: this.newPassword
@@ -364,6 +370,13 @@ export default {
     },
 
     updatePharmacy() {
+
+      if (this.pharmacy.name === '' || this.pharmacy.about === '' || this.pharmacy.address.street === ''
+          || this.pharmacy.address.city === '' || this.pharmacy.address.country === '') {
+        alert("Please fill all info!")
+        return;
+      }
+
       this.$http.post('http://localhost:8080/pharmacy/updatePharmacy', {
         name: this.pharmacy.name,
         about: this.pharmacy.about,
@@ -385,6 +398,7 @@ export default {
     addMedicine() {
       if (this.selectedMedicine === '') {
         alert("Please select medicine");
+        return;
       }
 
       this.$http.put('http://localhost:8080/pharmacy/addMedicine/' + this.selectedMedicine)
@@ -393,33 +407,54 @@ export default {
 
     registerPharmacist() {
 
+      if (this.pharmacistEmail === '' || this.pharmacistPassword === '' || this.pharmacistName === ''
+          || this.pharmacistSurname === '' || this.pharmacistCity === '' || this.pharmacistCountry === '' || this.pharmacistStreet === '') {
+        alert("Please fill all info!")
+        return;
+      }
+
+      let isMonDefined = this.monTimeStartPharmacist !== '' && this.monTimeEndPharmacist !== ''
+      let isTueDefined = this.tueTimeStartPharmacist !== '' && this.tueTimeEndPharmacist !== ''
+      let isWedDefined = this.wedTimeStartPharmacist !== '' && this.wedTimeEndPharmacist !== ''
+      let isThuDefined = this.thuTimeStartPharmacist !== '' && this.thuTimeEndPharmacist !== ''
+      let isFriDefined = this.friTimeStartPharmacist !== '' && this.friTimeEndPharmacist !== ''
+      let isSatDefined = this.satTimeStartPharmacist !== '' && this.satTimeEndPharmacist !== ''
+      let isSunDefined = this.sunTimeStartPharmacist !== '' && this.sunTimeEndPharmacist !== ''
+
       let shift = [{
         'start': new Date('1970-01-01 ' + this.monTimeStartPharmacist),
-        'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist)
+        'end': new Date('1970-01-01 ' + this.monTimeEndPharmacist),
+        'shiftDefined': isMonDefined
       }
         , {
           'start': new Date('1970-01-01 ' + this.tueTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.tueTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.tueTimeEndPharmacist),
+          'shiftDefined': isTueDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.wedTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.wedTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.wedTimeEndPharmacist),
+          'shiftDefined': isWedDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.thuTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.thuTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.thuTimeEndPharmacist),
+          'shiftDefined': isThuDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.friTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.friTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.friTimeEndPharmacist),
+          'shiftDefined': isFriDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.satTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.satTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.satTimeEndPharmacist),
+          'shiftDefined': isSatDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.sunTimeStartPharmacist),
-          'end': new Date('1970-01-01 ' + this.sunTimeEndPharmacist)
+          'end': new Date('1970-01-01 ' + this.sunTimeEndPharmacist),
+          'shiftDefined': isSunDefined
         }];
 
       this.$http.post('http://localhost:8080/register/pharmacist', {
@@ -438,33 +473,48 @@ export default {
 
     addDermatologist() {
 
+      let isMonDefined = this.monTimeStartDermatologist !== '' && this.monTimeEndDermatologist !== ''
+      let isTueDefined = this.tueTimeStartDermatologist !== '' && this.tueTimeEndDermatologist !== ''
+      let isWedDefined = this.wedTimeStartDermatologist !== '' && this.wedTimeEndDermatologist !== ''
+      let isThuDefined = this.thuTimeStartDermatologist !== '' && this.thuTimeEndDermatologist !== ''
+      let isFriDefined = this.friTimeStartDermatologist !== '' && this.friTimeEndDermatologist !== ''
+      let isSatDefined = this.satTimeStartDermatologist !== '' && this.satTimeEndDermatologist !== ''
+      let isSunDefined = this.sunTimeStartDermatologist !== '' && this.sunTimeEndDermatologist !== ''
+
       let shift = [{
         'start': new Date('1970-01-01 ' + this.monTimeStartDermatologist),
-        'end': new Date('1970-01-01 ' + this.monTimeEndDermatologist)
+        'end': new Date('1970-01-01 ' + this.monTimeEndDermatologist),
+        'shiftDefined': isMonDefined
       }
         , {
           'start': new Date('1970-01-01 ' + this.tueTimeStartDermatologist),
-          'end': new Date('1970-01-01 ' + this.tueTimeEndDermatologist)
+          'end': new Date('1970-01-01 ' + this.tueTimeEndDermatologist),
+          'shiftDefined': isTueDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.wedTimeStartDermatologist),
-          'end': new Date('1970-01-01 ' + this.wedTimeEndDermatologist)
+          'end': new Date('1970-01-01 ' + this.wedTimeEndDermatologist),
+          'shiftDefined': isWedDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.thuTimeStartDermatologist),
-          'end': new Date('1970-01-01 ' + this.thuTimeEndDermatologist)
+          'end': new Date('1970-01-01 ' + this.thuTimeEndDermatologist),
+          'shiftDefined': isThuDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.friTimeStartDermatologist),
-          'end': new Date('1970-01-01 ' + this.friTimeEndDermatologist)
+          'end': new Date('1970-01-01 ' + this.friTimeEndDermatologist),
+          'shiftDefined': isFriDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.satTimeStartDermatologist),
-          'end': new Date('1970-01-01 ' + this.satTimeEndDermatologist)
+          'end': new Date('1970-01-01 ' + this.satTimeEndDermatologist),
+          'shiftDefined': isSatDefined
         },
         {
           'start': new Date('1970-01-01 ' + this.sunTimeStartDermatologist),
-          'end': new Date('1970-01-01 ' + this.sunTimeEndDermatologist)
+          'end': new Date('1970-01-01 ' + this.sunTimeEndDermatologist),
+          'shiftDefined': isSunDefined
         }];
 
       this.$http.post('http://localhost:8080/pharmacy/addDermatologist/', {
