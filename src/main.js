@@ -38,6 +38,7 @@ import AvailableDermatologistExams from "@/components/Patient/AvailableDermatolo
 import ScheduledDermatologistExams from "@/components/Patient/ScheduledDermatologistExams";
 import LoyaltyProgram from "@/components/SystemAdministrator/LoyaltyProgram";
 import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
+import QR from "@/components/Patient/QR";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -74,6 +75,7 @@ const routes = [
     {path: '/medicineReservation', component: MedicineReservation},
     {path: '/scheduling', component: AvailableDermatologistExams},
     {path: '/scheduledDermatologistExams', component: ScheduledDermatologistExams},
+    {path: '/qr', component: QR},
     {path: '/schedulePharmacistExam', component: SchedulePharmacistExam}
 ];
 

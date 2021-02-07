@@ -12,7 +12,8 @@
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                  <input v-model="email" type="text" class="form-control" name="email" id="email" placeholder="Enter your email"/>
+                  <input v-model="email" type="text" class="form-control" name="email" id="email"
+                         placeholder="Enter your email"/>
                 </div>
               </div>
             </div>
@@ -36,7 +37,8 @@
               <label for="firstName" class="cols-sm-2 control-label">First name</label>
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <input v-model="name" id="firstName" type="text" placeholder="Enter first name here.." class="form-control">
+                  <input v-model="name" id="firstName" type="text" placeholder="Enter first name here.."
+                         class="form-control">
                 </div>
               </div>
             </div>
@@ -44,7 +46,8 @@
               <label for="lastName" class="cols-sm-2 control-label">Last name</label>
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <input v-model="surname" id="lastName" type="text" placeholder="Enter last name here.." class="form-control">
+                  <input v-model="surname" id="lastName" type="text" placeholder="Enter last name here.."
+                         class="form-control">
                 </div>
               </div>
             </div>
@@ -54,7 +57,8 @@
               <label for="country" class="cols-sm-2 control-label">Country</label>
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <input v-model="country" id="country" type="text" placeholder="Enter country here.." class="form-control">
+                  <input v-model="country" id="country" type="text" placeholder="Enter country here.."
+                         class="form-control">
                 </div>
               </div>
             </div>
@@ -70,7 +74,8 @@
               <label for="Address" class="cols-sm-2 control-label">Address</label>
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <input id="Address" v-model="address" type="text" placeholder="Enter address here.." class="form-control">
+                  <input id="Address" v-model="address" type="text" placeholder="Enter address here.."
+                         class="form-control">
                 </div>
               </div>
             </div>
@@ -78,7 +83,8 @@
               <label for="phoneNum" class="cols-sm-2 control-label">Phone number</label>
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <input id="phoneNum" v-model="phoneNumber" type="text" placeholder="Enter phone number here.." class="form-control">
+                  <input id="phoneNum" v-model="phoneNumber" type="text" placeholder="Enter phone number here.."
+                         class="form-control">
                 </div>
               </div>
             </div>
@@ -109,55 +115,62 @@ export default {
   name: "RegisterPatient",
   data: function () {
     return {
-      sendingMail:false,
-      redirectURL:"",
-      name:"",
-      surname:"",
-      address:"",
-      city:"",
-      country:"",
-      phoneNumber:"",
-      email:"",
-      password:"",
-      passwordVerification:""
+      sendingMail: false,
+      redirectURL: "",
+      name: "",
+      surname: "",
+      address: "",
+      city: "",
+      country: "",
+      phoneNumber: "",
+      email: "",
+      password: "",
+      passwordVerification: ""
     }
   },
   mounted() {
 
   },
   methods: {
-    submit(){
-      if(this.ValidInformation){
+    submit() {
+      if (this.ValidInformation) {
         this.sendingMail = true;
         this.$http
             .post('http://localhost:8080/register/patient', this.User)
-            .then(response => {this.redirectURL = response.data; window.location.href = this.redirectURL;})
-            .catch(err => {alert(err.response.data);this.sendingMail=false});
-      }
-      else {
+            .then(response => {
+              this.redirectURL = response.data;
+              window.location.href = this.redirectURL;
+            })
+            .catch(err => {
+              alert(err.response.data);
+              this.sendingMail = false
+            });
+      } else {
         this.sendingMail = false;
         alert("The given data was not valid!")
       }
     }
   },
-  computed:{
-    User(){
+  computed: {
+    User() {
       let user;
-      user = {'name':this.name, 'surname':this.surname, 'address':this.address, 'city':this.city, 'country':this.country,
-        'phoneNumber':this.phoneNumber, 'email':this.email, 'password':this.password};
+      user = {
+        'name': this.name, 'surname': this.surname, 'address': this.address, 'city': this.city, 'country': this.country,
+        'phoneNumber': this.phoneNumber, 'email': this.email, 'password': this.password
+      };
       return user
     },
-    ValidInformation(){
-      return   this.name!="" &&
-          this.surname!="" &&
-          this.address!="" &&
-          this.city!="" &&
-          this.country!="" &&
-          this.phoneNumber!="" &&
-          this.email!="" &&
-          this.password!="" &&
-          this.passwordVerification!="" &&
-          this.password==this.passwordVerification;
+    ValidInformation() {
+      return this.name != "" &&
+          this.surname != "" &&
+          this.address != "" &&
+          this.city != "" &&
+          this.country != "" &&
+          this.phoneNumber != "" &&
+          this.email != "" &&
+          this.password != "" &&
+          this.passwordVerification != "" &&
+          this.password == this.passwordVerification;
 
     }
   },
@@ -166,6 +179,7 @@ export default {
 
 <style scoped>
 @import '../css/Loader.css';
+
 .card {
   color: white;
   background-color: dimgray;
