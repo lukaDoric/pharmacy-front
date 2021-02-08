@@ -6,6 +6,38 @@
       <div class="input-group mb-3 px-5">
         <input type="text" class="form-control" placeholder="Search pharmacies" v-model="searchParam">
       </div>
+      <div class="row">
+        <div class="col">
+          <div class="input-group form-inline mb-3 px-5">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="pharmacistsSort"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ ratingDropdownText }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" v-on:click="onRatingFilterChanged(0)">Any Rating</a>
+                <a class="dropdown-item" href="#" v-on:click="onRatingFilterChanged(1)">1+ Star Rating</a>
+                <a class="dropdown-item" href="#" v-on:click="onRatingFilterChanged(2)">2+ Star Rating</a>
+                <a class="dropdown-item" href="#" v-on:click="onRatingFilterChanged(3)">3+ Star Rating</a>
+                <a class="dropdown-item" href="#" v-on:click="onRatingFilterChanged(4)">4+ Star Rating</a>
+                <a class="dropdown-item" href="#" v-on:click="onRatingFilterChanged(5)">5 Star Rating (Best)</a>
+              </div>
+            </div>
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-light ml-4">Show results within</span>
+            </div>
+            <input type="number" min="1" class="form-control flex-fill" aria-label="Distance" v-model="distance">
+            <div class="input-group-append">
+              <span class="input-group-text bg-light mr-4">km</span>
+            </div>
+            <button class="btn btn-info" v-on:click="onFilterSearch()">Filter search</button>
+          </div>
+        </div>
+        <div class="col">
+
+        </div>
+      </div>
+
       <div class="px-5">
         <table class="table table-dark table-hover table-bordered">
           <thead>
@@ -30,7 +62,12 @@ export default {
   data() {
     return {
       pharmacies: [],
-      searchParam: ''
+      searchParam: '',
+      ratingDropdownTexts: ['All Ratings', '1+ Star Rating', '2+ Star Rating', '3+ Star Rating', '4+ Star Rating', '5 Star Rating (Best)'],
+      ratingDropdownText: 'All Ratings',
+      ratingFilterValues: ['NONE', 'ONE_STAR', 'TWO_STARS', 'THREE_STARS', 'FOUR_STARS', 'FIVE_STARS'],
+      ratingFilter: 'NONE',
+      distance: 10
     }
   },
   mounted() {
@@ -39,6 +76,19 @@ export default {
         .then(response => {
           this.pharmacies = response.data;
         })
+  },
+  methods: {
+    onRatingFilterChanged(filter) {
+      this.ratingFilter = this.ratingFilterValues[filter]
+      this.ratingDropdownText = this.ratingDropdownTexts[filter]
+    },
+    onFilterSearch() {
+      this.$http
+          .get("http://localhost:8080/pharmacy/" + this.ratingFilter + "/" + this.distance)
+          .then(response => {
+            this.pharmacies = response.data;
+          })
+    }
   },
   computed: {
     filteredPharmacies() {
@@ -52,7 +102,7 @@ export default {
             street.includes(searchParam);
       });
     }
-  },
+  }
 }
 </script>
 
