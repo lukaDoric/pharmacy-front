@@ -6,7 +6,7 @@ import VueLayers from 'vuelayers'
 import 'vuelayers/lib/style.css'
 import {PointGeom} from 'vuelayers'
 import {store} from './store/store'
-
+import VueGeolocation from 'vue-browser-geolocation';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -53,6 +53,7 @@ Vue.config.productionTip = false
 Vue.use(VueRouter);
 Vue.use(VueLayers);
 Vue.use(PointGeom);
+Vue.use(VueGeolocation);
 
 const routes = [
     {path: '/medicine', component: Medicine},
