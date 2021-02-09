@@ -33,11 +33,13 @@
                 <td>{{ m.manufacturer }}</td>
                 <td>{{ m.rating }}</td>
                 <td>
-                  <star-rating v-bind:star-size="20" v-bind:show-rating="false"/>
+                  <star-rating @rating-selected="onRatingSelectedMedicine(m.id, $event)" v-bind:star-size="20"
+                               v-bind:show-rating="false"/>
                 </td>
               </tr>
               </tbody>
             </table>
+            <button class="btn btn-info btn-block" @click="onSubmitRatingMedicine">Submit rating</button>
           </div>
 
           <div class="panel-body" v-if="displayMode === 1">
@@ -115,6 +117,7 @@ export default {
       dermatologists: [],
       pharmacists: [],
       pharmacies: [],
+      medicineRatings: new Map(),
       dermatologistRatings: new Map(),
       pharmacistRatings: new Map()
     }
@@ -145,14 +148,30 @@ export default {
     switchDisplayMode(mode) {
       this.displayMode = mode
     },
+    onRatingSelectedMedicine(id, rating) {
+      this.medicineRatings.set(id, rating)
+    },
     onRatingSelectedDermatologist(id, rating) {
       this.dermatologistRatings.set(id, rating)
     },
     onRatingSelectedPharmacist(id, rating) {
       this.pharmacistRatings.set(id, rating)
     },
+    onRatingSelectedPharmacy(id, rating) {
+      console.log(id + ',' + rating)
+    },
     onSubmitRatingMedicine() {
-
+      let data = []
+      for (let [key, value] of this.medicineRatings) {
+        data.push({id: key, rating: value})
+      }
+      this.$http
+          .post("http://localhost:8080/rating/medicine", data)
+          .then(response => {
+            response.data
+            alert("Rating submitted!")
+          })
+          .catch(err => alert(err.response.data))
     },
     onSubmitRatingDermatologists() {
       let data = []
