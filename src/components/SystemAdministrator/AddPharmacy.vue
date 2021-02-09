@@ -12,7 +12,7 @@
         <tbody>
         <tr v-for="p in pharmacies" v-bind:key="p.id">
           <td>{{ p.name }}</td>
-          <td>{{ p.address }}</td>
+          <td>{{ p.address.street}}, {{p.address.city}}, {{p.address.country}} </td>
           <td>{{ p.about }}</td>
         </tr>
         </tbody>
@@ -26,16 +26,35 @@
         <div class="card-body bg-dark">
           <div class="form-outline mb-4">
             <input v-model="name" type="text" id="nameInput" class="form-control"
-                   placeholder="Enter pharmacy name"/>
+                   placeholder="Enter pharmacy's name"/>
             <label class="form-label" for="nameInput">Name</label>
           </div>
           <div class="form-outline mb-4">
-            <input v-model="address" type="text" id="addressInput" class="form-control"
-                   placeholder="Enter pharmacy address"/>
-            <label class="form-label" for="addressInput">Address</label>
+            <input v-model="address.street" type="text" id="streetInput" class="form-control"
+                   placeholder="Enter pharmacy's street"/>
+            <label class="form-label" for="streetInput">Street</label>
           </div>
           <div class="form-outline mb-4">
-        <textarea v-model="about" id="aboutInput" class="form-control"
+            <input v-model="address.city" type="text" id="cityInput" class="form-control"
+                   placeholder="Enter pharmacy's city"/>
+            <label class="form-label" for="cityInput">City</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input v-model="address.country" type="text" id="countryInput" class="form-control"
+                   placeholder="Enter pharmacy's country"/>
+            <label class="form-label" for="countryInput">Country</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input v-model="address.latitude" type="number" id="latitudeInput" class="form-control"/>
+            <br>
+            <label class="form-label" for="latitudeInput">Latitude</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input v-model="address.longitude" type="number" id="longitudeInput" class="form-control"/><br>
+            <label class="form-label" for="longitudeInput">Longitude</label>
+          </div>
+          <div class="form-outline mb-4">
+            <textarea v-model="about" id="aboutInput" class="form-control"
                   placeholder="About this pharmacy"/>
             <label class="form-label" for="aboutInput">About</label>
           </div>
@@ -53,11 +72,14 @@ export default {
     return {
       pharmacies: null,
       name: "",
-      address: "",
+      address: {},
       about: "",
     }
   },
   mounted() {
+    if(this.$store.state.userType!=='SystemAdmin'){
+      this.$router.push("/")
+    }
     this.getAllPharmacies();
   },
   methods: {
@@ -65,7 +87,8 @@ export default {
       let pharmacy = {
         'name': this.name,
         'address': this.address,
-        'about': this.about
+        'about': this.about,
+
       }
       this.$http.post('http://localhost:8080/pharmacy/register', pharmacy)
           .then(response => {

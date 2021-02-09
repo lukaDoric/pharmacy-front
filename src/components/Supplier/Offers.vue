@@ -39,11 +39,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in getKeys(order.orderItems)" v-bind:key="item">
-                      <td>{{ convertToMap1(item).name }}</td>
-                      <td>{{ convertToMap1(item).uuid }}</td>
-                      <td>{{ convertToMap1(item).form }}</td>
-                      <td>{{ order.orderItems[item] }}</td>
+                    <tr v-for="item in order.orderItems" v-bind:key="item.medicine.uuid">
+                      <td>{{ item.medicine.name }}</td>
+                      <td>{{ item.medicine.uuid }}</td>
+                      <td>{{ item.medicine.form }}</td>
+                      <td>{{ item.amount }}</td>
                     </tr>
                     </tbody>
                   </table>
@@ -105,6 +105,9 @@ export default {
   },
   methods: {
     init() {
+      if(this.$store.state.userType!=='Supplier'){
+        this.$router.push("/")
+      }
       this.selectedOrder = null;
       this.$http
           .get("http://localhost:8080/order/notOffered")
@@ -129,17 +132,7 @@ export default {
       const da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
       return `${da}-${mo}-${ye}`
     },
-    convertToMap(map) {
-      let mp = new Map();
-      Object.keys(map).forEach((k) => mp.set(k, map[k]));
-      return mp
-    },
-    convertToMap1(map) {
-      return JSON.parse(map)
-    },
-    getKeys(map) {
-      return this.convertToMap(map).keys();
-    }
+
   }
 }
 </script>

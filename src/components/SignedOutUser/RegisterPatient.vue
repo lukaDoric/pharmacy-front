@@ -11,7 +11,6 @@
               <label for="email" class="cols-sm-2 control-label">Your email</label>
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                   <input v-model="email" type="text" class="form-control" name="email" id="email"
                          placeholder="Enter your email"/>
                 </div>
@@ -21,13 +20,11 @@
             <div class="row">
               <div class="col-sm-6 form-group">
                 <label for="password" class="cols-sm-2 control-label">Password</label>
-                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                 <input v-model="password" type="password" class="form-control" name="confirm" id="password"
                        placeholder="Enter your password"/>
               </div>
               <div class="col-sm-6 form-group">
                 <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                 <input v-model="passwordVerification" type="password" class="form-control" name="confirm" id="confirm"
                        placeholder="Confirm your password"/>
               </div>
@@ -129,7 +126,9 @@ export default {
     }
   },
   mounted() {
-
+    if(this.$store.state.userType!==null){
+      this.$router.push("/")
+    }
   },
   methods: {
     submit() {

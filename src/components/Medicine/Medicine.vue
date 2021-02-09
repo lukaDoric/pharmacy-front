@@ -57,12 +57,12 @@
         <b-jumbotron class="jumbotron">
           <div class="card">
             <div class="card-header">
-              <h2 v-if="selectedMedicine != null && loggedUser!=null" class="display-4">Make {{ selectedMedicine.name }}
+              <h2 v-if="selectedMedicine != null && loggedUser=='Patient'" class="display-4">Make {{ selectedMedicine.name }}
                 reservation</h2>
-              <h2 v-else-if="selectedMedicine != null && loggedUser==null" class="display-4">{{
+              <h2 v-else-if="selectedMedicine != null && loggedUser!='Patient'" class="display-4">{{
                   selectedMedicine.name
                 }}' pharmacies</h2>
-              <h2 v-else-if="loggedUser==null" class="display-4">Select medicine to see it's pharmacies.</h2>
+              <h2 v-else-if="loggedUser!='Patient'" class="display-4">Select medicine to see it's pharmacies.</h2>
               <h2 v-else class="display-4">Select medicine to make a reservation.</h2>
             </div>
             <div class="card-body bg-dark" v-if="selectedMedicine != null">
@@ -80,7 +80,7 @@
                   <td>{{ p.name }}</td>
                   <td>{{ p.address }}</td>
                   <td>{{ p.price }}</td>
-                  <td v-if="loggedUser!=null">
+                  <td v-if="loggedUser=='Patient'">
                     <button class="btn btn-info btn-sm" v-on:click="selectedPharmacy=p">select</button>
                   </td>
                 </tr>

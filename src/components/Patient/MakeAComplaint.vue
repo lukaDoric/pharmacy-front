@@ -1,5 +1,5 @@
 <template>
-  <b-jumbotron>
+  <b-jumbotron class="bg-dark">
     <div class="row">
       <div class="col-lg-6">
         <select v-model="typeSelected" style="width: 80%;" selectedIndex="2" @change="getDropValues">
@@ -95,9 +95,14 @@ export default {
         }
       }
       this.$http.post("http://localhost:8080/complaints/", complaint)
+      .then(response=>{alert(response.data);})
+          .catch(err=>alert(err.response.data))
     }
   },
   mounted() {
+    if(this.$store.state.userType!=='Patient'){
+      this.$router.push("/")
+    }
     this.getDropValues();
 
   }
