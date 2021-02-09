@@ -61,9 +61,6 @@
               <td>{{ dermatologist.name }}</td>
               <td>{{ dermatologist.surname }}</td>
               <td>{{ dermatologist.rating }}</td>
-              <td>
-                <button type="button" class="btn btn-success">Check details</button>
-              </td>
             </tr>
             </tbody>
           </table>
@@ -96,9 +93,6 @@
               <td>{{ pharmacist.name }}</td>
               <td>{{ pharmacist.surname }}</td>
               <td>{{ pharmacist.rating }}</td>
-              <td>
-                <button type="button" class="btn btn-success">Check details</button>
-              </td>
             </tr>
             </tbody>
           </table>
@@ -132,7 +126,7 @@
               <td>{{ medicine.form }}</td>
               <td>{{ medicine.rating }}</td>
               <td>
-                <button type="button" class="btn btn-success" @click="removeMedicine(medicine)">Remove medicine</button>
+                <button type="button" class="btn btn-danger" @click="removeMedicine(medicine)">Remove medicine</button>
               </td>
             </tr>
             </tbody>
@@ -231,9 +225,12 @@ export default {
     },
 
     removeMedicine(medicine) {
-      this.$http.delete('http://localhost:8080/pharmacy/deleteMedicine/' + medicine.id).catch(err => {
+      this.$http.delete('http://localhost:8080/pharmacy/deleteMedicine/' + medicine.id).then(response => {
+        alert(response.data);
+        window.location.reload()
+      }).catch(err => {
         alert(err.response.data)
-      })
+      });
     }
   },
 
