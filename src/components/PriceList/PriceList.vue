@@ -46,7 +46,10 @@
             <td>{{ priceListItem.medicineInfo.name }}</td>
             <td v-if="priceListItem.currentPrice !== 0">{{ priceListItem.currentPrice + '$' }}</td>
             <td v-else>Price is not currently defined!</td>
-            <td v-if="priceListItem.currentPrice !== 0">{{ priceListItem.startDate + '//' + priceListItem.endDate }}</td>
+            <td v-if="priceListItem.currentPrice !== 0">{{
+                priceListItem.startDate + '//' + priceListItem.endDate
+              }}
+            </td>
           </tr>
           </tbody>
         </table>
@@ -91,7 +94,12 @@ export default {
             'price': this.price,
             'from': this.from,
             'to': this.to
-          })
+          }).then(response => {
+        alert(response.data);
+        window.location.reload()
+      }).catch(err => {
+        alert(err.response.data)
+      });
     },
 
     onMedicineSelect(event) {
