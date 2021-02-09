@@ -9,7 +9,6 @@ import {store} from './store/store'
 import VueGeolocation from 'vue-browser-geolocation';
 import Datepicker from 'vuejs-datepicker';
 
-
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Home from "@/components/Home";
@@ -50,6 +49,7 @@ import Chart from "@/components/Statistics/Chart";
 import PharmacySearch from "@/components/Pharmacy/PharmacySearch";
 import Subscriptions from "@/components/Patient/Subscriptions";
 import ChangeUserInfo from "@/components/ChangeUserInfo/ChangeUserInfo";
+import Rating from "@/components/Patient/Rating";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -98,7 +98,8 @@ const routes = [
     {path: '/chart', component: Chart},
     {path: '/qr', component: QR},
     {path: '/subscriptions', component: Subscriptions},
-    {path: '/pharmacies', component: PharmacySearch}
+    {path: '/pharmacies', component: PharmacySearch},
+    {path: '/rating', component: Rating}
 ];
 
 const router = new VueRouter({
