@@ -49,6 +49,7 @@ import ManagePharmacyAdminProfileAndPharmacy
 import Chart from "@/components/Statistics/Chart";
 import PharmacySearch from "@/components/Pharmacy/PharmacySearch";
 import Subscriptions from "@/components/Patient/Subscriptions";
+import ChangeUserInfo from "@/components/ChangeUserInfo/ChangeUserInfo";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -92,6 +93,7 @@ const routes = [
     {path: '/qr', component: QR},
     {path: '/complaint/new', component: MakeAComplaint},
     {path: '/complaint/resolve', component: ResolveAComplaint},
+    {path: '/account/update', component:ChangeUserInfo},
     {path: '/managePharmacy', component: ManagePharmacyAdminProfileAndPharmacy},
     {path: '/chart', component: Chart},
     {path: '/qr', component: QR},
