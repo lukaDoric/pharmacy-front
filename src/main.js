@@ -77,7 +77,7 @@ const routes = [
     {path: '/offers', component: Offers},
     {path: '/promotion', component: Promotion},
     {path: '/dermatologistDetails/:id', component: DermatologistDetails},
-    {path: '/pharmacyProfile', component: PharmacyProfile},
+    {path: '/pharmacyProfile/:id', component: PharmacyProfile},
     {path: '/offers/update', component: OffersUpdate},
     {path: '/loyaltyProgram', component: LoyaltyProgram},
     {path: '/medicineReservation', component: MedicineReservation},
