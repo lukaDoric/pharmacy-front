@@ -40,6 +40,8 @@ import LoyaltyProgram from "@/components/SystemAdministrator/LoyaltyProgram";
 import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
 import ScheduledPharmacistExams from "@/components/Patient/ScheduledPharmacistExams";
 import QR from "@/components/Patient/QR";
+import MakeAComplaint from "@/components/Patient/MakeAComplaint";
+import ResolveAComplaint from "@/components/SystemAdministrator/ResolveAComplaint";
 import ManagePharmacyAdminProfileAndPharmacy
     from "@/components/PharmacyAdminManage/ManagePharmacyAdminProfileAndPharmacy";
 import Chart from "@/components/Statistics/Chart";
@@ -80,9 +82,11 @@ const routes = [
     {path: '/scheduling', component: AvailableDermatologistExams},
     {path: '/schedulePharmacistExam', component: SchedulePharmacistExam},
     {path: '/scheduledDermatologistExams', component: ScheduledDermatologistExams},
+    {path: '/qr', component: QR},
+    {path: '/complaint/new', component: MakeAComplaint},
+    {path: '/complaint/resolve', component: ResolveAComplaint},
     {path: '/managePharmacy', component: ManagePharmacyAdminProfileAndPharmacy},
     {path: '/chart', component: Chart},
-    {path: '/schedulePharmacistExam', component: SchedulePharmacistExam},
     {path: '/scheduledPharmacistExams', component: ScheduledPharmacistExams},
     {path: '/qr', component: QR}
 ];
