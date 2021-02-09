@@ -7,6 +7,8 @@ import 'vuelayers/lib/style.css'
 import {PointGeom} from 'vuelayers'
 import {store} from './store/store'
 import VueGeolocation from 'vue-browser-geolocation';
+import Datepicker from 'vuejs-datepicker';
+
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -54,6 +56,7 @@ Vue.use(VueRouter);
 Vue.use(VueLayers);
 Vue.use(PointGeom);
 Vue.use(VueGeolocation);
+Vue.use(Datepicker);
 
 const routes = [
     {path: '/medicine', component: Medicine},
@@ -90,7 +93,6 @@ const routes = [
     {path: '/complaint/resolve', component: ResolveAComplaint},
     {path: '/managePharmacy', component: ManagePharmacyAdminProfileAndPharmacy},
     {path: '/chart', component: Chart},
-    {path: '/qr', component: QR},
     {path: '/pharmacies', component: PharmacySearch}
 ];
 
