@@ -2,7 +2,7 @@
   <li style="float:right" class="dropdown nav-item ml-auto">
     <a href="javascript:void(0)" class="dropbtn">Profile</a>
     <div class="dropdown-content">
-      <a class="drop-link" href="#">Edit profile</a>
+      <a class="drop-link" v-on:click="editProfile">Edit profile</a>
       <a class="drop-link" v-on:click="logOut">Log out</a>
     </div>
   </li>
@@ -15,7 +15,10 @@ export default {
     logOut(){
       this.$store.dispatch('logOut');
       this.$router.push("/");
-    }
+    },
+    editProfile(){
+      this.$router.push("/account/update");
+    },
   }
 }
 </script>
