@@ -40,11 +40,15 @@
           <th>Name</th>
           <th>Address</th>
           <th>Rating</th>
+          <th></th>
           </thead>
           <tbody v-for="p in filteredPharmacies" v-bind:key="p.id">
           <td>{{ p.name }}</td>
           <td>{{ p.address.country }}, {{ p.address.city }}, {{ p.address.street }}</td>
           <td>{{ p.rating }}</td>
+          <td>
+            <button class="btn btn-info" v-on:click="onDetails(p.id)">Details</button>
+          </td>
           </tbody>
         </table>
       </div>
@@ -98,6 +102,11 @@ export default {
           .then(response => {
             this.pharmacies = response.data;
           })
+    },
+    onDetails(pharmacyId) {
+      console.log(pharmacyId)
+      // TODO: go to pharmacy page
+      this.$router.push("/pharmacyProfile/" + pharmacyId);
     }
   },
   computed: {

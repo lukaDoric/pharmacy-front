@@ -142,7 +142,7 @@
     </b-jumbotron>
 
     <b-jumbotron>
-      <AvailableDermatologistExams :pharmacy-id="pharmacyId"></AvailableDermatologistExams>
+      <AvailableDermatologistExams :pharmacy-id="pharmacyId" v-if="pharmacyId != null"></AvailableDermatologistExams>
     </b-jumbotron>
   </div>
 </template>
@@ -153,6 +153,11 @@ import AvailableDermatologistExams from "@/components/Patient/AvailableDermatolo
 export default {
   name: "PharmacyProfile",
   components: {AvailableDermatologistExams},
+  watch: {
+    '$route'(to) {
+      this.pharmacyId = to.params.id;
+    }
+  },
   data() {
     return {
       zoom: 18,
@@ -166,13 +171,13 @@ export default {
       filterDermatologist: '',
       filterMedicine: '',
       medicines: [],
-      pharmacyId: 4,
+      pharmacyId: null,
       subscribed: false
     }
   },
 
   mounted() {
-
+    this.pharmacyId = this.$route.params.id;
     this.$http
         .get('http://localhost:8080/pharmacy/getPharmacyById/' + this.pharmacyId)
         .then(response => {
@@ -180,10 +185,10 @@ export default {
           this.dermatologists = response.data.dermatologists;
           this.pharmacists = response.data.pharmacists;
           this.medicines = response.data.medicines;
-          this.location[0] = response.data.pharmacy.address.longitude;
-          this.location[1] = response.data.pharmacy.address.latitude;
-          this.center[1] = response.data.pharmacy.address.longitude;
-          this.center[0] = response.data.pharmacy.address.latitude;
+          this.location[0] = response.data.pharmacy.address.latitude;
+          this.location[1] = response.data.pharmacy.address.longitude;
+          this.center[1] = response.data.pharmacy.address.latitude;
+          this.center[0] = response.data.pharmacy.address.longitude;
         })
     this.checkIfSubscribed();
   },
@@ -196,7 +201,7 @@ export default {
     checkIfSubscribed() {
       if (this.userType === "Patient") {
         this.$http
-            .get('http://localhost:8080/promotion/subscribe/' + 4)
+            .get('http://localhost:8080/promotion/subscribe/' + this.pharmacyId)
             .then(response => {
               this.subscribed = response.data
             })
@@ -212,7 +217,7 @@ export default {
     subscription() {
       if (this.userType === "Patient") {
         this.$http
-            .put('http://localhost:8080/promotion/subscribe/' + 4)
+            .put('http://localhost:8080/promotion/subscribe/' + this.pharmacyId)
             .then(response => {
               this.subscribed = response.data
             })
