@@ -154,7 +154,12 @@ export default {
                 role: this.dermatologistVacations[index].role,
                 status: approved,
                 reason: this.dermatologistReason[index]
-              }).then(window.location.reload());
+              }).then(response => {
+        alert(response.data);
+        window.location.reload()
+      }).catch(err => {
+        alert(err.response.data)
+      });
     },
 
     sendVacationResponsePharmacist(index) {
@@ -193,7 +198,12 @@ export default {
                 role: this.pharmacistVacations[index].role,
                 status: approved,
                 reason: this.pharmacistReason[index]
-              }).then(window.location.reload());
+              }).then(response => {
+        alert(response.data);
+        window.location.reload()
+      }).catch(err => {
+        alert(err.response.data)
+      });
     }
   }
 }
