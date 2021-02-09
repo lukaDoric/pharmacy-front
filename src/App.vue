@@ -50,7 +50,7 @@ export default {
     NavGroup,
     RegisterPatientLink,
     OrderLink,
-    PromotionLink
+    PromotionLink,
   },
   created() {
     this.$store.dispatch('startSession', null);
