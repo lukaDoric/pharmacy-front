@@ -118,7 +118,7 @@ export default {
 
       for (let i = 0; i < this.items.length; i++) {
         this.medicineAmount[this.items[i].medicineId] = this.items[i].amount
-        if ((this.medicineAmount[this.items[i].medicineId]) === '' || (this.medicineAmount[this.items[i].medicineId]) === 0
+        if ((this.medicineAmount[this.items[i].medicineId]) === '' || (this.medicineAmount[this.items[i].medicineId]) <= 0
             || (this.items[i].medicineId === "")) {
           alert("Please fill all fields or remove ones you don't use!")
           return;
@@ -129,7 +129,12 @@ export default {
           .post('http://localhost:8080/order/', {
             orderItems: this.medicineAmount,
             deadline: this.deadline
-          }).then(window.location.reload());
+          }).then(response => {
+        alert(response.data);
+        window.location.reload();
+      }).catch(err => {
+        alert(err.response.data)
+      });
     },
 
     removeOrder(orderId) {
