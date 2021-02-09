@@ -36,13 +36,40 @@
                placeholder="Enter user surname"/>
         <label class="form-label" for="surnameInput">Surname</label>
       </div>
+      <hr>
+      <div class="form-outline mb-4">
+        <input v-model="address.street" type="text" id="streetInput" class="form-control"
+               placeholder="Enter user's street"/>
+        <label class="form-label" for="streetInput">Street</label>
+      </div>
+      <div class="form-outline mb-4">
+        <input v-model="address.city" type="text" id="cityInput" class="form-control"
+               placeholder="Enter user's city"/>
+        <label class="form-label" for="cityInput">City</label>
+      </div>
+      <div class="form-outline mb-4">
+        <input v-model="address.country" type="text" id="countryInput" class="form-control"
+               placeholder="Enter user's country"/>
+        <label class="form-label" for="countryInput">Country</label>
+      </div>
+      <div class="form-outline mb-4">
+        <input v-model="address.latitude" type="number" id="latitudeInput" class="form-control"
+               placeholder="Enter user' latitude"/>
+        <label class="form-label" for="latitudeInput">Latitude</label>
+      </div>
+      <div class="form-outline mb-4">
+        <input v-model="address.longitude" type="number" id="longitudeInput" class="form-control"
+               placeholder="Enter user' longitude"/>
+        <label class="form-label" for="longitudeInput">Longitude</label>
+      </div>
+      <hr>
       <div class="form-outline mb-4" v-if="type=='PHARMACY_ADMIN'">
         <select v-model="pharmacyId" id="pharmacySelect">
           <option v-for="p  in pharmacies" v-bind:key="p.id" selected class="dropdown-item" v-bind:value="p.id">
-            {{ p.name }}, {{ p.address }}
+            {{ p.name }}, {{ p.address.city }} {{ p.address.street }}
           </option>
         </select>
-        <label class="form-label" for="pharmacySelect">Surname</label>
+        <label class="form-label" for="pharmacySelect">Pharmacy</label>
       </div>
       <button class="btn btn-primary btn-block" @click="registerUser">Submit</button>
     </div>
@@ -61,10 +88,14 @@ export default {
       email: "",
       password: "",
       name: "",
-      surname: ""
+      surname: "",
+      address:{}
     }
   },
   mounted() {
+    if(this.$store.state.userType!=='SystemAdmin'){
+      this.$router.push("/")
+    }
     this.$http.get('http://localhost:8080/pharmacy/getAll').then(response => {
       this.pharmacies = response.data
     });
@@ -76,7 +107,8 @@ export default {
         'password': this.password,
         'name': this.name,
         'surname': this.surname,
-        'type': this.type
+        'type': this.type,
+        'address':this.address
       }
       if (this.type == "PHARMACY_ADMIN") {
         user['pharmacyId'] = this.pharmacyId;

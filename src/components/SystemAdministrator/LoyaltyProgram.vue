@@ -45,7 +45,7 @@
         </tr>
         <tr>
           <td>
-            <label class="form-label" for="form1Example2">Minimum points for gold user status</label>
+            <label class="form-label" for="form1Example3">Minimum points for gold user status</label>
           </td>
           <td>
             <input v-model="goldMinimumPoints" type="number" min="2" id="form1Example3" class="form-control"
@@ -57,7 +57,7 @@
         </tr>
         <tr>
           <td>
-            <label class="form-label" for="form1Example2">Silver status discount</label>
+            <label class="form-label" for="form1Example4">Silver status discount</label>
           </td>
           <td>
             <input type="range" id="form1Example4" style="direction: rtl" step="0.05"
@@ -71,7 +71,7 @@
         </tr>
         <tr>
           <td>
-            <label class="form-label" for="form1Example2">Gold status discount</label>
+            <label class="form-label" for="form1Example5">Gold status discount</label>
           </td>
           <td>
             <input type="range" id="form1Example5" style="direction: rtl" step="0.05" class="form-control" min="0.5"
@@ -114,6 +114,9 @@ export default {
   },
   methods: {
     init() {
+      if(this.$store.state.userType!=='SystemAdmin'){
+        this.$router.push("/")
+      }
       this.$http.get("http://localhost:8080/loyalty/")
           .then(response => {
             this.assignOldData(response.data)

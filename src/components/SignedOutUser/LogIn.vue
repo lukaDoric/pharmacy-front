@@ -45,7 +45,9 @@ export default {
   },
   name: "LogIn",
   mounted() {
-
+    if(this.$store.state.userType!==null){
+      this.$router.push("/")
+    }
   },
   computed: {
     JwtAuthenticationRequest() {
@@ -74,7 +76,7 @@ export default {
     dispatch(type) {
       let router = this.$router;
       if (type != null) {
-        router.push("/home");
+        router.push("/medicine");
       }
     }
   },

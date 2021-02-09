@@ -43,7 +43,7 @@ export default {
             store.dispatch('startSession', response.data);
             this.$router.push("/home")
           })
-          .catch(err => alert(err.response.data));
+          .catch(err=>{alert("Something went wrong. Please don't refresh page before typing new password and try again!");this.$router.push("/login");console.log(err.response.data)});
     }
   }
 }

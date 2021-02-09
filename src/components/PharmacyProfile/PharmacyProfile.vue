@@ -208,7 +208,7 @@ export default {
             .catch(err => {
               {
                 this.subscribed = err.response.data;
-                console.log("Backend error")
+                alert("Sorry, something went wrong.")
               }
             });
       }
@@ -224,7 +224,7 @@ export default {
             .catch(err => {
               {
                 this.subscribed = err.response.data;
-                console.log("Backend error")
+                alert("Sorry, something went wrong.")
               }
             });
       }

@@ -67,6 +67,11 @@ export default {
       loading: false
     }
   },
+  mounted() {
+    if(this.$store.state.userType!=='Patient'){
+      this.$router.push("/")
+    }
+  },
   methods: {
     async scanCode(e) {
 
@@ -107,7 +112,15 @@ export default {
             this.pharmaciesOriginal = response.data;
           })
           .catch(err => {
-            alert(err.response.data);
+            if(err.response.status==400){
+              alert("You sent qr code with bad information!")
+            }
+            else if(err.response.status==404){
+              alert("Sorry, medicine you need is out of stock!")
+            }
+            else{
+              alert("Sorry, something went wrong!")
+            }
             this.resetData();
           });
     },

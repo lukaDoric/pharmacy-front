@@ -20,13 +20,10 @@
           </tr>
           </tbody>
         </table>
-
       </b-jumbotron>
-
     </div>
 
     <div class="col-lg-6">
-
       <b-jumbotron v-if="complaint!=null">
         <h3>Complaint by {{ complaint.patientName }} {{ complaint.patientSurname }} about
           {{ subjectString(complaint) }}</h3>
@@ -38,8 +35,10 @@
         <div v-if="loading" class="spinner"></div>
         <div>
           <h3>Write your answer</h3>
+          <br>
           <textarea rows="20" style="width: 90%" v-model="answerText"></textarea>
         </div>
+        <br>
         <div>
           <button class="btn btn-info" v-on:click="resolveComplaint">Submit</button>
         </div>
@@ -65,6 +64,9 @@ export default {
   },
   methods: {
     init() {
+      if(this.$store.state.userType!=='SystemAdmin'){
+        this.$router.push("/")
+      }
       this.complaints = [];
       this.complaint = null;
       this.answerText = "";

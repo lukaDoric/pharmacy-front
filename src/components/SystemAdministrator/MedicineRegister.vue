@@ -121,6 +121,9 @@ export default {
     }
   },
   mounted() {
+    if(this.$store.state.userType!=='SystemAdmin'){
+      this.$router.push("/")
+    }
     this.getAllMedicine();
   },
   methods: {

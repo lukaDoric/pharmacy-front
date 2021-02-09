@@ -98,6 +98,9 @@ export default {
       });
     },
     init() {
+      if(this.$store.state.userType!=='Supplier'){
+        this.$router.push("/")
+      }
       this.$http.get("http://localhost:8080/offer/").then(response => this.offers = response.data);
       this.selectedOffer = null;
     }
