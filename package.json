@@ -23,6 +23,7 @@
     "vue-browser-geolocation": "^1.8.0",
     "vue-router": "^3.4.9",
     "vuejs-datepicker": "^1.6.2",
+    "vue-star-rating": "^1.7.0",
     "vuelayers": "^0.11.30",
     "vuex": "^3.6.0"
   },
