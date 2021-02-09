@@ -95,7 +95,28 @@
           </div>
 
           <div class="panel-body" v-if="displayMode === 3">
-            <p>This is pharmacies table (use your imagination)</p>
+            <table class="table table-dark table-hover table-bordered mt-3">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Current rating</th>
+                <th>Your rating</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="p in pharmacies" v-bind:key="p.id">
+                <td>{{ p.name }}</td>
+                <td>{{ p.address.country }}, {{ p.address.city }}, {{ p.address.street }}</td>
+                <td>{{ p.rating }}</td>
+                <td>
+                  <star-rating @rating-selected="onRatingSelectedPharmacy(p.id, $event)" v-bind:star-size="20"
+                               v-bind:show-rating="false"/>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-info btn-block" @click="onSubmitRatingPharmacies">Submit rating</button>
           </div>
         </div>
       </div>
@@ -119,7 +140,8 @@ export default {
       pharmacies: [],
       medicineRatings: new Map(),
       dermatologistRatings: new Map(),
-      pharmacistRatings: new Map()
+      pharmacistRatings: new Map(),
+      pharmacyRatings: new Map()
     }
   },
   mounted() {
@@ -143,6 +165,13 @@ export default {
           this.pharmacists = response.data
         })
         .catch(err => console.log(err.response.data))
+
+    this.$http
+        .get("http://localhost:8080/rating/pharmacies")
+        .then(response => {
+          this.pharmacies = response.data
+        })
+        .catch(err => console.log(err.response.data))
   },
   methods: {
     switchDisplayMode(mode) {
@@ -158,7 +187,7 @@ export default {
       this.pharmacistRatings.set(id, rating)
     },
     onRatingSelectedPharmacy(id, rating) {
-      console.log(id + ',' + rating)
+      this.pharmacyRatings.set(id, rating)
     },
     onSubmitRatingMedicine() {
       let data = []
@@ -200,7 +229,17 @@ export default {
           .catch(err => alert(err.response.data))
     },
     onSubmitRatingPharmacies() {
-
+      let data = []
+      for (let [key, value] of this.pharmacyRatings) {
+        data.push({id: key, rating: value})
+      }
+      this.$http
+          .post("http://localhost:8080/rating/pharmacies", data)
+          .then(response => {
+            response.data
+            alert("Rating submitted!")
+          })
+          .catch(err => alert(err.response.data))
     },
   }
 }
