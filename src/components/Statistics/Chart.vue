@@ -533,11 +533,11 @@ export default {
       incomeLoaded: false,
       selectedMedicine: 0,
       medicineName: 'Select medicine',
-      medicines: [],
+      medicines: [{name: '', form: ''}],
       examYear: '',
       medicineYear: '',
       incomeYear: '',
-      pharmacy: '',
+      pharmacy: {name: ''},
       dermatologists: [],
       pharmacists: [],
       filterPharmacist: '',
@@ -553,23 +553,17 @@ export default {
         })
 
     this.$http
-        .get('http://localhost:8080/pharmacy/getPharmacyById/' + 4)
-        .then(response => {
-          this.pharmacy = response.data.pharmacy;
-          this.dermatologists = response.data.dermatologists;
-          this.pharmacists = response.data.pharmacists;
-        })
-
-    this.$http
         .get('http://localhost:8080/medicine/getSearchedMedicine')
         .then(response => {
           this.searchedMedicine = response.data;
         })
 
     this.$http
-        .get('http://localhost:8080/pharmacy/getPharmacyByAdmin')
+        .get('http://localhost:8080/pharmacy/getAllPharmacyInfoByPharmacyAdmin')
         .then(response => {
           this.pharmacy = response.data.pharmacy;
+          this.dermatologists = response.data.dermatologists;
+          this.pharmacists = response.data.pharmacists;
         })
   },
 
