@@ -32,7 +32,9 @@
                 <td>{{ m.form }}</td>
                 <td>{{ m.manufacturer }}</td>
                 <td>{{ m.rating }}</td>
-                <td></td>
+                <td>
+                  <star-rating v-bind:star-size="20" v-bind:show-rating="false"/>
+                </td>
               </tr>
               </tbody>
             </table>
@@ -53,10 +55,14 @@
                 <td>{{ d.name }}</td>
                 <td>{{ d.surname }}</td>
                 <td>{{ d.rating }}</td>
-                <td></td>
+                <td>
+                  <star-rating @rating-selected="onRatingSelectedDermatologist(d.id, $event)" v-bind:star-size="20"
+                               v-bind:show-rating="false"/>
+                </td>
               </tr>
               </tbody>
             </table>
+            <button class="btn btn-info btn-block" @click="onSubmitRatingDermatologists">Submit rating</button>
           </div>
 
           <div class="panel-body" v-if="displayMode === 2">
@@ -74,10 +80,16 @@
                 <td>{{ p.name }}</td>
                 <td>{{ p.surname }}</td>
                 <td>{{ p.rating }}</td>
-                <td></td>
+                <td>
+                  <div class="d-inline-flex justify-content-center">
+                    <star-rating @rating-selected="onRatingSelectedPharmacist(p.id, $event)" v-bind:star-size="25"
+                                 v-bind:show-rating="false"/>
+                  </div>
+                </td>
               </tr>
               </tbody>
             </table>
+            <button class="btn btn-info btn-block" @click="onSubmitRatingPharmacists">Submit rating</button>
           </div>
 
           <div class="panel-body" v-if="displayMode === 3">
@@ -91,15 +103,20 @@
 </template>
 
 <script>
+import StarRating from 'vue-star-rating'
+
 export default {
   name: "Rating",
+  components: {StarRating},
   data() {
     return {
       displayMode: 0,
       medicine: [],
       dermatologists: [],
       pharmacists: [],
-      pharmacies: []
+      pharmacies: [],
+      dermatologistRatings: new Map(),
+      pharmacistRatings: new Map()
     }
   },
   mounted() {
@@ -108,26 +125,64 @@ export default {
         .then(response => {
           this.medicine = response.data
         })
-        .catch(err => alert(err.response.data))
+        .catch(err => console.log(err.response.data))
 
     this.$http
         .get("http://localhost:8080/rating/dermatologists")
         .then(response => {
           this.dermatologists = response.data
         })
-        .catch(err => alert(err.response.data))
+        .catch(err => console.log(err.response.data))
 
     this.$http
         .get("http://localhost:8080/rating/pharmacists")
         .then(response => {
           this.pharmacists = response.data
         })
-        .catch(err => alert(err.response.data))
+        .catch(err => console.log(err.response.data))
   },
   methods: {
     switchDisplayMode(mode) {
       this.displayMode = mode
-    }
+    },
+    onRatingSelectedDermatologist(id, rating) {
+      this.dermatologistRatings.set(id, rating)
+    },
+    onRatingSelectedPharmacist(id, rating) {
+      this.pharmacistRatings.set(id, rating)
+    },
+    onSubmitRatingMedicine() {
+
+    },
+    onSubmitRatingDermatologists() {
+      let data = []
+      for (let [key, value] of this.dermatologistRatings) {
+        data.push({id: key, rating: value})
+      }
+      this.$http
+          .post("http://localhost:8080/rating/dermatologists", data)
+          .then(response => {
+            response.data
+            alert("Rating submitted!")
+          })
+          .catch(err => alert(err.response.data))
+    },
+    onSubmitRatingPharmacists() {
+      let data = []
+      for (let [key, value] of this.pharmacistRatings) {
+        data.push({id: key, rating: value})
+      }
+      this.$http
+          .post("http://localhost:8080/rating/pharmacists", data)
+          .then(response => {
+            response.data
+            alert("Rating submitted!")
+          })
+          .catch(err => alert(err.response.data))
+    },
+    onSubmitRatingPharmacies() {
+
+    },
   }
 }
 </script>
