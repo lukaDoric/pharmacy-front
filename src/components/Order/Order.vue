@@ -25,12 +25,27 @@
       </div>
     </b-jumbotron>
     <b-jumbotron class="jumbotron">
-      <h1 class="display-4">Recent orders</h1>
-      <div v-for="(order, index) in recentOrders" :key="index">
+      <div class="d-flex bd-highlight mb-3">
+        <h1 class="display-4">Recent orders</h1>
+        <div class="dropdown"  id="status">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">{{ statusName }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" @click="changeFilter('All')">All</a>
+            <a class="dropdown-item" href="#" @click="changeFilter('Waiting')">Waiting</a>
+            <a class="dropdown-item" href="#" @click="changeFilter('Processed')">Processed</a>
+          </div>
+        </div>
+      </div>
+      <div v-for="(order, index) in filterOrders" :key="index">
         <div class="d-flex bd-highlight mb-3">
           <button type="button" class="btn btn-danger mt-3 mr-2" @click="removeOrder(order.id)">Remove order</button>
+          <button type="button" class="btn btn-success mt-3 mr-2">Update order</button>
           <h4 class="mt-3 ml-5">Deadline: {{ order.deadlineString }}</h4>
           <h4 class="mt-3 ml-5">Order id: {{ order.id }}</h4>
+          <h4 class="mt-3 ml-5" v-if="order.accepted">Status: PROCESSED</h4>
+          <h4 class="mt-3 ml-5" v-else>Status: WAITING</h4>
         </div>
         <table class="table table-dark">
           <thead>
@@ -77,6 +92,7 @@ export default {
   components: {OrderItem},
   data() {
     return {
+      filter: '',
       items: [{medicineId: '', amount: 0}],
       deadline: null,
       medicineName: '',
@@ -85,7 +101,8 @@ export default {
       recentOrders: [],
       medicines: [],
       offersList: [],
-      today: new Date().toISOString().split('T')[0]
+      today: new Date().toISOString().split('T')[0],
+      statusName: 'All'
     }
   },
 
@@ -140,15 +157,23 @@ export default {
     removeOrder(orderId) {
       this.$http
           .delete('http://localhost:8080/order/deleteOrder/' + orderId)
-          .then(window.location.reload())
-          .catch(reason => alert(reason.message));
+          .then(response => {
+            alert(response.data);
+            window.location.reload();
+          }).catch(err => {
+        alert(err.response.data)
+      });
     },
 
     acceptOffer(offerId) {
       this.$http
           .put('http://localhost:8080/offer/acceptOffer/' + offerId)
-          .then(window.location.reload())
-          .catch(reason => alert(reason.message));
+          .then(response => {
+            alert(response.data);
+            window.location.reload();
+          }).catch(err => {
+        alert(err.response.data)
+      });
     },
 
     formatDate(date) {
@@ -164,6 +189,29 @@ export default {
 
     removeOrderItem() {
       this.items.pop()
+    },
+
+    changeFilter(name) {
+      this.statusName = name;
+      this.filter = name;
+    }
+  },
+
+  computed: {
+    filterOrders() {
+      return this.recentOrders.filter(order => {
+        switch (this.filter) {
+          case 'All':
+            return true;
+
+          case 'Waiting':
+            return !order.accepted;
+
+          case 'Processed':
+            return order.accepted;
+        }
+        return true;
+      });
     }
   }
 }
@@ -172,5 +220,9 @@ export default {
 <style scoped>
 .btn {
   margin-top: 2%;
+}
+
+#status {
+  margin-left: 10%;
 }
 </style>
