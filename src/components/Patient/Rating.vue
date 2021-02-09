@@ -16,7 +16,26 @@
       <div class="panel-group">
         <div class="panel panel-primary">
           <div class="panel-body" v-if="displayMode === 0">
-            <p>This is medicine table (use your imagination)</p>
+            <table class="table table-dark table-hover table-bordered mt-3">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Form</th>
+                <th>Manufacturer</th>
+                <th>Current rating</th>
+                <th>Your rating</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="m in medicine" v-bind:key="m.id">
+                <td>{{ m.name }}</td>
+                <td>{{ m.form }}</td>
+                <td>{{ m.manufacturer }}</td>
+                <td>{{ m.rating }}</td>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
           </div>
 
           <div class="panel-body" v-if="displayMode === 1">
@@ -84,6 +103,13 @@ export default {
     }
   },
   mounted() {
+    this.$http
+        .get("http://localhost:8080/rating/medicine")
+        .then(response => {
+          this.medicine = response.data
+        })
+        .catch(err => alert(err.response.data))
+
     this.$http
         .get("http://localhost:8080/rating/dermatologists")
         .then(response => {
