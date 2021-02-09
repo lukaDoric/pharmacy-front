@@ -57,7 +57,7 @@ export default {
       complaints: [],
       complaint: null,
       answerText: "",
-      loading:false,
+      loading: false,
     }
   },
   mounted() {
@@ -89,7 +89,7 @@ export default {
           .then(response => {
             alert(response.data);
             this.init();
-            this.loading= false;
+            this.loading = false;
           });
     }
   }

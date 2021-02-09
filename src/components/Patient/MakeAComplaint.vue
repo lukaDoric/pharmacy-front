@@ -1,13 +1,13 @@
 <template>
   <b-jumbotron>
     <div class="row">
-      <div class="col-lg-6" >
-        <select v-model="typeSelected" style="width: 80%;" selectedIndex="2" @change="getDropValues">
-        <option v-for="t in type" v-bind:key="t">{{t}}</option>
-      </select></div>
       <div class="col-lg-6">
-        <select v-model="subject" style="width: 80%;"  v-bind:disabled="subject==null">
-          <option v-for="s in subjects" v-bind:key="s.id" v-bind:value="s" >{{stringify(s)}}</option>
+        <select v-model="typeSelected" style="width: 80%;" selectedIndex="2" @change="getDropValues">
+          <option v-for="t in type" v-bind:key="t">{{ t }}</option>
+        </select></div>
+      <div class="col-lg-6">
+        <select v-model="subject" style="width: 80%;" v-bind:disabled="subject==null">
+          <option v-for="s in subjects" v-bind:key="s.id" v-bind:value="s">{{ stringify(s) }}</option>
         </select>
       </div>
     </div>
@@ -29,71 +29,69 @@ export default {
   data() {
     return {
       type: ["Dermatologist", "Pharmacists", "Pharmacy"],
-      typeSelected:"Dermatologist",
-      subject:"",
-      subjects:"",
-      complaintText:"",
+      typeSelected: "Dermatologist",
+      subject: "",
+      subjects: "",
+      complaintText: "",
     }
   },
-  methods:{
-    getDropValues(){
-      switch (this.typeSelected){
+  methods: {
+    getDropValues() {
+      switch (this.typeSelected) {
         case "Dermatologist":
           this.$http.get("http://localhost:8080/complaints/dermatologists")
-          .then(response=> {
-            this.subjects = response.data;
-            if(this.subjects.length!=0){
-              this.subject = response.data[0];
-            }
-            else {
-              this.subject =null;
-            }
-          });
+              .then(response => {
+                this.subjects = response.data;
+                if (this.subjects.length != 0) {
+                  this.subject = response.data[0];
+                } else {
+                  this.subject = null;
+                }
+              });
           break;
         case "Pharmacists":
           this.$http.get("http://localhost:8080/complaints/pharmacists")
-          .then(response=> {
-            this.subjects = response.data;
-            if(this.subjects.length!=0){
-              this.subject = response.data[0];
-            }
-            else {
-              this.subject =null;
-            }
-          });
+              .then(response => {
+                this.subjects = response.data;
+                if (this.subjects.length != 0) {
+                  this.subject = response.data[0];
+                } else {
+                  this.subject = null;
+                }
+              });
           break;
         case "Pharmacy":
           this.$http.get("http://localhost:8080/complaints/pharmacies")
-              .then(response=> {
+              .then(response => {
                 this.subjects = response.data;
-                if(this.subjects.length!=0){
+                if (this.subjects.length != 0) {
                   this.subject = response.data[0];
-                }
-                else {
-                  this.subject =null;
+                } else {
+                  this.subject = null;
                 }
               });
       }
     },
-    stringify(subject){
+    stringify(subject) {
       let str = subject.name;
-      if("surname" in subject){
+      if ("surname" in subject) {
         str = str + " " + subject.surname;
       }
       return str;
     },
-    submit(){
+    submit() {
 
       let complaint;
       let subject = this.subject;
-      if(this.typeSelected==="Pharmacy"){
-        complaint = {"pharmacyId":subject.id, "subjectType":"PHARMACY", "complaintText":this.complaintText};
-      }
-      else{
-        complaint = {"staffId":subject.id, "staffName":subject.nameInput,
-          "staffSurname":subject.surname, "complaintText":this.complaintText};
-        if(this.typeSelected==="Pharmacist"){
-          complaint["subjectType"]="DERMATOLOGIST";
+      if (this.typeSelected === "Pharmacy") {
+        complaint = {"pharmacyId": subject.id, "subjectType": "PHARMACY", "complaintText": this.complaintText};
+      } else {
+        complaint = {
+          "staffId": subject.id, "staffName": subject.nameInput,
+          "staffSurname": subject.surname, "complaintText": this.complaintText
+        };
+        if (this.typeSelected === "Pharmacist") {
+          complaint["subjectType"] = "DERMATOLOGIST";
         }
       }
       this.$http.post("http://localhost:8080/complaints/", complaint)
