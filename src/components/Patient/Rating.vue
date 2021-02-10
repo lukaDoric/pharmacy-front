@@ -33,7 +33,8 @@
                 <td>{{ m.manufacturer }}</td>
                 <td>{{ m.rating }}</td>
                 <td>
-                  <star-rating @rating-selected="onRatingSelectedMedicine(m.id, $event)" v-bind:star-size="20"
+                  <star-rating v-model="m.myRating" @rating-selected="onRatingSelectedMedicine(m.id, $event)"
+                               v-bind:star-size="20"
                                v-bind:show-rating="false"/>
                 </td>
               </tr>
@@ -58,7 +59,8 @@
                 <td>{{ d.surname }}</td>
                 <td>{{ d.rating }}</td>
                 <td>
-                  <star-rating @rating-selected="onRatingSelectedDermatologist(d.id, $event)" v-bind:star-size="20"
+                  <star-rating v-model="d.myRating" @rating-selected="onRatingSelectedDermatologist(d.id, $event)"
+                               v-bind:star-size="20"
                                v-bind:show-rating="false"/>
                 </td>
               </tr>
@@ -84,7 +86,8 @@
                 <td>{{ p.rating }}</td>
                 <td>
                   <div class="d-inline-flex justify-content-center">
-                    <star-rating @rating-selected="onRatingSelectedPharmacist(p.id, $event)" v-bind:star-size="25"
+                    <star-rating v-model="p.myRating" @rating-selected="onRatingSelectedPharmacist(p.id, $event)"
+                                 v-bind:star-size="25"
                                  v-bind:show-rating="false"/>
                   </div>
                 </td>
@@ -110,7 +113,8 @@
                 <td>{{ p.address.country }}, {{ p.address.city }}, {{ p.address.street }}</td>
                 <td>{{ p.rating }}</td>
                 <td>
-                  <star-rating @rating-selected="onRatingSelectedPharmacy(p.id, $event)" v-bind:star-size="20"
+                  <star-rating v-model="p.myRating" @rating-selected="onRatingSelectedPharmacy(p.id, $event)"
+                               v-bind:star-size="20"
                                v-bind:show-rating="false"/>
                 </td>
               </tr>
