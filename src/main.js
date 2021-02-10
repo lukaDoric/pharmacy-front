@@ -13,7 +13,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Home from "@/components/Home";
 import OurTeam from "@/components/OurTeam/OurTeam";
-import Contact from "@/components/Contact/Contact"
 import RegisterPatient from "@/components/SignedOutUser/RegisterPatient";
 import LogIn from "@/components/SignedOutUser/LogIn";
 import axios from "axios";
@@ -45,7 +44,7 @@ import MakeAComplaint from "@/components/Patient/MakeAComplaint";
 import ResolveAComplaint from "@/components/SystemAdministrator/ResolveAComplaint";
 import ManagePharmacyAdminProfileAndPharmacy
     from "@/components/PharmacyAdminManage/ManagePharmacyAdminProfileAndPharmacy";
-import Chart from "@/components/Statistics/Chart";
+import Statistic from "@/components/Statistics/Statistic";
 import PharmacySearch from "@/components/Pharmacy/PharmacySearch";
 import Subscriptions from "@/components/Patient/Subscriptions";
 import ChangeUserInfo from "@/components/ChangeUserInfo/ChangeUserInfo";
@@ -63,7 +62,6 @@ Vue.use(Datepicker);
 const routes = [
     {path: '/medicine', component: Medicine},
     {path: '/ourteam', component: OurTeam},
-    {path: '/contact', component: Contact},
     {path: '/register/patient', component: RegisterPatient},
     {path: '/login', component: LogIn},
     {path: '/emailSent', component: ActivationMailSent},
@@ -95,11 +93,12 @@ const routes = [
     {path: '/complaint/resolve', component: ResolveAComplaint},
     {path: '/account/update', component:ChangeUserInfo},
     {path: '/managePharmacy', component: ManagePharmacyAdminProfileAndPharmacy},
-    {path: '/chart', component: Chart},
     {path: '/qr', component: QR},
     {path: '/subscriptions', component: Subscriptions},
     {path: '/pharmacies', component: PharmacySearch},
-    {path: '/rating', component: Rating}
+    {path: '/rating', component: Rating},
+    {path: '/statistic', component: Statistic},
+    {path: '/pharmacies', component: PharmacySearch}
 ];
 
 const router = new VueRouter({

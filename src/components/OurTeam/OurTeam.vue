@@ -11,7 +11,13 @@ import Dermatologists from "@/components/OurTeam/Dermatologists";
 
 export default {
   name: "OurTeam",
-  components: {Dermatologists, Pharmacists}
+  components: {Dermatologists, Pharmacists},
+
+  mounted() {
+    if (this.$store.state.userType !== 'PharmacyAdmin' && this.$store.state.userType !== 'Patient') {
+      this.$router.push("/")
+    }
+  }
 }
 </script>
 
