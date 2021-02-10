@@ -92,7 +92,7 @@
       <div>
         <h3>Create new appointment</h3>
         <div id="appointment" class="d-flex justify-content-center">
-          <input v-model="startDate" type="date"/>
+          <input :min="today" v-model="startDate" type="date"/>
           <input v-model="startTime" type="time"/>
           <input v-model="durationTime" type="number" placeholder="Duration..."/>
           <input v-model="price" type="number" placeholder="Price in dollars..."/>
@@ -120,7 +120,8 @@ export default {
       startDate: '',
       startTime: '',
       durationTime: '',
-      price: ''
+      price: '',
+      today: new Date().toISOString().split('T')[0]
     }
   },
 
@@ -161,9 +162,12 @@ export default {
         examStart: startDate,
         duration: this.durationTime,
         price: this.price
+      }).then(response => {
+        alert(response.data);
+        window.location.reload()
       }).catch(err => {
         alert(err.response.data)
-      })
+      });
     }
   }
 }
