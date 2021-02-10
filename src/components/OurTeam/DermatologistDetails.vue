@@ -24,20 +24,7 @@
                    :value="shiftIntervals.dermatologist.email">
           </div>
         </div>
-        <div class="form-group row">
-          <label for="email" class="col-sm-2 col-form-label">Exam duration:</label>
-          <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext"
-                   :value="'~' + shiftIntervals.durationInMinutes + 'min'">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="email" class="col-sm-2 col-form-label">Price per exam:</label>
-          <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext"
-                   :value="'~' + shiftIntervals.price + '$'">
-          </div>
-        </div>
+
         <h2>Schedule</h2>
         <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">Monday</label>

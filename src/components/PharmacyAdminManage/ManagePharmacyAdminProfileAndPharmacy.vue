@@ -370,7 +370,8 @@ export default {
       this.$http.post('http://localhost:8080/user/changePassword', {
         oldPassword: this.oldPassword,
         newPassword: this.newPassword
-      }).then(response => alert(response.data)).catch(err => alert(err.response.data));
+      }).then(response => { alert(response.data); this.$store.dispatch('logOut');
+        this.$router.push("/login"); }).catch(err => alert(err.response.data));
     },
 
     updatePharmacy() {
