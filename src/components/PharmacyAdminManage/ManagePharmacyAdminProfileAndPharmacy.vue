@@ -466,9 +466,11 @@ export default {
         password: this.pharmacistPassword,
         name: this.pharmacistName,
         surname: this.pharmacistSurname,
-        country: this.pharmacistCountry,
-        street: this.pharmacistStreet,
-        city: this.pharmacistCity,
+        address: {
+          country: this.pharmacistCountry,
+          street: this.pharmacistStreet,
+          city: this.pharmacistCity
+        },
         shifts: shift
       }).then(response => {
         alert(response.data);
