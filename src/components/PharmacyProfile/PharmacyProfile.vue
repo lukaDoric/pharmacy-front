@@ -126,11 +126,12 @@
               <td>{{ medicine.name }}</td>
               <td>{{ medicine.form }}</td>
               <td>{{ medicine.rating }}</td>
-              <td v-if="medicine.currentPrice !== 0">{{ medicine.currentPrice + "$"}}</td>
+              <td v-if="medicine.currentPrice !== 0">{{ medicine.currentPrice + "$" }}</td>
               <td v-else>Price is not currently defined!</td>
               <td>
-                <button v-if="user == 'PharmacyAdmin'" type="button" class="btn btn-danger" @click="removeMedicine(medicine)">Remove medicine</button>
-                <button v-else type="button" class="btn btn-success">Order medicine</button>
+                <button v-if="user == 'PharmacyAdmin'" type="button" class="btn btn-danger"
+                        @click="removeMedicine(medicine)">Remove medicine
+                </button>
               </td>
             </tr>
             </tbody>

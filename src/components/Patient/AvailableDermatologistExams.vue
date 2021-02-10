@@ -42,8 +42,10 @@
           <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
           <td>{{ e.dermatologistRating }}</td>
           <td>
-            <button v-if="userType==='Patient'" class="btn btn-success" v-on:click="onSchedule(e.examId)">Schedule</button>
-            <button v-if="userType==='PharmacyAdmin'" class="btn btn-danger" v-on:click="onDelete(e.examId)">Delete</button>
+            <button v-if="userType==='Patient'" class="btn btn-success" v-on:click="onSchedule(e.examId)">Schedule
+            </button>
+            <button v-if="userType==='PharmacyAdmin'" class="btn btn-danger" v-on:click="onDelete(e.examId)">Delete
+            </button>
           </td>
         </tr>
         </tbody>
@@ -79,11 +81,12 @@ export default {
       this.$http
           .put("http://localhost:8080/patient-exam/", examId, config)
           .then(response => {
-            response.data
-            alert("Exam is scheduled successfully!")
+            alert(response.data);
             window.location.reload()
           })
-          .catch(reason => alert(reason.message))
+          .catch(err => {
+            alert(err.response.data)
+          });
     },
     onDelete(examId) {
       this.$http
