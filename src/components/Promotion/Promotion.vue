@@ -35,6 +35,12 @@ export default {
     }
   },
 
+  mounted() {
+    if (this.$store.state.userType !== 'PharmacyAdmin') {
+      this.$router.push("/")
+    }
+  },
+
   methods: {
     createPromotion() {
       if (this.discount === '' || this.message === '' || this.to === '' || this.from === '') {

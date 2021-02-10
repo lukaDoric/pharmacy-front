@@ -75,6 +75,10 @@ export default {
 
   mounted() {
 
+    if (this.$store.state.userType !== 'PharmacyAdmin') {
+      this.$router.push("/")
+    }
+
     this.$http
         .get('http://localhost:8080/priceList/')
         .then(response => {

@@ -118,6 +118,7 @@
               <th scope="col">Name</th>
               <th scope="col">Form</th>
               <th scope="col">Rating</th>
+              <th scope="col">Current price</th>
             </tr>
             </thead>
             <tbody v-for="(medicine, index) in filteredMedicines" :key="index">
@@ -125,8 +126,11 @@
               <td>{{ medicine.name }}</td>
               <td>{{ medicine.form }}</td>
               <td>{{ medicine.rating }}</td>
+              <td v-if="medicine.currentPrice !== 0">{{ medicine.currentPrice + "$"}}</td>
+              <td v-else>Price is not currently defined!</td>
               <td>
-                <button type="button" class="btn btn-danger" @click="removeMedicine(medicine)">Remove medicine</button>
+                <button v-if="user == 'PharmacyAdmin'" type="button" class="btn btn-danger" @click="removeMedicine(medicine)">Remove medicine</button>
+                <button v-else type="button" class="btn btn-success">Order medicine</button>
               </td>
             </tr>
             </tbody>
@@ -166,11 +170,17 @@ export default {
       filterMedicine: '',
       medicines: [],
       pharmacyId: null,
-      subscribed: false
+      subscribed: false,
+      user: this.$store.state.userType
     }
   },
 
   mounted() {
+
+    if (this.$store.state.userType !== 'PharmacyAdmin' && this.$store.state.userType !== 'SystemAdmin' && this.$store.state.userType !== 'Patient') {
+      this.$router.push("/")
+    }
+
     this.pharmacyId = this.$route.params.id;
     this.$http
         .get('http://localhost:8080/pharmacy/getPharmacyById/' + this.pharmacyId)

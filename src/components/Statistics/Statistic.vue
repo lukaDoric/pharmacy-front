@@ -217,7 +217,7 @@ import {mdbBarChart, mdbContainer} from "mdbvue";
 import Datepicker from 'vuejs-datepicker';
 
 export default {
-  name: "Chart",
+  name: "Statistic",
   components: {
     mdbBarChart,
     mdbContainer,
@@ -547,6 +547,11 @@ export default {
   },
 
   mounted() {
+
+    if (this.$store.state.userType !== 'PharmacyAdmin') {
+      this.$router.push("/")
+    }
+
     this.$http.get('http://localhost:8080/medicine/get/all')
         .then(response => {
           this.medicines = response.data;

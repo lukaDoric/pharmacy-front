@@ -107,6 +107,11 @@ export default {
   },
 
   mounted() {
+
+    if (this.$store.state.userType !== 'PharmacyAdmin') {
+      this.$router.push("/")
+    }
+
     axios
         .get('http://localhost:8080/order/getOrdersByPharmacy')
         .then(response => {

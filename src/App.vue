@@ -2,11 +2,15 @@
   <div id="app">
     <NavBar>
       <NavGroup side='mr-auto'>
-        <OurTeamLink/>
-        <OrderLink/>
-        <VacationRequests/>
-        <PriceListLink/>
-        <PromotionLink/>
+        <OurTeamLink v-if="user == 'PharmacyAdmin' || user == 'Patient' "></OurTeamLink>
+        <OrderLink v-if="user == 'PharmacyAdmin'"></OrderLink>
+        <VacationRequests v-if="user == 'PharmacyAdmin'"></VacationRequests>
+        <PriceListLink v-if="user == 'PharmacyAdmin'"></PriceListLink>
+        <PromotionLink v-if="user == 'PharmacyAdmin'"></PromotionLink>
+        <ManagePharmacyLink v-if="user == 'PharmacyAdmin'"></ManagePharmacyLink>
+        <PharmacyProfileLink v-if="user == 'PharmacyAdmin'"></PharmacyProfileLink>
+        <StatisticLink v-if="user == 'PharmacyAdmin'"></StatisticLink>
+        <MedicineReservationLink v-if="user == 'Patient'"/>
         <OffersLink v-if="user == 'Supplier'"></OffersLink>
         <OffersUpdateLink v-if="user == 'Supplier'"></OffersUpdateLink>
         <AddPharmacyLink v-if="user == 'SystemAdmin'"></AddPharmacyLink>
@@ -16,7 +20,6 @@
         <MakeAComplaintLink v-if="user == 'Patient'"></MakeAComplaintLink>
         <QRLink v-if="user == 'Patient'"></QRLink>
         <MedicineRegisterLink v-if="user == 'SystemAdmin'"></MedicineRegisterLink>
-        <MedicineReservationLink v-if="user == 'Patient'"/>
       </NavGroup>
       <NavGroup side="ml-auto">
         <RegisterPatientLink v-if="!isLogged"/>
@@ -51,10 +54,14 @@ import LoyaltyProgramLink from "@/components/NavBar/LoyaltyProgramLink";
 import MakeAComplaintLink from "@/components/NavBar/MakeAComplaintLink";
 import ResolveComplaintLink from "@/components/NavBar/ResolveComplaintLink"
 import QRLink from "@/components/NavBar/QRLink";
+import ManagePharmacyLink from "@/components/NavBar/ManagePharmacyLink";
+import PharmacyProfileLink from "@/components/NavBar/PharmacyProfileLink";
+import StatisticLink from "@/components/NavBar/StatisticLink";
 
 export default {
   name: 'App',
   components: {
+    StatisticLink,
     QRLink,
     ResolveComplaintLink,
     MakeAComplaintLink,
@@ -65,6 +72,7 @@ export default {
     OffersUpdateLink,
     OffersLink,
     MedicineReservationLink,
+    PharmacyProfileLink,
     PriceListLink,
     VacationRequests,
     LogIn,
@@ -75,6 +83,7 @@ export default {
     RegisterPatientLink,
     OrderLink,
     PromotionLink,
+    ManagePharmacyLink
   },
   created() {
     this.$store.dispatch('startSession', null);
