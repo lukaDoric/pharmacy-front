@@ -114,9 +114,12 @@ export default {
     },
 
     removeDermatologist(dermatologist) {
-      this.$http.delete('http://localhost:8080/pharmacy/deleteDermatologist/' + dermatologist.id).catch(err => {
+      this.$http.delete('http://localhost:8080/pharmacy/deleteDermatologist/' + dermatologist.id).then(response => {
+        alert(response.data);
+        window.location.reload();
+      }).catch(err => {
         alert(err.response.data)
-      })
+      });
     }
   },
 

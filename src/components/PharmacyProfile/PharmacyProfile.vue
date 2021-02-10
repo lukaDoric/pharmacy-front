@@ -228,6 +228,9 @@ export default {
       this.$http.delete('http://localhost:8080/pharmacy/deleteMedicine/' + medicine.id).then(response => {
         alert(response.data);
         window.location.reload()
+      }).then(response => {
+        alert(response.data);
+        window.location.reload();
       }).catch(err => {
         alert(err.response.data)
       });

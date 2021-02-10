@@ -466,9 +466,12 @@ export default {
         street: this.pharmacistStreet,
         city: this.pharmacistCity,
         shifts: shift
-      })
-          .then(response => alert(response.data))
-          .catch(err => alert(err.response.data));
+      }).then(response => {
+        alert(response.data);
+        window.location.reload();
+      }).catch(err => {
+        alert(err.response.data)
+      });
     },
 
     addDermatologist() {
@@ -520,9 +523,12 @@ export default {
       this.$http.post('http://localhost:8080/pharmacy/addDermatologist/', {
         dermatologistId: this.selectedDermatologist,
         shifts: shift
-      })
-          .then(response => alert(response.data))
-          .catch(err => alert(err.response.data));
+      }).then(response => {
+        alert(response.data);
+        window.location.reload();
+      }).catch(err => {
+        alert(err.response.data)
+      });
     }
   }
 

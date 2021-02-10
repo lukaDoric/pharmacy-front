@@ -5,11 +5,11 @@
       <b-form-textarea v-model="message" placeholder="Notify patients about promotion..."></b-form-textarea>
       <div class="form-group col-md-6">
         <label>From:</label>
-        <b-form-input v-model="from" type="date"></b-form-input>
+        <b-form-input :min="today" v-model="from" type="date"></b-form-input>
       </div>
       <div class="form-group col-md-6">
         <label>To:</label>
-        <b-form-input v-model="to" type="date"></b-form-input>
+        <b-form-input :min="today" v-model="to" type="date"></b-form-input>
       </div>
       <div class="form-group col-md-6">
         <label>Enter discount in percentage for medicines:</label>
@@ -30,7 +30,8 @@ export default {
       from: '',
       to: '',
       message: '',
-      discount: ''
+      discount: '',
+      today: new Date().toISOString().split('T')[0]
     }
   },
 
@@ -41,7 +42,7 @@ export default {
         return;
       }
 
-      if (this.discount > 100 || this.discount < 0) {
+      if (this.discount > 100 || this.discount <= 0) {
         alert("Discount cannot be lower than 0 or greater than 100!")
         return;
       }
@@ -52,7 +53,11 @@ export default {
             to: this.to,
             notificationMessage: this.message,
             discount: this.discount
-          })
+          }).then(response => {
+        alert(response.data);
+      }).catch(err => {
+        alert(err.response.data)
+      });
     },
   }
 }

@@ -11,11 +11,11 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>From:</label>
-          <b-form-input v-model="from" type="date"></b-form-input>
+          <b-form-input :min="today" v-model="from" type="date"></b-form-input>
         </div>
         <div class="form-group col-md-6">
           <label>To:</label>
-          <b-form-input v-model="to" type="date"></b-form-input>
+          <b-form-input :min="today" v-model="to" type="date"></b-form-input>
         </div>
         <div>
           <select id="dropdown-1" text="Medicine" class="m-md-2" @change="onMedicineSelect($event)">
@@ -68,7 +68,8 @@ export default {
       to: '',
       price: '',
       medicines: [],
-      id: ''
+      id: '',
+      today: new Date().toISOString().split('T')[0]
     }
   },
 
