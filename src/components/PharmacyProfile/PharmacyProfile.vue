@@ -18,7 +18,7 @@
         </template>
       </vl-geoloc>
       <vl-feature>
-        <vl-geom-point :coordinates="[location[1], location[0]]"></vl-geom-point>
+        <vl-geom-point :coordinates="[location[0], location[1]]"></vl-geom-point>
       </vl-feature>
       <vl-layer-tile id="osm">
         <vl-source-osm></vl-source-osm>
@@ -189,10 +189,10 @@ export default {
           this.dermatologists = response.data.dermatologists;
           this.pharmacists = response.data.pharmacists;
           this.medicines = response.data.medicines;
-          this.location[0] = response.data.pharmacy.address.latitude;
-          this.location[1] = response.data.pharmacy.address.longitude;
-          this.center[1] = response.data.pharmacy.address.latitude;
+          this.location[0] = response.data.pharmacy.address.longitude;
+          this.location[1] = response.data.pharmacy.address.latitude;
           this.center[0] = response.data.pharmacy.address.longitude;
+          this.center[1] = response.data.pharmacy.address.latitude;
         })
     this.checkIfSubscribed();
   },
