@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import OrderItem from "@/components/Order/OrderItem";
 
 export default {
   name: "Order",

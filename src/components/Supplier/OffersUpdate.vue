@@ -93,9 +93,9 @@ export default {
     submit() {
       let offer = {'shippingDays': this.shippingDays, 'price': this.price, 'offerId': this.selectedOffer.offerId}
       this.$http.post(process.env.VUE_APP_BACKEND_URL + "offer/update", offer).then(response => {
-        console.log(response);
+        alert(response.data)
         this.init()
-      });
+      }).catch(err=>alert(err.response.data));
     },
     init() {
       if(this.$store.state.userType!=='Supplier'){
