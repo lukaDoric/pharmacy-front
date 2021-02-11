@@ -101,7 +101,7 @@ export default {
         this.dermatologists = this.allDermatologists;
       } else {
         this.$http
-            .get('http://localhost:8080/dermatologist/getDermatologistsByPharmacy/' + event.target.value)
+            .get(process.env.VUE_APP_BACKEND_URL + 'dermatologist/getDermatologistsByPharmacy/' + event.target.value)
             .then(response => {
               this.dermatologists = response.data;
             })
@@ -113,7 +113,7 @@ export default {
     },
 
     removeDermatologist(dermatologist) {
-      this.$http.delete('http://localhost:8080/pharmacy/deleteDermatologist/' + dermatologist.id).then(response => {
+      this.$http.delete(process.env.VUE_APP_BACKEND_URL + 'pharmacy/deleteDermatologist/' + dermatologist.id).then(response => {
         alert(response.data);
         window.location.reload();
       }).catch(err => {
