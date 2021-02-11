@@ -136,6 +136,8 @@
 </style>
 
 <script>
+import 'bootstrap/dist/js/bootstrap.bundle';
+import {jsPDF} from "jspdf";
 
 export default {
   name: "Medicine",
