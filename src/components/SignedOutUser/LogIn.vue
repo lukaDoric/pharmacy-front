@@ -59,8 +59,9 @@ export default {
   methods: {
     login() {
       let store = this.$store;
+      console.log("path:" + process.env.VUE_APP_BACKEND_URL)
       this.$http
-          .post('http://localhost:8080/login/', this.JwtAuthenticationRequest)
+          .post(process.env.VUE_APP_BACKEND_URL + 'login/', this.JwtAuthenticationRequest)
           .then(response => {
             store.dispatch('startSession', response.data);
             this.dispatch(response.data.userType);
