@@ -552,19 +552,19 @@ export default {
       this.$router.push("/")
     }
 
-    this.$http.get('http://localhost:8080/medicine/get/all')
+    this.$http.get(process.env.VUE_APP_BACKEND_URL + 'medicine/get/all')
         .then(response => {
           this.medicines = response.data;
         })
 
     this.$http
-        .get('http://localhost:8080/medicine/getSearchedMedicine')
+        .get(process.env.VUE_APP_BACKEND_URL + 'medicine/getSearchedMedicine')
         .then(response => {
           this.searchedMedicine = response.data;
         })
 
     this.$http
-        .get('http://localhost:8080/pharmacy/getAllPharmacyInfoByPharmacyAdmin')
+        .get(process.env.VUE_APP_BACKEND_URL + 'pharmacy/getAllPharmacyInfoByPharmacyAdmin')
         .then(response => {
           this.pharmacy = response.data.pharmacy;
           this.dermatologists = response.data.dermatologists;
@@ -591,7 +591,7 @@ export default {
       this.barChartQuarter.datasets[0].data = [];
 
       this.$http
-          .get('http://localhost:8080/statistic/exam/' + this.examYear.getFullYear())
+          .get(process.env.VUE_APP_BACKEND_URL + 'statistic/exam/' + this.examYear.getFullYear())
           .then(response => {
 
             this.examStatistics = response.data;
@@ -626,7 +626,7 @@ export default {
 
 
       this.$http
-          .get('http://localhost:8080/statistic/medicine/' + this.medicineYear.getFullYear() + "/" + this.selectedMedicine)
+          .get(process.env.VUE_APP_BACKEND_URL + 'statistic/medicine/' + this.medicineYear.getFullYear() + "/" + this.selectedMedicine)
           .then(response => {
             this.medicineStatistics = response.data;
 
@@ -655,7 +655,7 @@ export default {
       this.barChartIncomeDataMonth.datasets[0].data = [];
 
       this.$http
-          .get('http://localhost:8080/statistic/income/' + this.incomeYear.getFullYear())
+          .get(process.env.VUE_APP_BACKEND_URL + 'statistic/income/' + this.incomeYear.getFullYear())
           .then(response => {
             this.income = response.data;
 

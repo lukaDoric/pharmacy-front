@@ -39,7 +39,7 @@ export default {
     getDropValues() {
       switch (this.typeSelected) {
         case "Dermatologist":
-          this.$http.get("http://localhost:8080/complaints/dermatologists")
+          this.$http.get(process.env.VUE_APP_BACKEND_URL + "complaints/dermatologists")
               .then(response => {
                 this.subjects = response.data;
                 if (this.subjects.length != 0) {
@@ -50,7 +50,7 @@ export default {
               });
           break;
         case "Pharmacists":
-          this.$http.get("http://localhost:8080/complaints/pharmacists")
+          this.$http.get(process.env.VUE_APP_BACKEND_URL + "complaints/pharmacists")
               .then(response => {
                 this.subjects = response.data;
                 if (this.subjects.length != 0) {
@@ -61,7 +61,7 @@ export default {
               });
           break;
         case "Pharmacy":
-          this.$http.get("http://localhost:8080/complaints/pharmacies")
+          this.$http.get(process.env.VUE_APP_BACKEND_URL + "complaints/pharmacies")
               .then(response => {
                 this.subjects = response.data;
                 if (this.subjects.length != 0) {
@@ -94,7 +94,7 @@ export default {
           complaint["subjectType"] = "DERMATOLOGIST";
         }
       }
-      this.$http.post("http://localhost:8080/complaints/", complaint)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + "complaints/", complaint)
       .then(response=>{alert(response.data);})
           .catch(err=>alert(err.response.data))
     }

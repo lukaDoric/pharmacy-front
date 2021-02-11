@@ -86,7 +86,7 @@ export default {
     )
 
     this.$http
-        .get("http://localhost:8080/pharmacy/getAll/")
+        .get(process.env.VUE_APP_BACKEND_URL + "pharmacy/getAll/")
         .then(response => {
           this.pharmacies = response.data;
         })
@@ -98,7 +98,7 @@ export default {
     },
     onFilterSearch() {
       this.$http
-          .get("http://localhost:8080/pharmacy/" + this.ratingFilter + "/" + this.distance + "/" + this.userLon + "/" + this.userLat)
+          .get(process.env.VUE_APP_BACKEND_URL + "pharmacy/" + this.ratingFilter + "/" + this.distance + "/" + this.userLon + "/" + this.userLat)
           .then(response => {
             this.pharmacies = response.data;
           })

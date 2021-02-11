@@ -96,7 +96,7 @@ export default {
     if(this.$store.state.userType!=='SystemAdmin'){
       this.$router.push("/")
     }
-    this.$http.get('http://localhost:8080/pharmacy/getAll').then(response => {
+    this.$http.get(process.env.VUE_APP_BACKEND_URL + 'pharmacy/getAll').then(response => {
       this.pharmacies = response.data
     });
   },
@@ -113,7 +113,7 @@ export default {
       if (this.type == "PHARMACY_ADMIN") {
         user['pharmacyId'] = this.pharmacyId;
       }
-      this.$http.post('http://localhost:8080/register/user', user)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'register/user', user)
           .then(response => alert(response.data))
           .catch(err => alert(err.response.data));
     }

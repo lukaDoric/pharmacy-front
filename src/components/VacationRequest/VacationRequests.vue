@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   data() {
@@ -113,14 +112,14 @@ export default {
       this.$router.push("/")
     }
 
-    axios
-        .get('http://localhost:8080/vacation/pharmacistVacation')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'vacation/pharmacistVacation')
         .then(response => {
           this.pharmacistVacations = response.data;
         })
 
-    axios
-        .get('http://localhost:8080/vacation/dermatologistVacation')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'vacation/dermatologistVacation')
         .then(response => {
           this.dermatologistVacations = response.data;
         })
@@ -149,8 +148,8 @@ export default {
         return;
       }
 
-      axios
-          .post('http://localhost:8080/vacation/dermatologistVacation/',
+      this.$http
+          .post(process.env.VUE_APP_BACKEND_URL + 'vacation/dermatologistVacation/',
               {
                 id: this.dermatologistVacations[index].id,
                 name: this.dermatologistVacations[index].name,
@@ -193,8 +192,8 @@ export default {
       console.log(approved)
       console.log(this.pharmacistReason[index])
 
-      axios
-          .post('http://localhost:8080/vacation/pharmacistVacation/',
+      this.$http
+          .post(process.env.VUE_APP_BACKEND_URL + 'vacation/pharmacistVacation/',
               {
                 id: this.pharmacistVacations[index].id,
                 name: this.pharmacistVacations[index].name,

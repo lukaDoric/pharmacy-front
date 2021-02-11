@@ -43,7 +43,7 @@ export default {
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/pharmacistExam/")
+        .get(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/")
         .then(response => {
           this.exams = response.data
         })
@@ -52,7 +52,7 @@ export default {
   methods: {
     onCancel(id) {
       this.$http
-          .delete("http://localhost:8080/pharmacistExam/cancel/" + id)
+          .delete(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/cancel/" + id)
           .then(response => {
             response.data
             alert("Appointment successfully cancelled!")

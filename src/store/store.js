@@ -66,7 +66,7 @@ export const store = new Vuex.Store({
                         context.state.accessToken != null &&
                         Number.isInteger(context.state.expiresIn)) {
                         context.state.canChange = false;
-                        axios.post('http://localhost:8080/user/refresh ', {},
+                        axios.post(process.env.VUE_APP_BACKEND_URL + 'user/refresh ', {},
                             {
                                 headers: {
                                     Authorization: 'Bearer ' + context.state.accessToken

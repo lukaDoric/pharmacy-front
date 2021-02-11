@@ -320,23 +320,23 @@ export default {
     }
 
     this.$http
-        .get('http://localhost:8080/user/')
+        .get(process.env.VUE_APP_BACKEND_URL + 'user/')
         .then(response => {
           this.pharmacyAdmin = response.data
         });
 
     this.$http
-        .get('http://localhost:8080/pharmacy/getPharmacyByAdmin')
+        .get(process.env.VUE_APP_BACKEND_URL + 'pharmacy/getPharmacyByAdmin')
         .then(response => {
           this.pharmacy = response.data
         });
 
-    this.$http.get('http://localhost:8080/medicine/getIfDoesntExist')
+    this.$http.get(process.env.VUE_APP_BACKEND_URL + 'medicine/getIfDoesntExist')
         .then(response => {
           this.medicines = response.data;
         })
 
-    this.$http.get('http://localhost:8080/dermatologist/getOtherDermatologists')
+    this.$http.get(process.env.VUE_APP_BACKEND_URL + 'dermatologist/getOtherDermatologists')
         .then(response => {
           this.otherDermatologists = response.data;
         })
@@ -353,7 +353,7 @@ export default {
         return;
       }
 
-      this.$http.post('http://localhost:8080/user/', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'user/', {
         name: this.pharmacyAdmin.name,
         surname: this.pharmacyAdmin.surname,
         address: this.pharmacyAdmin.address
@@ -367,7 +367,7 @@ export default {
         return;
       }
 
-      this.$http.post('http://localhost:8080/user/changePassword', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'user/changePassword', {
         oldPassword: this.oldPassword,
         newPassword: this.newPassword
       }).then(response => { alert(response.data); this.$store.dispatch('logOut');
@@ -382,7 +382,7 @@ export default {
         return;
       }
 
-      this.$http.post('http://localhost:8080/pharmacy/updatePharmacy', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'pharmacy/updatePharmacy', {
         name: this.pharmacy.name,
         about: this.pharmacy.about,
         address: this.pharmacy.address
@@ -406,7 +406,7 @@ export default {
         return;
       }
 
-      this.$http.put('http://localhost:8080/pharmacy/addMedicine/' + this.selectedMedicine)
+      this.$http.put(process.env.VUE_APP_BACKEND_URL + 'pharmacy/addMedicine/' + this.selectedMedicine)
           .then(response => alert(response.data)).catch(err => alert(err.response.data));
     },
 
@@ -462,7 +462,7 @@ export default {
           'shiftDefined': isSunDefined
         }];
 
-      this.$http.post('http://localhost:8080/register/pharmacist', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'register/pharmacist', {
         email: this.pharmacistEmail,
         password: this.pharmacistPassword,
         name: this.pharmacistName,
@@ -527,7 +527,7 @@ export default {
           'shiftDefined': isSunDefined
         }];
 
-      this.$http.post('http://localhost:8080/pharmacy/addDermatologist/', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'pharmacy/addDermatologist/', {
         dermatologistId: this.selectedDermatologist,
         shifts: shift
       }).then(response => {

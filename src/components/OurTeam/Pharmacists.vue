@@ -59,7 +59,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   name: "Dermatologists",
@@ -75,15 +74,15 @@ export default {
   },
 
   mounted() {
-    axios
-        .get('http://localhost:8080/pharmacist/getAllPharmacists')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'pharmacist/getAllPharmacists')
         .then(response => {
           this.pharmacists = response.data;
           this.allPharmacists = response.data;
         })
 
-    axios
-        .get('http://localhost:8080/pharmacy/')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'pharmacy/')
         .then(response => {
           this.pharmacies = response.data;
         })
@@ -95,8 +94,8 @@ export default {
       if (event.target.value === 'All pharmacies') {
         this.pharmacists = this.allPharmacists;
       } else {
-        axios
-            .get('http://localhost:8080/pharmacist/getPharmacistsByPharmacy/' + event.target.value)
+        this.$http
+            .get(process.env.VUE_APP_BACKEND_URL + 'pharmacist/getPharmacistsByPharmacy/' + event.target.value)
             .then(response => {
               this.pharmacists = response.data;
             })
@@ -104,7 +103,7 @@ export default {
     },
 
     removePharmacist(pharmacist) {
-      this.$http.delete('http://localhost:8080/pharmacy/deletePharmacist/' + pharmacist.id).catch(err => {
+      this.$http.delete(process.env.VUE_APP_BACKEND_URL + 'pharmacy/deletePharmacist/' + pharmacist.id).catch(err => {
         alert(err.response.data)
       })
     }

@@ -114,7 +114,7 @@ export default {
 
   mounted() {
     this.dermatologistId = this.$route.params.id;
-    this.$http.get('http://localhost:8080/dermatologist/shiftIntervals/' + this.dermatologistId)
+    this.$http.get(process.env.VUE_APP_BACKEND_URL + 'dermatologist/shiftIntervals/' + this.dermatologistId)
         .then(response => {
           this.shiftIntervals = response.data;
         })
@@ -144,7 +144,7 @@ export default {
       }
 
       let startDate = new Date(this.startDate + 'T' + this.startTime)
-      this.$http.post('http://localhost:8080/exam/', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'exam/', {
         dermatologistId: this.dermatologistId,
         examStart: startDate,
         duration: this.durationTime,

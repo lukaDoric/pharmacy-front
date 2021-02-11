@@ -42,7 +42,7 @@ export default {
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/medicine-reservation/")
+        .get(process.env.VUE_APP_BACKEND_URL + "medicine-reservation/")
         .then(response => {
           this.reservations = response.data;
         })
@@ -51,7 +51,7 @@ export default {
     onCancel(reservationId) {
       console.log(reservationId)
       this.$http
-          .delete("http://localhost:8080/medicine-reservation/cancel/" + reservationId)
+          .delete(process.env.VUE_APP_BACKEND_URL + "medicine-reservation/cancel/" + reservationId)
           .then(window.location.reload())
           .catch(reason => (alert(reason.message)))
     }

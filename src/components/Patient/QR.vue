@@ -106,7 +106,7 @@ export default {
       }
     },
     getPharmacies(prescription) {
-      this.$http.post("http://localhost:8080/qr/pharmacies", prescription)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + "qr/pharmacies", prescription)
           .then(response => {
             this.pharmacies = response.data;
             this.pharmaciesOriginal = response.data;
@@ -132,7 +132,7 @@ export default {
     },
     buy(pharmacy) {
       this.loading = true;
-      this.$http.post("http://localhost:8080/qr/buy", pharmacy)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + "qr/buy", pharmacy)
           .then(response => {
             alert(response.data);
             this.resetData();

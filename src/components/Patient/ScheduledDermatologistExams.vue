@@ -45,7 +45,7 @@ export default {
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/patient-exam/")
+        .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/")
         .then(response => {
           this.exams = response.data;
         })
@@ -54,7 +54,7 @@ export default {
     onCancel(id) {
       const config = {headers: {'Content-Type': 'application/json'}};
       this.$http
-          .put("http://localhost:8080/patient-exam/cancel/", id, config)
+          .put(process.env.VUE_APP_BACKEND_URL + "patient-exam/cancel/", id, config)
           .then(response => {
             response.data
             alert("Exam is cancelled successfully!")

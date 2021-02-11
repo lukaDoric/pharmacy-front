@@ -66,7 +66,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   name: "Dermatologists",
@@ -82,15 +81,15 @@ export default {
   },
 
   mounted() {
-    axios
-        .get('http://localhost:8080/dermatologist/getAllDermatologists')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'dermatologist/getAllDermatologists')
         .then(response => {
           this.dermatologists = response.data;
           this.allDermatologists = response.data;
         })
 
-    axios
-        .get('http://localhost:8080/pharmacy/')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'pharmacy/')
         .then(response => {
           this.pharmacies = response.data;
         })
@@ -101,7 +100,7 @@ export default {
       if (event.target.value === 'All pharmacies') {
         this.dermatologists = this.allDermatologists;
       } else {
-        axios
+        this.$http
             .get('http://localhost:8080/dermatologist/getDermatologistsByPharmacy/' + event.target.value)
             .then(response => {
               this.dermatologists = response.data;

@@ -90,7 +90,7 @@ export default {
         'about': this.about,
 
       }
-      this.$http.post('http://localhost:8080/pharmacy/register', pharmacy)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'pharmacy/register', pharmacy)
           .then(response => {
             alert(response.data);
             this.getAllPharmacies()
@@ -98,7 +98,7 @@ export default {
           .catch(err => alert(err.response.data));
     },
     getAllPharmacies() {
-      this.$http.get('http://localhost:8080/pharmacy/getAll').then(response => {
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + 'pharmacy/getAll').then(response => {
         this.pharmacies = response.data
       });
     }

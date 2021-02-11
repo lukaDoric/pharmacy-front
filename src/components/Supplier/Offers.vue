@@ -110,11 +110,11 @@ export default {
       }
       this.selectedOrder = null;
       this.$http
-          .get("http://localhost:8080/order/notOffered")
+          .get(process.env.VUE_APP_BACKEND_URL + "order/notOffered")
           .then(response => {
             this.orders = response.data;
           })
-      this.$http.get("http://localhost:8080/offer/medicine")
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + "offer/medicine")
           .then(response => {
             this.supplierMedicines = response.data
           })
@@ -122,7 +122,7 @@ export default {
     onSubmit() {
       console.log(this.selectedOrder.id);
       let offer = {'shippingDays': this.shippingDays, 'price': this.price, 'orderId': this.selectedOrder.id};
-      this.$http.post("http://localhost:8080/offer/", offer)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + "offer/", offer)
           .then(this.init)
           .catch(err => alert(err.response.data));
     },
