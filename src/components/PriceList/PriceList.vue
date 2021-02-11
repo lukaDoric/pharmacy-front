@@ -80,7 +80,7 @@ export default {
     }
 
     this.$http
-        .get('http://localhost:8080/priceList/')
+        .get(process.env.VUE_APP_BACKEND_URL + 'priceList/')
         .then(response => {
           this.priceListItems = response.data;
 
@@ -93,7 +93,7 @@ export default {
   methods: {
     sendPrice() {
 
-      this.$http.post('http://localhost:8080/priceList/',
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'priceList/',
           {
             'medicineId': this.id,
             'price': this.price,

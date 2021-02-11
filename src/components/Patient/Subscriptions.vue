@@ -37,7 +37,7 @@ export default {
       if(this.$store.state.userType!=='Patient'){
         this.$router.push("/");
       }
-      this.$http.get('http://localhost:8080/promotion/pharmacies')
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + 'promotion/pharmacies')
           .then(response => this.pharmacies = response.data)
           .catch(err => {
             console.log(err);
@@ -46,7 +46,7 @@ export default {
     },
     Unsubscribe(pharmacy) {
       this.$http
-          .put('http://localhost:8080/promotion/subscribe/' + pharmacy.id)
+          .put(process.env.VUE_APP_BACKEND_URL + 'promotion/subscribe/' + pharmacy.id)
           .then(response => {
             console.log(response);
             this.init();

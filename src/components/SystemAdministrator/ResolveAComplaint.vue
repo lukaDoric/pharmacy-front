@@ -64,13 +64,13 @@ export default {
   },
   methods: {
     init() {
-      if(this.$store.state.userType!=='SystemAdmin'){
+      if (this.$store.state.userType !== 'SystemAdmin') {
         this.$router.push("/")
       }
       this.complaints = [];
       this.complaint = null;
       this.answerText = "";
-      this.$http.get('http://localhost:8080/complaints/')
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + 'complaints/')
           .then(response => {
             this.complaints = response.data
           })
@@ -87,11 +87,16 @@ export default {
     resolveComplaint() {
       this.loading = true;
       let answer = {"id": this.complaint.id, "answerText": this.answerText};
-      this.$http.post("http://localhost:8080/complaints/answer", answer)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + "complaints/answer", answer)
           .then(response => {
             alert(response.data);
             this.init();
             this.loading = false;
+          })
+          .catch(err => {
+            alert(err.response.data);
+            this.init();
+            this.loading = false
           });
     }
   }

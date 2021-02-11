@@ -20,7 +20,7 @@ export default {
   mounted() {
 
     this.$http
-        .get("http://localhost:8080/pharmacy/getPharmacyId")
+        .get(process.env.VUE_APP_BACKEND_URL + "pharmacy/getPharmacyId")
         .then(response => {
           let id = response.data;
           this.path = "/pharmacyProfile/" + id;

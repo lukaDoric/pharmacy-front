@@ -38,7 +38,7 @@ export default {
     changePassword() {
       let store = this.$store;
       console.log(this.DTO);
-      this.$http.post('http://localhost:8080/login/intialPasswordChange', this.DTO)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'login/initialPasswordChange', this.DTO)
           .then(response => {
             store.dispatch('startSession', response.data);
             this.$router.push("/home")

@@ -135,7 +135,7 @@ export default {
       if (this.ValidInformation) {
         this.sendingMail = true;
         this.$http
-            .post('http://localhost:8080/register/patient', this.User)
+            .post(process.env.VUE_APP_BACKEND_URL + 'register/patient', this.User)
             .then(response => {
               this.redirectURL = response.data;
               window.location.href = this.redirectURL;

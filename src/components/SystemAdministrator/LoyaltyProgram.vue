@@ -117,7 +117,7 @@ export default {
       if(this.$store.state.userType!=='SystemAdmin'){
         this.$router.push("/")
       }
-      this.$http.get("http://localhost:8080/loyalty/")
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + "loyalty/")
           .then(response => {
             this.assignOldData(response.data)
           })
@@ -134,7 +134,7 @@ export default {
         'goldDiscount': this.goldDiscount,
         'examPoints': this.examPoints,
       };
-      this.$http.post("http://localhost:8080/loyalty/", program)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + "loyalty/", program)
           .then(response => {
             alert(response.data);
             this.init()

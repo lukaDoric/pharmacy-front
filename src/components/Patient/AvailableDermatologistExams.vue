@@ -70,7 +70,7 @@ export default {
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/patient-exam/" + this.pharmacyId)
+        .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/" + this.pharmacyId)
         .then(response => {
           this.exams = response.data;
         })
@@ -79,7 +79,7 @@ export default {
     onSchedule(examId) {
       const config = {headers: {'Content-Type': 'application/json'}};
       this.$http
-          .put("http://localhost:8080/patient-exam/", examId, config)
+          .put(process.env.VUE_APP_BACKEND_URL + "patient-exam/", examId, config)
           .then(response => {
             alert(response.data);
             window.location.reload()
@@ -90,7 +90,7 @@ export default {
     },
     onDelete(examId) {
       this.$http
-          .delete("http://localhost:8080/exam/delete/" + examId)
+          .delete(process.env.VUE_APP_BACKEND_URL + "exam/delete/" + examId)
           .then(response => {
             response.data
             alert("Exam is deleted successfully!")
@@ -115,7 +115,7 @@ export default {
           break;
       }
       this.$http
-          .get("http://localhost:8080/patient-exam/4/" + param)
+          .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/4/" + param)
           .then(response => {
             this.exams = response.data;
           })

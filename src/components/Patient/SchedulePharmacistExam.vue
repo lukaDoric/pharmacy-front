@@ -201,7 +201,7 @@ export default {
       let dateTime = this.getDateFromInputs();
       let data = {"dateTime": dateTime, "pharmacistId": this.selectedPharmacistId}
       this.$http
-          .post("http://localhost:8080/pharmacistExam/", data)
+          .post(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/", data)
           .then(response => {
             response.data
             alert("Appointment successfully scheduled!")
@@ -212,7 +212,7 @@ export default {
     getPharmacies(sort = '') {
       let dateTime = this.getDateFromInputs();
       this.$http
-          .get("http://localhost:8080/pharmacistExam/pharmacies/" + dateTime + "/" + sort)
+          .get(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/pharmacies/" + dateTime + "/" + sort)
           .then(response => {
             this.pharmacies = response.data;
             this.pharmacyNoResults = this.pharmacies.length === 0
@@ -222,7 +222,7 @@ export default {
     getPharmacists(sort = '') {
       let dateTime = this.getDateFromInputs();
       this.$http
-          .get("http://localhost:8080/pharmacistExam/pharmacists/" + this.selectedPharmacyId + "/" + dateTime + "/" + sort)
+          .get(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/pharmacists/" + this.selectedPharmacyId + "/" + dateTime + "/" + sort)
           .then(response => {
             this.pharmacists = response.data;
             this.pharmacistNoResults = this.pharmacies.length === 0

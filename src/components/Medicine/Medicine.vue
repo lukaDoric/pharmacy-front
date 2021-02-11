@@ -136,9 +136,6 @@
 </style>
 
 <script>
-import axios from "axios";
-import 'bootstrap/dist/js/bootstrap.bundle';
-import {jsPDF} from "jspdf";
 
 export default {
   name: "Medicine",
@@ -177,8 +174,8 @@ export default {
     }
   },
   mounted() {
-    axios
-        .get("http://localhost:8080/medicine/get/all")
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + "medicine/get/all")
         .then(response => {
           this.medicine = response.data;
           this.medicineSearched = this.medicine
@@ -188,8 +185,8 @@ export default {
     selectMedicine(medicine) {
       this.selectedPharmacy = null;
       this.selectedMedicine = medicine
-      axios
-          .get("http://localhost:8080/medicine-reservation/pharmacies/" + medicine.id.toString())
+      this.$http
+          .get(process.env.VUE_APP_BACKEND_URL + "medicine-reservation/pharmacies/" + medicine.id.toString())
           .then(response => {
             this.pharmacies = response.data;
           })
@@ -219,8 +216,8 @@ export default {
       doc.save(medicine.name + ".pdf");
     },
     onSubmit() {
-      axios
-          .post("http://localhost:8080/medicine-reservation/", {
+      this.$http
+          .post(process.env.VUE_APP_BACKEND_URL + "medicine-reservation/", {
             medicineId: this.selectedMedicine.id,
             pharmacyId: this.selectedPharmacy.id,
             expirationDate: this.expirationDate

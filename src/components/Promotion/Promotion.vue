@@ -54,7 +54,7 @@ export default {
       }
 
       this.$http
-          .post('http://localhost:8080/promotion/', {
+          .post(process.env.VUE_APP_BACKEND_URL + 'promotion/', {
             from: this.from,
             to: this.to,
             notificationMessage: this.message,

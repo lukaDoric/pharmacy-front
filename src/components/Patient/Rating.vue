@@ -150,28 +150,28 @@ export default {
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/rating/medicine")
+        .get(process.env.VUE_APP_BACKEND_URL + "rating/medicine")
         .then(response => {
           this.medicine = response.data
         })
         .catch(err => console.log(err.response.data))
 
     this.$http
-        .get("http://localhost:8080/rating/dermatologists")
+        .get(process.env.VUE_APP_BACKEND_URL + "rating/dermatologists")
         .then(response => {
           this.dermatologists = response.data
         })
         .catch(err => console.log(err.response.data))
 
     this.$http
-        .get("http://localhost:8080/rating/pharmacists")
+        .get(process.env.VUE_APP_BACKEND_URL + "rating/pharmacists")
         .then(response => {
           this.pharmacists = response.data
         })
         .catch(err => console.log(err.response.data))
 
     this.$http
-        .get("http://localhost:8080/rating/pharmacies")
+        .get(process.env.VUE_APP_BACKEND_URL + "rating/pharmacies")
         .then(response => {
           this.pharmacies = response.data
         })
@@ -199,7 +199,7 @@ export default {
         data.push({id: key, rating: value})
       }
       this.$http
-          .post("http://localhost:8080/rating/medicine", data)
+          .post(process.env.VUE_APP_BACKEND_URL + "rating/medicine", data)
           .then(response => {
             response.data
             alert("Rating submitted!")
@@ -212,7 +212,7 @@ export default {
         data.push({id: key, rating: value})
       }
       this.$http
-          .post("http://localhost:8080/rating/dermatologists", data)
+          .post(process.env.VUE_APP_BACKEND_URL + "dermatologists", data)
           .then(response => {
             response.data
             alert("Rating submitted!")
@@ -225,7 +225,7 @@ export default {
         data.push({id: key, rating: value})
       }
       this.$http
-          .post("http://localhost:8080/rating/pharmacists", data)
+          .post(process.env.VUE_APP_BACKEND_URL + "rating/pharmacists", data)
           .then(response => {
             response.data
             alert("Rating submitted!")
@@ -238,7 +238,7 @@ export default {
         data.push({id: key, rating: value})
       }
       this.$http
-          .post("http://localhost:8080/rating/pharmacies", data)
+          .post(process.env.VUE_APP_BACKEND_URL + "rating/pharmacies", data)
           .then(response => {
             response.data
             alert("Rating submitted!")

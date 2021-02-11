@@ -4,14 +4,13 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   name: "Activation",
   mounted() {
     let email = this.$route.query.email.replace(/ /g, "+");
     let code = this.$route.query.code;
-    axios.post('http://localhost:8080/register/activate',
+    this.$http.post(process.env.VUE_APP_BACKEND_URL + 'register/activate',
         {
           'code': code,
           'email': email

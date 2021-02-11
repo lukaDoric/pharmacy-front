@@ -184,7 +184,7 @@ export default {
 
     this.pharmacyId = this.$route.params.id;
     this.$http
-        .get('http://localhost:8080/pharmacy/getPharmacyById/' + this.pharmacyId)
+        .get(process.env.VUE_APP_BACKEND_URL + 'pharmacy/getPharmacyById/' + this.pharmacyId)
         .then(response => {
           this.pharmacy = response.data.pharmacy;
           this.dermatologists = response.data.dermatologists;
@@ -206,7 +206,7 @@ export default {
     checkIfSubscribed() {
       if (this.userType === "Patient") {
         this.$http
-            .get('http://localhost:8080/promotion/subscribe/' + this.pharmacyId)
+            .get(process.env.VUE_APP_BACKEND_URL + 'promotion/subscribe/' + this.pharmacyId)
             .then(response => {
               this.subscribed = response.data
             })
@@ -222,7 +222,7 @@ export default {
     subscription() {
       if (this.userType === "Patient") {
         this.$http
-            .put('http://localhost:8080/promotion/subscribe/' + this.pharmacyId)
+            .put(process.env.VUE_APP_BACKEND_URL + 'promotion/subscribe/' + this.pharmacyId)
             .then(response => {
               this.subscribed = response.data
             })
@@ -236,7 +236,7 @@ export default {
     },
 
     removeMedicine(medicine) {
-      this.$http.delete('http://localhost:8080/pharmacy/deleteMedicine/' + medicine.id).then(response => {
+      this.$http.delete(process.env.VUE_APP_BACKEND_URL + 'pharmacy/deleteMedicine/' + medicine.id).then(response => {
         alert(response.data);
         window.location.reload()
       }).then(response => {

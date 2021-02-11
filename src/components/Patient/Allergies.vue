@@ -45,13 +45,13 @@ export default {
   },
   mounted() {
     this.$http
-        .get("http://localhost:8080/patient/allergies")
+        .get(process.env.VUE_APP_BACKEND_URL + "patient/allergies")
         .then(response => {
           this.allergies = response.data
         })
 
     this.$http
-        .get("http://localhost:8080/patient/medicine")
+        .get(process.env.VUE_APP_BACKEND_URL + "patient/medicine")
         .then(response => {
           this.medicine = response.data
         })
@@ -59,7 +59,7 @@ export default {
   methods: {
     onSubmit() {
       this.$http
-          .post("http://localhost:8080/patient/allergies", this.allergies)
+          .post(process.env.VUE_APP_BACKEND_URL + "patient/allergies", this.allergies)
           .then(response => {
             response.data
             alert("Allergies successfully updated!")

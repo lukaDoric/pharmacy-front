@@ -84,8 +84,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import OrderItem from "@/components/Order/OrderItem";
 
 export default {
   name: "Order",
@@ -112,19 +110,19 @@ export default {
       this.$router.push("/")
     }
 
-    axios
-        .get('http://localhost:8080/order/getOrdersByPharmacy')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'order/getOrdersByPharmacy')
         .then(response => {
           this.recentOrders = response.data;
         })
 
-    axios
-        .get('http://localhost:8080/offer/getOffersByPharmacy')
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + 'offer/getOffersByPharmacy')
         .then(response => {
           this.offersList = response.data;
         })
 
-    this.$http.get('http://localhost:8080/medicine/get/all')
+    this.$http.get(process.env.VUE_APP_BACKEND_URL + 'medicine/get/all')
         .then(response => {
           this.medicines = response.data;
         })
@@ -147,8 +145,8 @@ export default {
         }
       }
 
-      axios
-          .post('http://localhost:8080/order/', {
+      this.$http
+          .post(process.env.VUE_APP_BACKEND_URL + 'order/', {
             orderItems: this.medicineAmount,
             deadline: this.deadline
           }).then(response => {
@@ -161,7 +159,7 @@ export default {
 
     removeOrder(orderId) {
       this.$http
-          .delete('http://localhost:8080/order/deleteOrder/' + orderId)
+          .delete(process.env.VUE_APP_BACKEND_URL + 'deleteOrder/' + orderId)
           .then(response => {
             alert(response.data);
             window.location.reload();
@@ -172,7 +170,7 @@ export default {
 
     acceptOffer(offerId) {
       this.$http
-          .put('http://localhost:8080/offer/acceptOffer/' + offerId)
+          .put(process.env.VUE_APP_BACKEND_URL + 'acceptOffer/' + offerId)
           .then(response => {
             alert(response.data);
             window.location.reload();
@@ -189,7 +187,7 @@ export default {
     },
 
     addOrderItem() {
-      this.items.push({medicineName: "", amount: 0})
+      this.items.push({medicineId: "", amount: 0})
     },
 
     removeOrderItem() {
@@ -204,7 +202,7 @@ export default {
     updateOrder(order) {
 
       this.$http
-          .put('http://localhost:8080/order/updateOrder', order)
+          .put(process.env.VUE_APP_BACKEND_URL + 'order/updateOrder', order)
           .then(response => {
             alert(response.data);
             window.location.reload();

@@ -92,7 +92,7 @@ export default {
     },
     submit() {
       let offer = {'shippingDays': this.shippingDays, 'price': this.price, 'offerId': this.selectedOffer.offerId}
-      this.$http.post("http://localhost:8080/offer/update", offer).then(response => {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + "offer/update", offer).then(response => {
         console.log(response);
         this.init()
       });
@@ -101,7 +101,7 @@ export default {
       if(this.$store.state.userType!=='Supplier'){
         this.$router.push("/")
       }
-      this.$http.get("http://localhost:8080/offer/").then(response => this.offers = response.data);
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + "offer/").then(response => this.offers = response.data);
       this.selectedOffer = null;
     }
   }

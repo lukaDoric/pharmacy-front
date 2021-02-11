@@ -150,7 +150,7 @@ export default {
         medicine['alternatives'] = this.alternatives;
       }
 
-      this.$http.post('http://localhost:8080/medicine/save', medicine)
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'medicine/save', medicine)
           .then(response => {
             alert(response.data);
             this.getAllMedicine()
@@ -158,10 +158,10 @@ export default {
           .catch(err => alert(err.response.data));
     },
     getAllMedicine() {
-      this.$http.get('http://localhost:8080/medicine/get/all').then(response => {
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + 'medicine/get/all').then(response => {
         this.medicines = response.data
       }).catch(e => alert("Oops, sorry there has been an error: " + e.toString()));
-      this.$http.get('http://localhost:8080/medicine/get/alternativeGroups').then(response => {
+      this.$http.get(process.env.VUE_APP_BACKEND_URL + 'medicine/get/alternativeGroups').then(response => {
         this.alternativeGroups = response.data;
         this.alternatives = "None"
       }).catch(e => alert("Oops, sorry there has been an error: " + e.toString()));

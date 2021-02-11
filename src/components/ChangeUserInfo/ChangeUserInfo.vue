@@ -56,7 +56,7 @@ export default {
   },
   mounted() {
     this.$http
-        .get('http://localhost:8080/user/')
+        .get(process.env.VUE_APP_BACKEND_URL + 'user/')
         .then(response => {
           this.user = response.data
         });
@@ -68,7 +68,7 @@ export default {
         alert("Please input all fields!")
         return;
       }
-      this.$http.post('http://localhost:8080/user/', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'user/', {
         name: this.user.name,
         surname: this.user.surname,
         address: this.user.address
@@ -80,10 +80,15 @@ export default {
         alert("Please input all fields!")
         return;
       }
-      this.$http.post('http://localhost:8080/user/changePassword', {
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'user/changePassword', {
         oldPassword: this.oldPassword,
         newPassword: this.newPassword
-      }).then(response => alert(response.data)).catch(err => alert(err.response.data));
+      }).then(response => {
+        alert(response.data);
+        this.$store.dispatch('logOut');
+        this.$router.push("/login");
+      })
+          .catch(err => alert(err.response.data));
     },
   }
 }
