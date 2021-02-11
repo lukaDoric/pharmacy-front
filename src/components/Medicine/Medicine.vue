@@ -228,9 +228,8 @@ export default {
             response.data
             alert("Medicine successfully reserved!")
           })
-          .catch(error => {
-            console.log(error.message)
-            alert("Sorry, looks like there has been a mistake with your reservation. Please try again.")
+          .catch(err => {
+            alert(err.response.data)
           })
     },
     search() {
