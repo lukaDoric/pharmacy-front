@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-jumbotron class="jumbotron bg-dark text-light">
+    <b-jumbotron class="jumbotron">
       <h1 class="display-4">Schedule an appointment with a dermatologist</h1>
       <div class="row">
         <div class="col-sm-10">
@@ -69,11 +69,19 @@ export default {
     }
   },
   mounted() {
-    this.$http
-        .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/" + this.pharmacyId)
-        .then(response => {
-          this.exams = response.data;
-        })
+    if (this.pharmacyId === undefined) {
+      this.$http
+          .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/all/")
+          .then(response => {
+            this.exams = response.data;
+          })
+    } else {
+      this.$http
+          .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/" + this.pharmacyId)
+          .then(response => {
+            this.exams = response.data;
+          })
+    }
   },
   methods: {
     onSchedule(examId) {
@@ -114,11 +122,20 @@ export default {
           param = 'RATING_DESC';
           break;
       }
-      this.$http
-          .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/4/" + param)
-          .then(response => {
-            this.exams = response.data;
-          })
+
+      if (this.pharmacyId === undefined) {
+        this.$http
+            .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/all/" + param)
+            .then(response => {
+              this.exams = response.data;
+            })
+      } else {
+        this.$http
+            .get(process.env.VUE_APP_BACKEND_URL + "patient-exam/" + this.pharmacyId + "/" + param)
+            .then(response => {
+              this.exams = response.data;
+            })
+      }
     }
   },
   filters: {

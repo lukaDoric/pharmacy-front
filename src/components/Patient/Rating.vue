@@ -212,7 +212,7 @@ export default {
         data.push({id: key, rating: value})
       }
       this.$http
-          .post(process.env.VUE_APP_BACKEND_URL + "rating/gdermatologists", data)
+          .post(process.env.VUE_APP_BACKEND_URL + "rating/dermatologists", data)
           .then(response => {
             response.data
             alert("Rating submitted!")
