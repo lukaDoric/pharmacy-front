@@ -1,15 +1,16 @@
 <template>
   <div>
     <b-jumbotron>
-      <h2>Allergies</h2>
-      <ul class="list-group">
-        <li class="list-group-item" v-for="a in allergies" v-bind:key="a.id">
+      <h4>Allergies</h4>
+      <br>
+      <ul class="list-group bg-dark text-light">
+        <li class="list-group-item bg-dark" v-for="a in allergies" v-bind:key="a.id">
           <div class="row">
             <div class="col text-left">
               <h5>{{ a.name }}, {{ a.form }}</h5>
             </div>
             <div class="col text-right">
-              <button class="btn btn-outline-dark" v-on:click="onRemove(a)">Remove from allergies</button>
+              <button class="btn btn-outline-light" v-on:click="onRemove(a)">Remove from allergies</button>
             </div>
           </div>
         </li>

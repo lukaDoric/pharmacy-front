@@ -73,6 +73,11 @@
           <Subscriptions v-if="display === 1"/>
           <Medicine v-if="display === 2"/>
           <MedicineReservation v-if="display === 3"/>
+          <!-- prescriptions missing -->
+          <QR v-if="display === 5"/>
+          <Allergies v-if="display === 6"/>
+          <Rating v-if="display === 11" />
+          <MakeAComplaint v-if="display === 12" />
         </div>
       </div>
     </b-jumbotron>
@@ -84,10 +89,14 @@ import PharmacySearch from "@/components/Pharmacy/PharmacySearch";
 import Subscriptions from "@/components/Patient/Subscriptions";
 import Medicine from "@/components/Medicine/Medicine";
 import MedicineReservation from "@/components/Patient/MedicineReservation";
+import QR from "@/components/Patient/QR";
+import Allergies from "@/components/Patient/Allergies";
+import Rating from "@/components/Patient/Rating";
+import MakeAComplaint from "@/components/Patient/MakeAComplaint";
 
 export default {
   name: "PatientHome",
-  components: {MedicineReservation, Medicine, Subscriptions, PharmacySearch},
+  components: {MakeAComplaint, Rating, Allergies, QR, MedicineReservation, Medicine, Subscriptions, PharmacySearch},
   data() {
     return {
       display: 0
