@@ -68,7 +68,7 @@ export default {
       ratingDropdownText: 'All Ratings',
       ratingFilterValues: ['NONE', 'ONE_STAR', 'TWO_STARS', 'THREE_STARS', 'FOUR_STARS', 'FIVE_STARS'],
       ratingFilter: 'NONE',
-      distance: 10,
+      distance: 100,
       userLon: 0.0,
       userLat: 0.0
     }

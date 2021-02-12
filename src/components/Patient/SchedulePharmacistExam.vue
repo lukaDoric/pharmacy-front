@@ -1,15 +1,18 @@
 <template>
   <div>
-    <b-jumbotron class="jumbotron bg-light text-light">
+    <b-jumbotron class="jumbotron bg-light">
 
       <div class="panel-group">
+        <h1>Schedule an appointment with pharmacist</h1>
+        <br>
         <div class="panel panel-primary">
           <fieldset v-if="step === 1">
             <div class="panel-body">
               <h4 class="text-dark">Step 1: Pick date and time to start your appointment</h4>
               <br>
               <div class="input-group mb-3 px-5">
-                <input type="date" class="form-control" placeholder="Date" aria-label="Date" v-model="date">
+                <input type="date" :min="dateLimit" class="form-control" placeholder="Date" aria-label="Date"
+                       v-model="date">
                 <input type="time" class="form-control" placeholder="Time" aria-label="Time" v-model="time">
                 <div class="input-group-append">
                   <button class="btn btn-outline-light bg-dark" type="button" v-on:click="onSearchPharmacies()">
@@ -149,8 +152,12 @@ export default {
       selectedPharmacyId: 0,
       selectedPharmacy: null,
       selectedPharmacistId: 0,
-      selectedPharmacist: null
+      selectedPharmacist: null,
+      dateLimit: '1970-01-01'
     }
+  },
+  mounted() {
+    this.setMinDate()
   },
   methods: {
     onSearchPharmacies() {
@@ -246,6 +253,20 @@ export default {
     ,
     next() {
       this.step++;
+    },
+    setMinDate: function () {
+      let today = new Date();
+      let dd = today.getDate() + 1;
+      let mm = today.getMonth() + 1; //January is 0!
+      let yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = '0' + dd
+      }
+      if (mm < 10) {
+        mm = '0' + mm
+      }
+
+      this.dateLimit = yyyy + '-' + mm + '-' + dd;
     }
   }
 }

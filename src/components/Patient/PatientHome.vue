@@ -44,6 +44,10 @@
               Dermatologist exam history
             </a>
             <a href="#" class="list-group-item list-group-item-action bg-light text-dark" v-on:click="changeDisplay(8)">
+              My scheduled dermatologist exams
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(13)">
               Schedule dermatologist exam
             </a>
             <a href="#" class="list-group-item list-group-item-action bg-light text-dark" v-on:click="changeDisplay(9)">
@@ -51,6 +55,10 @@
             </a>
             <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
                v-on:click="changeDisplay(10)">
+              My scheduled pharmacist appointments
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(14)">
               Schedule pharmacist appointment
             </a>
           </div>
@@ -71,13 +79,22 @@
         <div class="col">
           <PharmacySearch v-if="display === 0"/>
           <Subscriptions v-if="display === 1"/>
+
           <Medicine v-if="display === 2"/>
           <MedicineReservation v-if="display === 3"/>
           <!-- prescriptions missing -->
           <QR v-if="display === 5"/>
           <Allergies v-if="display === 6"/>
-          <Rating v-if="display === 11" />
-          <MakeAComplaint v-if="display === 12" />
+
+          <DermatologistExamHistory v-if="display === 7"/>
+          <ScheduledDermatologistExams v-if="display === 8"/>
+          <AvailableDermatologistExams v-if="display === 13"/>
+          <PharmacistExamHistory v-if="display === 9"/>
+          <ScheduledPharmacistExams v-if="display === 10"/>
+          <SchedulePharmacistExam v-if="display === 14"/>
+
+          <Rating v-if="display === 11"/>
+          <MakeAComplaint v-if="display === 12"/>
         </div>
       </div>
     </b-jumbotron>
@@ -93,10 +110,24 @@ import QR from "@/components/Patient/QR";
 import Allergies from "@/components/Patient/Allergies";
 import Rating from "@/components/Patient/Rating";
 import MakeAComplaint from "@/components/Patient/MakeAComplaint";
+import ScheduledDermatologistExams from "@/components/Patient/ScheduledDermatologistExams";
+import DermatologistExamHistory from "@/components/Patient/DermatologistExamHistory";
+import ScheduledPharmacistExams from "@/components/Patient/ScheduledPharmacistExams";
+import AvailableDermatologistExams from "@/components/Patient/AvailableDermatologistExams";
+import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
+import PharmacistExamHistory from "@/components/Patient/PharmacistExamHistory";
 
 export default {
   name: "PatientHome",
-  components: {MakeAComplaint, Rating, Allergies, QR, MedicineReservation, Medicine, Subscriptions, PharmacySearch},
+  components: {
+    PharmacistExamHistory,
+    SchedulePharmacistExam,
+    AvailableDermatologistExams,
+    ScheduledPharmacistExams,
+    DermatologistExamHistory,
+    ScheduledDermatologistExams,
+    MakeAComplaint, Rating, Allergies, QR, MedicineReservation, Medicine, Subscriptions, PharmacySearch
+  },
   data() {
     return {
       display: 0

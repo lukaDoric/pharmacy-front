@@ -1,27 +1,32 @@
 <template>
-  <b-jumbotron>
-    <div class="row">
-      <div class="col">
-        <select v-model="typeSelected" style="width: 80%;" selectedIndex="2" @change="getDropValues">
-          <option v-for="t in type" v-bind:key="t">{{ t }}</option>
-        </select></div>
-      <div class="col">
-        <select v-model="subject" style="width: 80%;" v-bind:disabled="subject==null">
-          <option v-for="s in subjects" v-bind:key="s.id" v-bind:value="s">{{ stringify(s) }}</option>
-        </select>
+  <div style="width: 80%">
+    <b-jumbotron>
+      <div class="row">
+        <div class="col-sm">
+          <select v-model="typeSelected" style="width: 80%;" selectedIndex="2" @change="getDropValues">
+            <option v-for="t in type" v-bind:key="t">{{ t }}</option>
+          </select></div>
+        <div class="col-sm">
+          <select v-model="subject" style="width: 80%;" v-bind:disabled="subject==null">
+            <option v-for="s in subjects" v-bind:key="s.id" v-bind:value="s">{{ stringify(s) }}</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-sm">
-        <textarea rows="20" cols="100" v-model="complaintText" v-bind:disabled="subject==null"></textarea>
+      <br>
+      <div class="row-cols-sm-1">
+        <div class="col">
+          <div class="input-group">
+            <textarea rows="20" cols="60" class="form-control" v-model="complaintText"
+                      v-bind:disabled="subject==null"></textarea>
+          </div>
+        </div>
       </div>
-    </div>
-    <br>
-    <div>
-      <button class="btn btn-info" v-on:click="submit" v-bind:disabled="subject==null">Submit</button>
-    </div>
-  </b-jumbotron>
+      <br>
+      <div>
+        <button class="btn btn-info" v-on:click="submit" v-bind:disabled="subject==null">Submit</button>
+      </div>
+    </b-jumbotron>
+  </div>
 </template>
 
 <script>
