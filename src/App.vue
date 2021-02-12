@@ -10,16 +10,16 @@
         <ManagePharmacyLink v-if="user == 'PharmacyAdmin'"></ManagePharmacyLink>
         <PharmacyProfileLink v-if="user == 'PharmacyAdmin'"></PharmacyProfileLink>
         <StatisticLink v-if="user == 'PharmacyAdmin'"></StatisticLink>
-        <MedicineReservationLink v-if="user == 'Patient'"/>
         <OffersLink v-if="user == 'Supplier'"></OffersLink>
         <OffersUpdateLink v-if="user == 'Supplier'"></OffersUpdateLink>
         <AddPharmacyLink v-if="user == 'SystemAdmin'"></AddPharmacyLink>
         <RegisterUserLink v-if="user == 'SystemAdmin'"></RegisterUserLink>
         <LoyaltyProgramLink v-if="user == 'SystemAdmin'"></LoyaltyProgramLink>
         <ResolveComplaintLink v-if="user == 'SystemAdmin'"></ResolveComplaintLink>
-        <MakeAComplaintLink v-if="user == 'Patient'"></MakeAComplaintLink>
         <QRLink v-if="user == 'Patient'"></QRLink>
         <MedicineRegisterLink v-if="user == 'SystemAdmin'"></MedicineRegisterLink>
+        <MedicineSearchLink v-if="user === 'Patient' || user === null"></MedicineSearchLink>
+        <PharmacySearchLink v-if="user === null || user === 'Patient'"></PharmacySearchLink>
       </NavGroup>
       <NavGroup side="ml-auto">
         <RegisterPatientLink v-if="!isLogged"/>
@@ -44,34 +44,34 @@ import LogIn from "@/components/NavBar/LogInLink";
 import VacationRequests from "@/components/NavBar/VacationRequestsLink";
 import PriceListLink from "@/components/NavBar/PriceListLink";
 import PromotionLink from "@/components/NavBar/PromotionLink";
-import MedicineReservationLink from "@/components/NavBar/MedicineReservationLink";
 import OffersLink from "@/components/NavBar/OffersLink";
 import OffersUpdateLink from "@/components/NavBar/OffersUpdateLink";
 import AddPharmacyLink from "@/components/NavBar/AddPharmacyLink";
 import RegisterUserLink from "@/components/NavBar/RegisterUserLink";
 import MedicineRegisterLink from "@/components/NavBar/MedicineRegisterLink";
 import LoyaltyProgramLink from "@/components/NavBar/LoyaltyProgramLink";
-import MakeAComplaintLink from "@/components/NavBar/MakeAComplaintLink";
 import ResolveComplaintLink from "@/components/NavBar/ResolveComplaintLink"
 import QRLink from "@/components/NavBar/QRLink";
 import ManagePharmacyLink from "@/components/NavBar/ManagePharmacyLink";
 import PharmacyProfileLink from "@/components/NavBar/PharmacyProfileLink";
 import StatisticLink from "@/components/NavBar/StatisticLink";
+import MedicineSearchLink from "@/components/NavBar/MedicineSearchLink";
+import PharmacySearchLink from "@/components/NavBar/PharmacySearchLink";
 
 export default {
   name: 'App',
   components: {
+    PharmacySearchLink,
+    MedicineSearchLink,
     StatisticLink,
     QRLink,
     ResolveComplaintLink,
-    MakeAComplaintLink,
     LoyaltyProgramLink,
     MedicineRegisterLink,
     RegisterUserLink,
     AddPharmacyLink,
     OffersUpdateLink,
     OffersLink,
-    MedicineReservationLink,
     PharmacyProfileLink,
     PriceListLink,
     VacationRequests,
@@ -103,8 +103,8 @@ export default {
       let user = this.$store.state.userType;
       return user;
     },
-    isSupplier(){
-      return this.$store.state.userType==='Supplier';
+    isSupplier() {
+      return this.$store.state.userType === 'Supplier';
     }
   }
 

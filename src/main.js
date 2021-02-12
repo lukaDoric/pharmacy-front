@@ -29,27 +29,18 @@ import RegisterUsers from "@/components/SystemAdministrator/RegisterUsers";
 import AddPharmacy from "@/components/SystemAdministrator/AddPharmacy";
 import MedicineRegister from "@/components/SystemAdministrator/MedicineRegister";
 import DermatologistDetails from "@/components/OurTeam/DermatologistDetails";
-import MedicineReservation from "@/components/Patient/MedicineReservation";
 import PharmacyProfile from "@/components/PharmacyProfile/PharmacyProfile";
 import ChangePassword from "@/components/SignedOutUser/ChangePassword";
 import Offers from "@/components/Supplier/Offers";
 import OffersUpdate from "@/components/Supplier/OffersUpdate";
-import AvailableDermatologistExams from "@/components/Patient/AvailableDermatologistExams";
-import ScheduledDermatologistExams from "@/components/Patient/ScheduledDermatologistExams";
 import LoyaltyProgram from "@/components/SystemAdministrator/LoyaltyProgram";
-import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
-import ScheduledPharmacistExams from "@/components/Patient/ScheduledPharmacistExams";
 import QR from "@/components/Patient/QR";
-import MakeAComplaint from "@/components/Patient/MakeAComplaint";
 import ResolveAComplaint from "@/components/SystemAdministrator/ResolveAComplaint";
 import ManagePharmacyAdminProfileAndPharmacy
     from "@/components/PharmacyAdminManage/ManagePharmacyAdminProfileAndPharmacy";
 import Statistic from "@/components/Statistics/Statistic";
 import PharmacySearch from "@/components/Pharmacy/PharmacySearch";
-import Subscriptions from "@/components/Patient/Subscriptions";
 import ChangeUserInfo from "@/components/ChangeUserInfo/ChangeUserInfo";
-import Rating from "@/components/Patient/Rating";
-import Allergies from "@/components/Patient/Allergies";
 import PatientHome from "@/components/Patient/PatientHome";
 
 Vue.prototype.$http = axios;
@@ -85,23 +76,13 @@ const routes = [
     {path: '/pharmacyProfile/:id', component: PharmacyProfile},
     {path: '/offers/update', component: OffersUpdate},
     {path: '/loyaltyProgram', component: LoyaltyProgram},
-    {path: '/medicineReservation', component: MedicineReservation},
-    {path: '/scheduling', component: AvailableDermatologistExams},
-    {path: '/scheduledDermatologistExams', component: ScheduledDermatologistExams},
-    {path: '/schedulePharmacistExam', component: SchedulePharmacistExam},
-    {path: '/scheduledPharmacistExams', component: ScheduledPharmacistExams},
     {path: '/qr', component: QR},
-    {path: '/complaint/new', component: MakeAComplaint},
     {path: '/complaint/resolve', component: ResolveAComplaint},
-    {path: '/account/update', component:ChangeUserInfo},
+    {path: '/account/update', component: ChangeUserInfo},
     {path: '/managePharmacy', component: ManagePharmacyAdminProfileAndPharmacy},
-    {path: '/qr', component: QR},
-    {path: '/subscriptions', component: Subscriptions},
     {path: '/pharmacies', component: PharmacySearch},
-    {path: '/rating', component: Rating},
     {path: '/statistic', component: Statistic},
     {path: '/pharmacies', component: PharmacySearch},
-    {path: '/allergies', component: Allergies},
     {path: '/patientHome', component: PatientHome}
 ];
 
