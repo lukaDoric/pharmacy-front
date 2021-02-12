@@ -45,7 +45,7 @@ export default {
   },
   name: "LogIn",
   mounted() {
-    if(this.$store.state.userType!==null){
+    if (this.$store.state.userType !== null) {
       this.$router.push("/")
     }
   },
@@ -76,6 +76,10 @@ export default {
     },
     dispatch(type) {
       let router = this.$router;
+      if (type === 'Patient') {
+        router.push("/patientHome");
+        return
+      }
       if (type != null) {
         router.push("/medicine");
       }

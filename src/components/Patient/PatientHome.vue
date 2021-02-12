@@ -82,7 +82,7 @@
 
           <Medicine v-if="display === 2"/>
           <MedicineReservation v-if="display === 3"/>
-          <!-- prescriptions missing -->
+          <Prescriptions v-if="display === 4"/>
           <QR v-if="display === 5"/>
           <Allergies v-if="display === 6"/>
 
@@ -116,10 +116,12 @@ import ScheduledPharmacistExams from "@/components/Patient/ScheduledPharmacistEx
 import AvailableDermatologistExams from "@/components/Patient/AvailableDermatologistExams";
 import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
 import PharmacistExamHistory from "@/components/Patient/PharmacistExamHistory";
+import Prescriptions from "@/components/Patient/Prescriptions";
 
 export default {
   name: "PatientHome",
   components: {
+    Prescriptions,
     PharmacistExamHistory,
     SchedulePharmacistExam,
     AvailableDermatologistExams,
