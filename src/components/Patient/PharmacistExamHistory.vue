@@ -45,7 +45,7 @@ export default {
   filters: {
     dateFormat: function (value) {
       let parsed = moment(value);
-      return parsed.format('DD.MM.YYYY');
+      return parsed.format('DD.MM.YYYY HH:mm');
     },
     toMoney: function (value) {
       return (Math.round(value * 100) / 100).toFixed(2) + '$';
