@@ -71,7 +71,7 @@ export default {
       if (msg === 'User is disabled') {
         this.$router.push({name: 'ChangePassword', params: {oldPassword: this.password, email: this.email}})
       } else {
-        alert(msg);
+        alert("Sorry something went wrong. You might have disabled account or entered wrong password");
       }
     },
     dispatch(type) {
@@ -81,7 +81,7 @@ export default {
         return
       }
       if (type != null) {
-        router.push("/medicine");
+        router.push("/");
       }
     }
   },
