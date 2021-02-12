@@ -80,7 +80,11 @@ export default {
         router.push("/patientHome");
         return
       }
-      if (type != null) {
+      else if (type === 'PharmacyAdmin') {
+        router.push("/managePharmacy");
+        return
+      }
+      else if (type != null) {
         router.push("/");
       }
     }
