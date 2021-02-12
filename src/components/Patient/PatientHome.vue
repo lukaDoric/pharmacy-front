@@ -9,6 +9,18 @@
       </div>
       <div class="row">
         <div class="col-3">
+          <!-- User section -->
+          <div class="list-group bg-dark text-light my-3">
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(15)">
+              Loyalty program
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(16)">
+              Penalty points
+            </a>
+          </div>
+
           <!-- Pharmacy section -->
           <div class="list-group bg-dark text-light my-3">
             <a href="#" class="list-group-item list-group-item-action bg-light text-dark" v-on:click="changeDisplay(0)">
@@ -77,6 +89,9 @@
         </div>
 
         <div class="col">
+          <PatientLoyaltyProgram v-if="display === 15"/>
+          <PenaltyPoints v-if="display === 16"/>
+
           <PharmacySearch v-if="display === 0"/>
           <Subscriptions v-if="display === 1"/>
 
@@ -117,10 +132,14 @@ import AvailableDermatologistExams from "@/components/Patient/AvailableDermatolo
 import SchedulePharmacistExam from "@/components/Patient/SchedulePharmacistExam";
 import PharmacistExamHistory from "@/components/Patient/PharmacistExamHistory";
 import Prescriptions from "@/components/Patient/Prescriptions";
+import PenaltyPoints from "@/components/Patient/PenaltyPoints";
+import PatientLoyaltyProgram from "@/components/Patient/PatientLoyaltyProgram";
 
 export default {
   name: "PatientHome",
   components: {
+    PatientLoyaltyProgram,
+    PenaltyPoints,
     Prescriptions,
     PharmacistExamHistory,
     SchedulePharmacistExam,
@@ -136,7 +155,9 @@ export default {
     }
   },
   mounted() {
-    // TODO: check user type
+    if (this.$store.state.userType !== 'Patient') {
+      this.$router.push("/login/");
+    }
   },
   methods: {
     changeDisplay(mode) {

@@ -105,7 +105,6 @@ export default {
     },
     onDetails(pharmacyId) {
       console.log(pharmacyId)
-      // TODO: go to pharmacy page
       this.$router.push("/pharmacyProfile/" + pharmacyId);
     }
   },
