@@ -242,6 +242,7 @@ export default {
         ],
         datasets: [
           {
+            label: "Month",
             data: [],
             backgroundColor: [
               "rgba(54, 162, 235, 0.2)",
@@ -284,6 +285,7 @@ export default {
         ],
         datasets: [
           {
+            label: "Quarter",
             data: [],
             backgroundColor: [
               "rgba(54, 162, 235, 0.2)",
@@ -305,6 +307,7 @@ export default {
         labels: [],
         datasets: [
           {
+            label: "Year",
             data: [],
             backgroundColor: [],
             borderColor: [],
@@ -354,6 +357,7 @@ export default {
         ],
         datasets: [
           {
+            label: "Month",
             data: [],
             backgroundColor: [
               "rgba(54, 162, 235, 0.2)",
@@ -396,6 +400,7 @@ export default {
         ],
         datasets: [
           {
+            label: "Quarter",
             data: [],
             backgroundColor: [
               "rgba(54, 162, 235, 0.2)",
@@ -417,6 +422,7 @@ export default {
         labels: [],
         datasets: [
           {
+            label: "Year",
             data: [],
             backgroundColor: [],
             borderColor: [],
@@ -466,6 +472,7 @@ export default {
         ],
         datasets: [
           {
+            label: "Month",
             data: [],
             backgroundColor: [
               "rgba(54, 162, 235, 0.2)",
