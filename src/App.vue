@@ -18,7 +18,7 @@
         <ResolveComplaintLink v-if="user == 'SystemAdmin'"></ResolveComplaintLink>
         <QRLink v-if="user == 'Patient'"></QRLink>
         <MedicineRegisterLink v-if="user == 'SystemAdmin'"></MedicineRegisterLink>
-        <MedicineSearchLink v-if="user === 'Patient' || user === null"></MedicineSearchLink>
+        <MedicineSearchLink></MedicineSearchLink>
         <PharmacySearchLink v-if="user === null || user === 'Patient'"></PharmacySearchLink>
       </NavGroup>
       <NavGroup side="ml-auto">
