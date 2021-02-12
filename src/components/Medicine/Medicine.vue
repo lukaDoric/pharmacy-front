@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-lg-7">
+    <div class="col">
+      <div class="row-lg-7">
         <b-jumbotron class="jumbotron">
           <h1 class="display-4">Medicine</h1>
           <table class="table table-dark table-hover table-bordered">
@@ -32,7 +32,7 @@
                 </select>
               </th>
               <th scope="col">Generate PDF</th>
-              <th scope="col">Select</th>
+              <th scope="col" v-if="loggedUser === 'Patient'">Select</th>
             </tr>
             </thead>
             <tbody v-for="(m, index) in medicineSearched" v-bind:key="m.id">
@@ -41,11 +41,11 @@
               <td class="align-baseline">{{ m.name }}</td>
               <td class="align-baseline">{{ typeFilter(m.type) }}</td>
               <td class="align-baseline">{{ formFilter(m.form) }}</td>
-              <td class="align-baseline">{{ m.ratings }}</td>
+              <td class="align-baseline">{{ m.rating }}</td>
               <td>
                 <button type="button" class="btn btn-success btn-sm" v-on:click="downloadPdf(m)">Download</button>
               </td>
-              <td class="align-baseline">
+              <td class="align-baseline" v-if="loggedUser === 'Patient'">
                 <button type="button" class="btn btn-info btn-sm" v-on:click="selectMedicine(m)">+</button>
               </td>
             </tr>
@@ -53,7 +53,7 @@
           </table>
         </b-jumbotron>
       </div>
-      <div class="col-lg-5">
+      <div class="row-lg-5" v-if="loggedUser === 'Patient'">
         <b-jumbotron class="jumbotron">
           <div class="card">
             <div class="card-header">

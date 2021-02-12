@@ -1,23 +1,26 @@
 <template>
   <div style="margin: 3%">
-    <h1>SUBSCRIPTIONS</h1>
-    <table class="table table-dark table-hover">
-      <thead>
-      <tr>
-        <th style="float: left">Pharmacy</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="p in pharmacies" v-bind:key="p.id">
-        <td>{{ p.name }}</td>
-        <td>{{ p.address.city }} {{ p.address.street }}</td>
-        <td>
-          <button class="btn btn-info" v-on:click="Unsubscribe(p)">Unsubscribe</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <b-jumbotron>
+      <h4>Subscriptions</h4>
+      <br>
+      <table class="table table-dark table-hover">
+        <thead>
+        <tr>
+          <th style="float: left">Pharmacy</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="p in pharmacies" v-bind:key="p.id">
+          <td>{{ p.name }}</td>
+          <td>{{ p.address.city }} {{ p.address.street }}</td>
+          <td>
+            <button class="btn btn-info" v-on:click="Unsubscribe(p)">Unsubscribe</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </b-jumbotron>
   </div>
 </template>
 
@@ -33,8 +36,8 @@ export default {
     this.init();
   },
   methods: {
-    init(){
-      if(this.$store.state.userType!=='Patient'){
+    init() {
+      if (this.$store.state.userType !== 'Patient') {
         this.$router.push("/");
       }
       this.$http.get(process.env.VUE_APP_BACKEND_URL + 'promotion/pharmacies')
