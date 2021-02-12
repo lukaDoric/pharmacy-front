@@ -57,7 +57,8 @@
         <b-jumbotron class="jumbotron">
           <div class="card">
             <div class="card-header">
-              <h2 v-if="selectedMedicine != null && loggedUser=='Patient'" class="display-4">Make {{ selectedMedicine.name }}
+              <h2 v-if="selectedMedicine != null && loggedUser=='Patient'" class="display-4">Make
+                {{ selectedMedicine.name }}
                 reservation</h2>
               <h2 v-else-if="selectedMedicine != null && loggedUser!='Patient'" class="display-4">{{
                   selectedMedicine.name
@@ -99,7 +100,8 @@
                 </div>
                 <div class="form-row">
                   <div class="col">
-                    <input type="date" class="form-control" v-model="expirationDate" placeholder="Reservation expires">
+                    <input type="date" :min="today" class="form-control" v-model="expirationDate"
+                           placeholder="Reservation expires">
                   </div>
                 </div>
                 <div class="form-group mt-1" style="width: 100%">
@@ -172,7 +174,8 @@ export default {
       searchName: "",
       searchType: "All",
       searchForm: "All",
-      searchRating: "All"
+      searchRating: "All",
+      today: '01-01-1970'
     }
   },
   mounted() {
@@ -182,6 +185,7 @@ export default {
           this.medicine = response.data;
           this.medicineSearched = this.medicine
         })
+    this.setToday()
   },
   methods: {
     selectMedicine(medicine) {
@@ -255,7 +259,20 @@ export default {
     typeFilter: function (value) {
       return this.enumTypeDict[value];
     },
+    setToday: function () {
+      let today = new Date();
+      let dd = today.getDate() + 1;
+      let mm = today.getMonth() + 1; //January is 0!
+      let yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = '0' + dd
+      }
+      if (mm < 10) {
+        mm = '0' + mm
+      }
 
+      this.today = yyyy + '-' + mm + '-' + dd;
+    }
   },
   computed: {
     loggedUser() {
