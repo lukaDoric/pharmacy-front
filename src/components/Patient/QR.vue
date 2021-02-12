@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <b-jumbotron class="col-lg-3 bg-dark panel">
+    <b-jumbotron>
 
       <div style="height: 300px" class="card bg-secondary">
         <div style=" background: #2c3e50;color: white" class="card-header">
@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted() {
-    if(this.$store.state.userType!=='Patient'){
+    if (this.$store.state.userType !== 'Patient') {
       this.$router.push("/")
     }
   },
@@ -112,13 +112,11 @@ export default {
             this.pharmaciesOriginal = response.data;
           })
           .catch(err => {
-            if(err.response.status==400){
+            if (err.response.status == 400) {
               alert("You sent qr code with bad information!")
-            }
-            else if(err.response.status==404){
+            } else if (err.response.status == 404) {
               alert("Sorry, medicine you need is out of stock!")
-            }
-            else{
+            } else {
               alert("Sorry, something went wrong!")
             }
             this.resetData();

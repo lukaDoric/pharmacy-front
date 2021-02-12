@@ -23,7 +23,7 @@
       </div>
       <br>
       <div>
-        <button class="btn btn-info" v-on:click="submit" v-bind:disabled="subject==null">Submit</button>
+        <button class="btn btn-info btn-block" v-on:click="submit" v-bind:disabled="subject==null">Submit</button>
       </div>
     </b-jumbotron>
   </div>
