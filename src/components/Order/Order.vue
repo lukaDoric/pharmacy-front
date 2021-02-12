@@ -160,7 +160,7 @@ export default {
 
     removeOrder(orderId) {
       this.$http
-          .delete(process.env.VUE_APP_BACKEND_URL + 'deleteOrder/' + orderId)
+          .delete(process.env.VUE_APP_BACKEND_URL + 'order/deleteOrder/' + orderId)
           .then(response => {
             alert(response.data);
             window.location.reload();
@@ -171,7 +171,7 @@ export default {
 
     acceptOffer(offerId) {
       this.$http
-          .put(process.env.VUE_APP_BACKEND_URL + 'acceptOffer/' + offerId)
+          .put(process.env.VUE_APP_BACKEND_URL + 'offer/acceptOffer/' + offerId)
           .then(response => {
             alert(response.data);
             window.location.reload();
