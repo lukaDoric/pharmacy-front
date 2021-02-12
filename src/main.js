@@ -50,6 +50,7 @@ import Subscriptions from "@/components/Patient/Subscriptions";
 import ChangeUserInfo from "@/components/ChangeUserInfo/ChangeUserInfo";
 import Rating from "@/components/Patient/Rating";
 import Allergies from "@/components/Patient/Allergies";
+import PatientHome from "@/components/Patient/PatientHome";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -100,7 +101,8 @@ const routes = [
     {path: '/rating', component: Rating},
     {path: '/statistic', component: Statistic},
     {path: '/pharmacies', component: PharmacySearch},
-    {path: '/allergies', component: Allergies}
+    {path: '/allergies', component: Allergies},
+    {path: '/patientHome', component: PatientHome}
 ];
 
 const router = new VueRouter({
