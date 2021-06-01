@@ -84,6 +84,14 @@ export default {
         router.push("/managePharmacy");
         return
       }
+      else if (type === 'Pharmacist') {
+        router.push("/pharmacistHome");
+        return
+      }
+      else if (type === 'Dermatologist') {
+        router.push("/dermatologistHome");
+        return
+      }
       else if (type != null) {
         router.push("/");
       }
