@@ -20,6 +20,7 @@
         <MedicineRegisterLink v-if="user == 'SystemAdmin'"></MedicineRegisterLink>
         <MedicineSearchLink></MedicineSearchLink>
         <PharmacySearchLink v-if="user === null || user === 'Patient'"></PharmacySearchLink>
+        <PatientSearchLink v-if="user === 'Pharmacist' || user === 'Dermatologist'"></PatientSearchLink>
       </NavGroup>
       <NavGroup side="ml-auto">
         <RegisterPatientLink v-if="!isLogged"/>
@@ -57,6 +58,7 @@ import PharmacyProfileLink from "@/components/NavBar/PharmacyProfileLink";
 import StatisticLink from "@/components/NavBar/StatisticLink";
 import MedicineSearchLink from "@/components/NavBar/MedicineSearchLink";
 import PharmacySearchLink from "@/components/NavBar/PharmacySearchLink";
+import PatientSearchLink from "./components/NavBar/PatientSearchLink";
 
 export default {
   name: 'App',
@@ -83,7 +85,8 @@ export default {
     RegisterPatientLink,
     OrderLink,
     PromotionLink,
-    ManagePharmacyLink
+    ManagePharmacyLink,
+    PatientSearchLink
   },
   created() {
     this.$store.dispatch('startSession', null);

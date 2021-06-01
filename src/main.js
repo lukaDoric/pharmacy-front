@@ -42,6 +42,9 @@ import Statistic from "@/components/Statistics/Statistic";
 import PharmacySearch from "@/components/Pharmacy/PharmacySearch";
 import ChangeUserInfo from "@/components/ChangeUserInfo/ChangeUserInfo";
 import PatientHome from "@/components/Patient/PatientHome";
+import PharmacistHome from "./components/Pharmacist/PharmacistHome";
+import DermatologistHome from "./components/Dermatologist/DermatologistHome";
+import PatientSearch from "./components/Patient/PatientSearch";
 
 Vue.prototype.$http = axios;
 Vue.use(BootstrapVue);
@@ -83,7 +86,10 @@ const routes = [
     {path: '/pharmacies', component: PharmacySearch},
     {path: '/statistic', component: Statistic},
     {path: '/pharmacies', component: PharmacySearch},
-    {path: '/patientHome', component: PatientHome}
+    {path: '/patientHome', component: PatientHome},
+    {path: '/pharmacistHome', component: PharmacistHome},
+    {path: '/dermatologistHome', component: DermatologistHome},
+    {path: '/patientSearch', component: PatientSearch}
 ];
 
 const router = new VueRouter({
