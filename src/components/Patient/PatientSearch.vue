@@ -19,7 +19,7 @@
               <td>{{ p.name }}</td>
               <td>{{ p.surname }}</td>
             </tr>
-            <tr class="hide-table-padding" v-if="userType !== 'PharmacyAdmin'">
+            <tr class="hide-table-padding">
               <td></td>
               <td colspan="3">
                 <div id="collapseOne" class="collapse in p-3">
@@ -33,6 +33,7 @@
                 </div>
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>
@@ -47,9 +48,7 @@ export default {
     return {
       patients: [],
       patientsSearched: [],
-      searchParam: '',
       searchName: '',
-      searchSurname: ''
     }
   },
   mounted() {
@@ -59,15 +58,6 @@ export default {
           this.patients = response.data;
           this.patientsSearched = response.data;
         })
-  },
-  methods: {
-    onFilterSearch() {
-      this.$http
-          .then(response => {
-            this.patients = response.data;
-          })
-    },
-
   },
   computed: {
     filteredList(){
