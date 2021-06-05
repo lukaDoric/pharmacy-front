@@ -19,12 +19,27 @@
                  v-on:click="changeDisplay(1)">
                 Schedule Exam
               </a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+                 v-on:click="changeDisplay(2)">
+                Medicine Issuing
+              </a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+                 v-on:click="changeDisplay(3)">
+                Appointment Report
+              </a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+                 v-on:click="changeDisplay(4)">
+                Working Calendar
+              </a>
             </div>
           </div>
 
           <div class="col">
             <PatientSearch v-if="display === 0"/>
             <SchedulePatientsAppointment v-if="display === 1"/>
+            <MedicineIssuing v-if="display === 2"/>
+            <AppointmentReport v-if="display === 3"/>
+            <PharmacistWorkingCalendar v-if="display === 4"/>
           </div>
         </div>
 
@@ -37,11 +52,17 @@
 <script>
 import PatientSearch from "../Patient/PatientSearch";
 import SchedulePatientsAppointment from "./SchedulePatientsAppointment";
+import MedicineIssuing from "../Medicine/MedicineIssuing";
+import AppointmentReport from "./AppointmentReport";
+import PharmacistWorkingCalendar from "./PharmacistWorkingCalendar";
 export default {
 name: "PharmacistHome",
   components: {
     PatientSearch,
-    SchedulePatientsAppointment
+    SchedulePatientsAppointment,
+    MedicineIssuing,
+    AppointmentReport,
+    PharmacistWorkingCalendar
   },
   data() {
     return {

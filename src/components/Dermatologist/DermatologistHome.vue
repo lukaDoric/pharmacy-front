@@ -18,12 +18,22 @@
                v-on:click="changeDisplay(1)">
               Schedule Exam
             </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(2)">
+              Exam Report
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(3)">
+              Working Calendar
+            </a>
           </div>
         </div>
 
         <div class="col">
           <PatientSearch v-if="display === 0"/>
           <SchedulePatientsExam v-if="display === 1"/>
+          <ExamReport v-if="display === 2"/>
+          <DermatologistWorkingCalendar v-if="display === 3"/>
         </div>
       </div>
 
@@ -35,11 +45,15 @@
 <script>
 import PatientSearch from "../Patient/PatientSearch";
 import SchedulePatientsExam from "./SchedulePatientsExam";
+import ExamReport from "./ExamReport";
+import DermatologistWorkingCalendar from "./DermatologistWorkingCalendar";
 export default {
   name: "DermatologistHome",
   components: {
     PatientSearch,
-    SchedulePatientsExam
+    SchedulePatientsExam,
+    ExamReport,
+    DermatologistWorkingCalendar
   },
   data() {
     return {
