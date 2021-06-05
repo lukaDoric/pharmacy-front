@@ -25,8 +25,8 @@
             <td>{{ p.surname }}</td>
             <td>{{p.email}}</td>
             <td>
-              <button v-on:click="onSelect(p)" v-if="btn1">Select</button>
-              <button v-on:click="onDeselect(p)" v-if="!btn1">Deselect</button>
+              <button class="btn btn-info btn-sm" type="button" v-on:click="onSelect(p)" v-if="btn1">Select</button>
+              <button class="btn btn-info btn-sm" type="button" v-on:click="onDeselect(p)" v-if="!btn1">Deselect</button>
             </td>
           </tr>
           </tbody>
@@ -56,7 +56,7 @@
             <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
             <td>{{ e.dermatologistRating }}</td>
             <td>
-              <button v-on:click="onSchedule(e.examId)">Schedule
+              <button class="btn btn-info btn-sm" type="button" v-on:click="onSchedule(e.examId)">Schedule
               </button>
             </td>
           </tr>
@@ -70,7 +70,7 @@
             <input v-model="startTime" type="time"/>
             <input v-model="durationTime" type="number" placeholder="Duration..."/>
             <input v-model="price" type="number" placeholder="Price in dollars..."/>
-            <button type="button" class="btn btn-success" @click="createExam">Create new appointment</button>
+            <button  type="button" class="btn btn-success" @click="createExam">Create new appointment</button>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
 import moment from "moment";
 export default {
   name: "SchedulePatientsExam",
-  props: ['pharmacyId'],
+  props: ['pharmacyId', 'selectedPatient1'],
 
   data() {
     return {
@@ -211,5 +211,35 @@ export default {
 </script>
 
 <style scoped>
+#search-name-button {
+  margin: 5px;
+}
 
+.jumbotron {
+  margin: 2%;
+}
+
+.display-4 {
+  margin-bottom: 0.5em;
+}
+
+tr.hide-table-padding td {
+  padding: 0;
+}
+
+.expand-button {
+  position: relative;
+}
+
+.accordion-toggle .expand-button:after {
+  position: absolute;
+  left: .75rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  content: '-';
+}
+
+.accordion-toggle.collapsed .expand-button:after {
+  content: '+';
+}
 </style>
