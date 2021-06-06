@@ -41,27 +41,7 @@
         <p>Medicine</p>
       </div>
       <div class="px-5">
-        <div class="input-group mb-3 px-5">
-          <input type="text" class="form-control" placeholder="Search medicine" v-model="searchName">
-        </div>
-        <table class="table table-dark table-hover table-bordered">
-          <thead>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Form</th>
-          <th>Rating</th>
-          <th></th>
-          </thead>
-          <tbody>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button class="btn btn-info btn-sm" type="button">Issued</button>
-          </td>
-          </tbody>
-        </table>
+        <Medicine/>
         <div>
           <button class="btn btn-info btn-sm" type="button" v-on:click="onSchedule()" v-if="!scheduleExam">Schedule exam</button>
           <button class="btn btn-info btn-sm" type="button" v-on:click="onCancelSchedule()" v-if="scheduleExam">Cancel Scheduling</button>
@@ -75,10 +55,12 @@
 
 <script>
 import SchedulePatientsExam from "./SchedulePatientsExam";
+import Medicine from "../Medicine/Medicine";
 export default {
   name: "ExamReport",
   components: {
-    SchedulePatientsExam
+    SchedulePatientsExam,
+    Medicine
   },
   data() {
     return {

@@ -52,6 +52,9 @@ export default {
   methods: {
     search(){
 
+    },
+    issued(){
+
     }
   }
 }
