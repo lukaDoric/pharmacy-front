@@ -106,19 +106,7 @@ export default {
           this.patients = response.data;
           this.patientsSearched = response.data;
         })
-    if (this.pharmacyId === undefined) {
-      this.$http
-          .get(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/")
-          .then(response => {
-            this.exams = response.data;
-          })
-    } else {
-      this.$http
-          .get(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/" + this.pharmacyId)
-          .then(response => {
-            this.exams = response.data;
-          })
-    }
+
   },
   methods: {
     onSelect(p) {

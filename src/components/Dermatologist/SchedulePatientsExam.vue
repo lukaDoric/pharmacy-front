@@ -142,7 +142,11 @@ export default {
         return;
       }
       this.$http
-          .put(process.env.VUE_APP_BACKEND_URL + "patient-exam/", examId, config)
+          .put(process.env.VUE_APP_BACKEND_URL + "patient-exam/scheduleForPatient", {
+            examId: examId,
+            patientID: this.selectedPatient.patientID,
+            duration: this.durationTime,
+            config})
           .then(response => {
             alert(response.data);
             window.location.reload()
@@ -158,28 +162,28 @@ export default {
       }
 
       if (this.startDate === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!1")
         return;
       }
 
       if (this.startTime === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!2")
         return;
       }
 
       if (this.durationTime === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!3")
         return;
       }
 
       if (this.price === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!4")
         return;
       }
 
       let startDate = new Date(this.startDate + 'T' + this.startTime)
       this.$http.post(process.env.VUE_APP_BACKEND_URL + 'exam/', {
-        dermatologistId: this.dermatologistId,
+        dermatologistId: 'prazno',
         examStart: startDate,
         duration: this.durationTime,
         price: this.price
