@@ -89,7 +89,9 @@ const routes = [
     {path: '/patientHome', component: PatientHome},
     {path: '/pharmacistHome', component: PharmacistHome},
     {path: '/dermatologistHome', component: DermatologistHome},
-    {path: '/patientSearch', component: PatientSearch}
+    {path: '/patientSearch', component: PatientSearch},
+    {path: '/pharmacistHome', component: PharmacistHome},
+    {path: '/dermatologistHome', component: DermatologistHome}
 ];
 
 const router = new VueRouter({

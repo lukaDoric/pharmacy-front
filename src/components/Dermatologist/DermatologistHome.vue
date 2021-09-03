@@ -26,6 +26,14 @@
                v-on:click="changeDisplay(3)">
               Working Calendar
             </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(4)">
+              Schedule vacation
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+               v-on:click="changeDisplay(5)">
+              Patient history
+            </a>
           </div>
         </div>
 
@@ -34,6 +42,8 @@
           <SchedulePatientsExam v-if="display === 1"/>
           <ExamReport v-if="display === 2"/>
           <DermatologistWorkingCalendar v-if="display === 3"/>
+          <VacationRequestDermatologist v-if="display === 4"></VacationRequestDermatologist>
+          <PatientHistory v-if="display === 5"/>
         </div>
       </div>
 
@@ -47,13 +57,17 @@ import PatientSearch from "../Patient/PatientSearch";
 import SchedulePatientsExam from "./SchedulePatientsExam";
 import ExamReport from "./ExamReport";
 import DermatologistWorkingCalendar from "./DermatologistWorkingCalendar";
+import VacationRequestDermatologist from "../VacationRequest/VacationRequestDermatologist";
+import PatientHistory from "../Patient/PatientHistory";
 export default {
   name: "DermatologistHome",
   components: {
+    PatientHistory,
+    VacationRequestDermatologist,
     PatientSearch,
     SchedulePatientsExam,
     ExamReport,
-    DermatologistWorkingCalendar
+    DermatologistWorkingCalendar,
   },
   data() {
     return {

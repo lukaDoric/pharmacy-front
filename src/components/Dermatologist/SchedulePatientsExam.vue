@@ -48,23 +48,43 @@
           </tr>
           </thead>
           <tbody v-for="e in exams" v-bind:key="e.examId">
-          <tr>
-            <td>{{ e.date | dateFormat() }}</td>
-            <td>{{ e.start }}</td>
-            <td>{{ e.end }}</td>
-            <td>{{ e.price | toMoney() }}</td>
-            <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
-            <td>{{ e.dermatologistRating }}</td>
-            <td>
-              <button class="btn btn-info btn-sm" type="button" v-on:click="onSchedule(e.examId)">Schedule
-              </button>
-            </td>
-          </tr>
+            <tr>
+              <td>{{ e.date | dateFormat() }}</td>
+              <td>{{ e.start }}</td>
+              <td>{{ e.end }}</td>
+              <td>{{ e.price | toMoney() }}</td>
+              <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
+              <td>{{ e.dermatologistRating }}</td>
+              <td>
+                <button class="btn btn-info btn-sm" type="button" v-on:click="onSchedule(e.examId)">Schedule
+                </button>
+              </td>
+            </tr>
           </tbody>
         </table>
         <br/>
         <div>
           <h3>Create new appointment</h3>
+
+          <table class="table table-dark table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>Pharmacy</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody v-for="p in pharmacies" v-bind:key="p.id">
+            <tr>
+              <td>{{ p.name }}</td>
+              <td>
+                <button class="btn btn-info btn-sm" type="button" v-on:click="onSelectPharmacy(p)" v-if="btn2">Select</button>
+                <button class="btn btn-info btn-sm" type="button" v-on:click="onDeselectPharmacy(p)" v-if="!btn2">Deselect</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+
           <div id="appointment" class="d-flex justify-content-center">
             <input :min="today" v-model="startDate" type="date"/>
             <input v-model="startTime" type="time"/>
@@ -91,10 +111,14 @@ export default {
     return {
       patients: [],
       patientsSearched: [],
+      pharmacies: [],
+      pharmaciesOther: [],
       searchName: '',
       exams: [],
       selectedPatient: null,
+      selectedPharmacy: null,
       btn1: true,
+      btn2: true,
       startDate: '',
       startTime: '',
       durationTime: '',
@@ -108,6 +132,12 @@ export default {
         .then(response => {
           this.patients = response.data;
           this.patientsSearched = response.data;
+        })
+    this.$http
+        .get(process.env.VUE_APP_BACKEND_URL + "dermatologist/getDermatologistsPharmacies/")
+        .then(response => {
+          this.pharmacies = response.data;
+          this.pharmaciesOther = response.data;
         })
     if (this.pharmacyId === undefined) {
       this.$http
@@ -135,18 +165,28 @@ export default {
       this.btn1 = true;
       this.selectedPatient = null;
     },
+    onSelectPharmacy(p) {
+      this.selectedPharmacy = p;
+      this.pharmacies = [];
+      this.pharmacies.push(p);
+      this.btn2 = false;
+    },
+    onDeselectPharmacy() {
+      this.pharmacies = this.pharmaciesOther;
+      this.btn2 = true;
+      this.selectedPharmacy = null;
+    },
     onSchedule(examId) {
-      const config = {headers: {'Content-Type': 'application/json'}};
       if (this.selectedPatient === null) {
         alert("Please select patient!")
         return;
       }
+      let exam = {
+        examID: examId,
+        patientID: this.selectedPatient.email
+      }
       this.$http
-          .put(process.env.VUE_APP_BACKEND_URL + "patient-exam/scheduleForPatient", {
-            examId: examId,
-            patientID: this.selectedPatient.patientID,
-            duration: this.durationTime,
-            config})
+          .put(process.env.VUE_APP_BACKEND_URL + "patient-exam/scheduleForPatient", exam)
           .then(response => {
             alert(response.data);
             window.location.reload()
@@ -157,7 +197,7 @@ export default {
     },
     createExam() {
       if (this.selectedPatient === null) {
-        alert("Please select patient!")
+        alert("Please select patient!123")
         return;
       }
 
@@ -180,14 +220,18 @@ export default {
         alert("Please input all fields!4")
         return;
       }
-
       let startDate = new Date(this.startDate + 'T' + this.startTime)
-      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'exam/', {
-        dermatologistId: 'prazno',
+      let examDTO = {
+        dermatologistID: 'a',
+        pharmacyID: this.selectedPharmacy.id,
+        patientID: this.selectedPatient.email,
         examStart: startDate,
         duration: this.durationTime,
         price: this.price
-      }).then(response => {
+      }
+
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'exam/createAndScheduleForPatientDermatologist/', examDTO)
+          .then(response => {
         alert(response.data);
         window.location.reload()
       }).catch(err => {

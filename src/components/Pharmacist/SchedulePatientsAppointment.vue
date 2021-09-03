@@ -25,8 +25,8 @@
             <td>{{ p.surname }}</td>
             <td>{{p.email}}</td>
             <td>
-              <button v-on:click="onSelect(p)" v-if="btn1">Select</button>
-              <button v-on:click="onDeselect(p)" v-if="!btn1">Deselect</button>
+              <button class="btn btn-info btn-sm" v-on:click="onSelect(p)" v-if="btn1">Select</button>
+              <button class="btn btn-info btn-sm" v-on:click="onDeselect(p)" v-if="!btn1">Deselect</button>
             </td>
           </tr>
           </tbody>
@@ -53,10 +53,10 @@
             <td>{{ e.start }}</td>
             <td>{{ e.end }}</td>
             <td>{{ e.price | toMoney() }}</td>
-            <td>{{ e.dermatologistName + " " + e.dermatologistSurname }}</td>
-            <td>{{ e.dermatologistRating }}</td>
+            <td>{{ e.pharmacistName + " " + e.pharmacistSurname }}</td>
+            <td>{{ e.pharmacistRating }}</td>
             <td>
-              <button v-on:click="onSchedule(e.examId)">Schedule
+              <button class="btn btn-info btn-sm" v-on:click="onSchedule(e.examId)">Schedule
               </button>
             </td>
           </tr>
@@ -107,6 +107,12 @@ export default {
           this.patientsSearched = response.data;
         })
 
+      this.$http
+          .get(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/all/")
+          .then(response => {
+            this.exams = response.data;
+          })
+
   },
   methods: {
     onSelect(p) {
@@ -121,13 +127,17 @@ export default {
       this.selectedPatient = null;
     },
     onSchedule(examId) {
-      const config = {headers: {'Content-Type': 'application/json'}};
+      //const config = {headers: {'Content-Type': 'application/json'}};
       if (this.selectedPatient === null) {
         alert("Please select patient!")
         return;
       }
+      let exam = {
+        examID: examId,
+        patientID: this.selectedPatient.email
+      }
       this.$http
-          .put(process.env.VUE_APP_BACKEND_URL + "patient-exam/", examId, config)
+          .put(process.env.VUE_APP_BACKEND_URL + "pharmacistExam/scheduleForPatientPharmacist/", exam)
           .then(response => {
             alert(response.data);
             window.location.reload()
@@ -138,40 +148,43 @@ export default {
     },
     createExam() {
       if (this.selectedPatient === null) {
-        alert("Please select patient!")
+        alert("Please select patient!123")
         return;
       }
 
       if (this.startDate === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!1")
         return;
       }
 
       if (this.startTime === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!2")
         return;
       }
 
       if (this.durationTime === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!3")
         return;
       }
 
       if (this.price === '') {
-        alert("Please input all fields!")
+        alert("Please input all fields!4")
         return;
       }
-
       let startDate = new Date(this.startDate + 'T' + this.startTime)
-      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'exam/', {
-        dermatologistId: this.dermatologistId,
+      let examDTO = {
+        dermatologistID: 'a',
+        patientID: this.selectedPatient.email,
         examStart: startDate,
         duration: this.durationTime,
         price: this.price
-      }).then(response => {
-        alert(response.data);
-        window.location.reload()
-      }).catch(err => {
+      }
+
+      this.$http.post(process.env.VUE_APP_BACKEND_URL + 'exam/createAndScheduleForPatientDermatologist/', examDTO)
+          .then(response => {
+            alert(response.data);
+            window.location.reload()
+          }).catch(err => {
         alert(err.response.data)
       });
     }
