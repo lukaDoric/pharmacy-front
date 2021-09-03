@@ -31,6 +31,14 @@
                  v-on:click="changeDisplay(4)">
                 Working Calendar
               </a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+                 v-on:click="changeDisplay(5)">
+                Schedule vacation
+              </a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-dark"
+                 v-on:click="changeDisplay(6)">
+                Patient history
+              </a>
             </div>
           </div>
 
@@ -40,6 +48,8 @@
             <MedicineIssuing v-if="display === 2"/>
             <AppointmentReport v-if="display === 3"/>
             <PharmacistWorkingCalendar v-if="display === 4"/>
+            <RequestVacation v-if="display === 5"></RequestVacation>
+            <PatientHistory v-if="display === 6"/>
           </div>
         </div>
 
@@ -55,9 +65,13 @@ import SchedulePatientsAppointment from "./SchedulePatientsAppointment";
 import MedicineIssuing from "../Medicine/MedicineIssuing";
 import AppointmentReport from "./AppointmentReport";
 import PharmacistWorkingCalendar from "./PharmacistWorkingCalendar";
+import RequestVacation from "../VacationRequest/RequestVacation";
+import PatientHistory from "../Patient/PatientHistory";
 export default {
 name: "PharmacistHome",
   components: {
+    PatientHistory,
+    RequestVacation,
     PatientSearch,
     SchedulePatientsAppointment,
     MedicineIssuing,

@@ -16,13 +16,13 @@
             <th>Rating</th>
             <th></th>
           </thead>
-          <tbody>
-            <td></td>
-            <td></td>
+          <tbody v-for="(p, index) in medicineSearched" v-bind:key="index">
+            <td>{{ p.medicineName }}</td>
+            <td>{{ p.reservationId }}</td>
             <td></td>
             <td></td>
             <td>
-              <button class="btn btn-info btn-sm" type="button" v-on:click="issued">Issued</button>
+              <button class="btn btn-info btn-sm" type="button" v-on:click="issued(p)">Issued</button>
             </td>
           </tbody>
         </table>
@@ -43,18 +43,28 @@ export default {
   },
   mounted() {
     this.$http
-        .get(process.env.VUE_APP_BACKEND_URL + "patient/getAll/")
+        .get(process.env.VUE_APP_BACKEND_URL + "medicine-reservation/getAll/")
         .then(response => {
-          this.patients = response.data;
-          this.patientsSearched = response.data;
+          this.medicines = response.data;
         })
   },
   methods: {
     search(){
+      this.$http
+          .get(process.env.VUE_APP_BACKEND_URL + "medicine-reservation/getMedicineByUniqueNumber/" + this.searchName)
+          .then(response => {
+            this.medicineSearched = response.data;
+      })
 
     },
-    issued(){
-
+    issued(p){
+      this.$http
+          .delete(process.env.VUE_APP_BACKEND_URL + "medicine-reservation/issue/" + p.reservationId)
+          .then(response => {
+            response.data
+            window.location.reload()
+          })
+          .catch(reason => (alert(reason.message)))
     }
   }
 }

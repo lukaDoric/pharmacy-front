@@ -2,6 +2,8 @@
   <div id="app">
     <NavBar>
       <NavGroup side='mr-auto'>
+        <DermatologistHomeLink v-if="user === 'Dermatologist'"></DermatologistHomeLink>
+        <PharmacistHomeLink v-if="user === 'Pharmacist'"></PharmacistHomeLink>
         <OurTeamLink v-if="user == 'PharmacyAdmin' || user == 'Patient' "></OurTeamLink>
         <OrderLink v-if="user == 'PharmacyAdmin'"></OrderLink>
         <VacationRequests v-if="user == 'PharmacyAdmin'"></VacationRequests>
@@ -59,10 +61,13 @@ import StatisticLink from "@/components/NavBar/StatisticLink";
 import MedicineSearchLink from "@/components/NavBar/MedicineSearchLink";
 import PharmacySearchLink from "@/components/NavBar/PharmacySearchLink";
 import PatientSearchLink from "./components/NavBar/PatientSearchLink";
+import DermatologistHomeLink from "./components/NavBar/DermatologistHomeLink";
+import PharmacistHomeLink from "./components/NavBar/PharmacistHomeLink";
 
 export default {
   name: 'App',
   components: {
+    DermatologistHomeLink,
     PharmacySearchLink,
     MedicineSearchLink,
     StatisticLink,
@@ -86,7 +91,8 @@ export default {
     OrderLink,
     PromotionLink,
     ManagePharmacyLink,
-    PatientSearchLink
+    PatientSearchLink,
+    PharmacistHomeLink
   },
   created() {
     this.$store.dispatch('startSession', null);
