@@ -2,7 +2,7 @@
   <div>
     <div>
       <b-jumbotron class="bg-dark">
-        <h1 class="text-light">Dermatologist home page</h1>
+        <h1 class="text-light">Pharmacist home page</h1>
         <div class="row">
           <div class="col-3"></div>
           <div class="col">
